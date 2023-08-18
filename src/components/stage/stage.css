@@ -108,8 +108,8 @@ stage doesn't "spill" out from under its rounded corners. instead, shift these o
 }
 
 .frame {
-    background: $looks-transparent;
-    border: 2px solid $looks-secondary;
+    background: $motion-transparent;
+    border: 2px solid $motion-tertiary;
     border-radius: 0.5rem;
     animation-name: flash;
     animation-duration: 0.75s;

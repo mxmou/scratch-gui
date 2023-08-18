@@ -88,7 +88,7 @@
 }
 
 .more {
-    background: $looks-secondary;
+    background: $motion-tertiary;
     color: $ui-white;
     border: none;
     outline: none;

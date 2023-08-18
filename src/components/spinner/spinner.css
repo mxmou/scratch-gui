@@ -83,8 +83,8 @@
 }
 
 .spinner.primary {
-    border-color: $looks-transparent;
+    border-color: $motion-transparent;
 }
 .spinner.primary::after {
-    border-top-color: $looks-secondary;
+    border-top-color: $motion-tertiary;
 }

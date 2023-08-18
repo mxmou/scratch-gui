@@ -43,7 +43,7 @@
     right: -1px;
     bottom: -1px;
     left: -1px;
-    border: 1px solid $looks-secondary;
+    border: 1px solid $motion-tertiary;
 }
 
 /* round corners for first and last buttons */
@@ -65,7 +65,7 @@
 /* selected button styling */
 
 .button[aria-pressed='true'] {
-    background-color: $looks-light-transparent;
+    background-color: $motion-light-transparent;
 }
 
 .button[aria-pressed='true'] > img {
@@ -75,7 +75,7 @@
 /* pressed button styling */
 
 .button:active {
-    background-color: $looks-transparent;
+    background-color: $motion-transparent;
 }
 
 /* disabled styling */

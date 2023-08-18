@@ -28,7 +28,7 @@
 .small {
     width: 0.825rem;
     height: 0.825rem;
-    background-color: $looks-secondary;
+    background-color: $motion-tertiary;
     color: $ui-white;
 }
 

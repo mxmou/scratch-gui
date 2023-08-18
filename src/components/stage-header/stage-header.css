@@ -67,7 +67,7 @@
 }
 
 .stage-button:active {
-    background-color: $looks-transparent;
+    background-color: $motion-transparent;
 }
 
 .stage-button-icon {
