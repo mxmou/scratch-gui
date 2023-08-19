@@ -96,9 +96,6 @@ class Backpack extends React.Component {
         case DragConstants.SPRITE:
             payloader = spritePayload;
             break;
-        case DragConstants.CODE:
-            payloader = codePayload;
-            break;
         }
         if (!payloader) return;
 

@@ -4,7 +4,6 @@ import assetDragReducer, {assetDragInitialState} from './asset-drag';
 import cardsReducer, {cardsInitialState} from './cards';
 import colorPickerReducer, {colorPickerInitialState} from './color-picker';
 import connectionModalReducer, {connectionModalInitialState} from './connection-modal';
-import customProceduresReducer, {customProceduresInitialState} from './custom-procedures';
 import blockDragReducer, {blockDragInitialState} from './block-drag';
 import editorTabReducer, {editorTabInitialState} from './editor-tab';
 import hoveredTargetReducer, {hoveredTargetInitialState} from './hovered-target';
@@ -24,10 +23,8 @@ import targetReducer, {targetsInitialState} from './targets';
 import themeReducer, {themeInitialState} from './theme';
 import timeoutReducer, {timeoutInitialState} from './timeout';
 import timeTravelReducer, {timeTravelInitialState} from './time-travel';
-import toolboxReducer, {toolboxInitialState} from './toolbox';
 import vmReducer, {vmInitialState} from './vm';
 import vmStatusReducer, {vmStatusInitialState} from './vm-status';
-import workspaceMetricsReducer, {workspaceMetricsInitialState} from './workspace-metrics';
 import throttle from 'redux-throttle';
 
 import decks from '../lib/libraries/decks/index.jsx';
@@ -41,7 +38,6 @@ const guiInitialState = {
     cards: cardsInitialState,
     colorPicker: colorPickerInitialState,
     connectionModal: connectionModalInitialState,
-    customProcedures: customProceduresInitialState,
     editorTab: editorTabInitialState,
     mode: modeInitialState,
     hoveredTarget: hoveredTargetInitialState,
@@ -60,10 +56,8 @@ const guiInitialState = {
     theme: themeInitialState,
     timeout: timeoutInitialState,
     timeTravel: timeTravelInitialState,
-    toolbox: toolboxInitialState,
     vm: vmInitialState,
-    vmStatus: vmStatusInitialState,
-    workspaceMetrics: workspaceMetricsInitialState
+    vmStatus: vmStatusInitialState
 };
 
 const initPlayer = function (currentState) {
@@ -142,7 +136,6 @@ const guiReducer = combineReducers({
     cards: cardsReducer,
     colorPicker: colorPickerReducer,
     connectionModal: connectionModalReducer,
-    customProcedures: customProceduresReducer,
     editorTab: editorTabReducer,
     mode: modeReducer,
     hoveredTarget: hoveredTargetReducer,
@@ -161,10 +154,8 @@ const guiReducer = combineReducers({
     theme: themeReducer,
     timeout: timeoutReducer,
     timeTravel: timeTravelReducer,
-    toolbox: toolboxReducer,
     vm: vmReducer,
-    vmStatus: vmStatusReducer,
-    workspaceMetrics: workspaceMetricsReducer
+    vmStatus: vmStatusReducer
 });
 
 export {

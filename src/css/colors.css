@@ -13,6 +13,7 @@ $ui-black-transparent: hsla(0, 0%, 0%, 0.15); /* 15% transparent version of blac
 
 $text-primary: hsla(225, 15%, 40%, 1); /* #575E75 */
 $text-primary-transparent: hsla(225, 15%, 40%, 0.75);
+$text-code: hsla(0, 0%, 0%, 1); /* #000000 */
 
 $motion-primary: hsla(215, 100%, 65%, 1); /* #4C97FF */
 $motion-tertiary: hsla(215, 60%, 50%, 1); /* #3373CC */
@@ -49,3 +50,4 @@ $extensions-transparent: hsla(163, 85%, 40%, 0.35); /* 35% transparent version o
 $extensions-light: hsla(163, 57%, 85%, 1); /* opaque version of extensions-transparent, on white bg */
 
 $drop-highlight: hsla(215, 100%, 77%, 1); /* lighter than motion-primary */
+$selection: hsla(215, 60%, 50%, 0.25); /* 25% transparent version of motion-tertary */

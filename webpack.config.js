@@ -97,25 +97,7 @@ const base = {
             })
         ]
     },
-    plugins: [
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: 'node_modules/scratch-blocks/media',
-                    to: 'static/blocks-media/default'
-                },
-                {
-                    from: 'node_modules/scratch-blocks/media',
-                    to: 'static/blocks-media/high-contrast'
-                },
-                {
-                    from: 'src/lib/themes/high-contrast/blocks-media',
-                    to: 'static/blocks-media/high-contrast',
-                    force: true
-                }
-            ]
-        })
-    ]
+    plugins: []
 };
 
 if (!process.env.CI) {
@@ -128,7 +110,6 @@ module.exports = [
         entry: {
             'lib.min': ['react', 'react-dom'],
             'gui': './src/playground/index.jsx',
-            'blocksonly': './src/playground/blocks-only.jsx',
             'compatibilitytesting': './src/playground/compatibility-testing.jsx',
             'player': './src/playground/player.jsx'
         },
@@ -167,12 +148,6 @@ module.exports = [
                 chunks: ['lib.min', 'gui'],
                 template: 'src/playground/index.ejs',
                 title: 'TB3 GUI'
-            }),
-            new HtmlWebpackPlugin({
-                chunks: ['lib.min', 'blocksonly'],
-                template: 'src/playground/index.ejs',
-                filename: 'blocks-only.html',
-                title: 'TB3 GUI: Blocks Only Example'
             }),
             new HtmlWebpackPlugin({
                 chunks: ['lib.min', 'compatibilitytesting'],

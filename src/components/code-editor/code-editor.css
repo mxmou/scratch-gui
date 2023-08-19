@@ -1,0 +1,56 @@
+@import "../../css/colors.css";
+@import "../../css/units.css";
+
+.code-editor-outer {
+    /* For vertical scrolling */
+    display: flex;
+    flex-direction: column;
+}
+
+.code-editor {
+    /* For vertical scrolling */
+    height: 0;
+    min-height: 0;
+    flex-grow: 1;
+    /* For horizontal scrolling */
+    display: flex;
+
+    overflow: hidden;
+    color: $text-code;
+}
+
+[dir="ltr"] .code-editor {
+    border-top-right-radius: calc($space - 1px);
+}
+
+[dir="rtl"] .code-editor {
+    border-top-left-radius: calc($space - 1px);
+}
+
+.code-editor :global(.cm-editor) {
+    /* For horizontal scrolling */
+    width: 0;
+    min-width: 0;
+    flex-grow: 1;
+    /* Remove focus outline */
+    outline: none;
+}
+
+.code-editor :global(.cm-scroller) {
+    overflow: auto;
+}
+
+.code-editor :global(.cm-gutters) {
+    background-color: transparent;
+    border-color: $ui-black-transparent;
+    color: $text-primary-transparent;
+    user-select: none;
+}
+
+.code-editor :global(.cm-selectionBackground) {
+    background-color: $ui-black-transparent;
+}
+
+.code-editor :global(.cm-editor.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground) {
+    background-color: $selection;
+}
