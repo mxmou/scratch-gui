@@ -7,7 +7,7 @@
     border-radius: $space;
     border-width: 2px;
     padding: 1rem;
-    background: white;
+    background: $ui-white-bg;
 }
 
 .question-label {
@@ -33,8 +33,8 @@
     border: none;
     border-radius: 100%;
 
-    color: white;
-    background: $motion-tertiary;
+    color: $text-on-accent;
+    background: $motion-accent;
 }
 
 [dir="ltr"] .question-submit-button {

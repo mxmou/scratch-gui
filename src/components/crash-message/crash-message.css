@@ -3,7 +3,7 @@
 @import "../../css/typography.css";
 
 .crash-wrapper {
-    background-color: $motion-tertiary;
+    background-color: $menu-bar;
     width: 100%;
     height: 100%;
     display: flex;
@@ -26,7 +26,7 @@
     border: 1px solid $motion-tertiary;
     border-radius: 0.25rem;
     padding: 0.5rem 2rem;
-    background: white;
+    background: $ui-white;
     color: $motion-tertiary;
     font-weight: bold;
     font-size: 0.875rem;

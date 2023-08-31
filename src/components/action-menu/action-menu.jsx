@@ -4,6 +4,8 @@ import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import ReactTooltip from 'react-tooltip';
 
+import InlineIcon from '../inline-icon/inline-icon.jsx';
+
 import styles from './action-menu.css';
 
 const CLOSE_DELAY = 300; // ms
@@ -127,9 +129,8 @@ class ActionMenu extends React.Component {
                     ref={this.setButtonRef}
                     onClick={this.clickDelayer(onClick)}
                 >
-                    <img
+                    <InlineIcon
                         className={styles.mainIcon}
-                        draggable={false}
                         src={mainImg}
                     />
                 </button>
@@ -157,9 +158,8 @@ class ActionMenu extends React.Component {
                                         data-tip={title}
                                         onClick={hasFileInput ? handleClick : this.clickDelayer(handleClick)}
                                     >
-                                        <img
+                                        <InlineIcon
                                             className={styles.moreIcon}
-                                            draggable={false}
                                             src={img}
                                         />
                                         {hasFileInput ? (

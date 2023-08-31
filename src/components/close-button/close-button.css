@@ -28,8 +28,8 @@
 .small {
     width: 0.825rem;
     height: 0.825rem;
-    background-color: $motion-tertiary;
-    color: $ui-white;
+    background-color: $motion-accent;
+    color: $text-on-accent;
 }
 
 .large {

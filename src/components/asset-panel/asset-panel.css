@@ -6,7 +6,7 @@
     flex-grow: 1;
     border: 1px solid $ui-black-transparent;
     border-bottom: none;
-    background: white;
+    background: $ui-white-bg;
     background-clip: padding-box;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 0.85rem;

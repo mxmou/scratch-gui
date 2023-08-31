@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
+import InlineIcon from '../inline-icon/inline-icon.jsx';
+
 import styles from './delete-button.css';
 import deleteIcon from './icon--delete.svg';
 
@@ -17,7 +19,7 @@ const DeleteButton = props => (
         onClick={props.onClick}
     >
         <div className={styles.deleteButtonVisible}>
-            <img
+            <InlineIcon
                 className={styles.deleteIcon}
                 src={deleteIcon}
             />

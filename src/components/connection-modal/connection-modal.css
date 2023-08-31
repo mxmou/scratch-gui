@@ -11,7 +11,7 @@
 }
 
 .body {
-    background: $ui-white;
+    background: $ui-white-bg;
 }
 
 .label {
@@ -38,7 +38,7 @@
     justify-content: space-between;
     align-items: center;
 
-    background-color: $ui-white;
+    background-color: $ui-white-bg;
     border-radius: 0.25rem;
     padding: 10px;
     width: 100%;
@@ -81,9 +81,9 @@
     border-radius: 0.25rem;
     font-weight: 600;
     font-size: 0.85rem;
-    background: $motion-tertiary;
-    border: $motion-tertiary;
-    color: white;
+    background: $motion-accent;
+    border: $motion-accent;
+    color: $text-on-accent;
     cursor: pointer;
 }
 
@@ -173,7 +173,7 @@
     right: -15px;
     left: -15px;
     padding: 5px 5px;
-    background-color: $motion-tertiary;
+    background-color: $motion-accent;
     border-radius: 100%;
     box-shadow: 0px 0px 0px 4px $motion-transparent;
     /* animation: pulse-blue-ring 1s infinite ease-in-out alternate; */
@@ -209,7 +209,7 @@
 .bluetooth-centered-icon {
     position: absolute;
     padding: 5px 5px;
-    background-color: $motion-tertiary;
+    background-color: $motion-accent;
     border-radius: 100%;
     box-shadow: 0px 0px 0px 2px $motion-transparent;
 }
@@ -302,8 +302,8 @@
 .connection-button {
     padding: 0.6rem 0.75rem;
     border-radius: 0.5rem;
-    background: $motion-tertiary;
-    color: white;
+    background: $motion-accent;
+    color: $text-on-accent;
     font-weight: 600;
     font-size: 0.85rem;
     margin: 0.25rem;
@@ -365,7 +365,7 @@
 }
 
 .bottom-area {
-    background-color: $ui-white;
+    background-color: $ui-white-bg;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -418,7 +418,7 @@
 }
 
 .active-step-dot {
-    background: $motion-tertiary;
+    background: $motion-accent;
 }
 
 .success-dot {

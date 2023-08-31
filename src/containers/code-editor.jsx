@@ -1,5 +1,6 @@
 import React from 'react';
 import bindAll from 'lodash.bindall';
+import {connect} from 'react-redux';
 import {
     EditorView,
     keymap,
@@ -9,7 +10,7 @@ import {
     rectangularSelection,
     crosshairCursor
 } from '@codemirror/view';
-import {EditorState} from '@codemirror/state';
+import {EditorState, Compartment} from '@codemirror/state';
 import {
     defaultKeymap,
     indentWithTab,
@@ -19,6 +20,7 @@ import {
 import {searchKeymap} from '@codemirror/search';
 
 import CodeEditorComponent from '../components/code-editor/code-editor.jsx';
+import {themeMap} from '../lib/themes';
 
 class CodeEditor extends React.Component {
     constructor (props) {
@@ -28,6 +30,7 @@ class CodeEditor extends React.Component {
         ]);
         this.element = null;
         this.view = null;
+        this.themeOptions = new Compartment();
     }
     componentDidMount () {
         this.view = new EditorView({
@@ -45,13 +48,26 @@ class CodeEditor extends React.Component {
                     indentWithTab,
                     ...historyKeymap,
                     ...searchKeymap
+                ]),
+                this.themeOptions.of([
+                    EditorView.darkTheme.of(themeMap[this.props.theme].dark)
                 ])
             ]
         });
         if (document.activeElement === document.body) this.view.focus();
     }
+    componentDidUpdate () {
+        this.updateTheme();
+    }
     setElement (element) {
         this.element = element;
+    }
+    updateTheme () {
+        this.view.dispatch({
+            effects: this.themeOptions.reconfigure([
+                EditorView.darkTheme.of(themeMap[this.props.theme].dark)
+            ])
+        });
     }
     render () {
         return (
@@ -63,4 +79,8 @@ class CodeEditor extends React.Component {
     }
 }
 
-export default CodeEditor;
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default connect(mapStateToProps)(CodeEditor);

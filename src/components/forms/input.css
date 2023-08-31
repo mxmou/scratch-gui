@@ -10,6 +10,7 @@
     font-weight: bold;
     color: $text-primary;
 
+    background-color: $input-field;
     border-width: 1px;
     border-style: solid;
     border-color: $ui-black-transparent;
@@ -32,11 +33,11 @@
 }
 
 .input-form:hover {
-    border-color: $motion-tertiary;
+    border-color: $motion-accent;
 }
 
 .input-form:focus {
-    border-color: $motion-tertiary;
+    border-color: $motion-accent;
     box-shadow: 0 0 0 0.25rem $motion-transparent;
 }
 

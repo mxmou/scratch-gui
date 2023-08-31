@@ -2,6 +2,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import InlineIcon from '../inline-icon/inline-icon.jsx';
+
 import filterIcon from './icon--filter.svg';
 import xIcon from './icon--x.svg';
 import styles from './filter.css';
@@ -21,7 +23,7 @@ const FilterComponent = props => {
                 [styles.isActive]: filterQuery.length > 0
             })}
         >
-            <img
+            <InlineIcon
                 className={styles.filterIcon}
                 src={filterIcon}
             />
@@ -36,7 +38,7 @@ const FilterComponent = props => {
                 className={styles.xIconWrapper}
                 onClick={onClear}
             >
-                <img
+                <InlineIcon
                     className={styles.xIcon}
                     src={xIcon}
                 />

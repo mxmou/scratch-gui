@@ -14,7 +14,7 @@
     padding: 1rem 1rem 0 1rem;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: $text-primary;
-    background: white;
+    background: $ui-white-bg;
     border-width: 2px;
     border-style: solid;
     border-color: $ui-black-transparent;
@@ -29,7 +29,7 @@
 
 .library-item:hover {
     border-width: 2px;
-    border-color: $motion-tertiary;
+    border-color: $motion-accent;
 }
 
 .hidden {
@@ -68,7 +68,7 @@
     width: 3.5rem;
     height: 3.5rem;
     border-radius: 0.5rem;
-    border: 0.25rem solid $ui-white;
+    border: 0.25rem solid $ui-white-bg;
 }
 
 [dir="ltr"] .library-item-inset-image-container {

@@ -45,7 +45,7 @@
 }
 
 .body {
-    background: $ui-white;
+    background: $ui-white-bg;
     padding: 1.5rem 2.25rem;
     text-align: center;
 }
@@ -60,11 +60,11 @@
 }
 
 .button-row button {
-    border: 1px solid $motion-tertiary;
+    border: 1px solid $motion-accent;
     border-radius: 0.25rem;
     padding: 0.5rem 2rem;
-    background: $motion-tertiary;
-    color: white;
+    background: $motion-accent;
+    color: $text-on-accent;
     font-weight: bold;
     font-size: 0.875rem;
     cursor: pointer;
@@ -77,6 +77,6 @@
 }
 
 .faq-link {
-    color: $motion-tertiary;
+    color: $motion-accent;
     text-decoration: none;
 }

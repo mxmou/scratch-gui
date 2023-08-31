@@ -10,6 +10,7 @@ import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 import AudioSelector from '../../containers/audio-selector.jsx';
 import IconButton from '../icon-button/icon-button.jsx';
+import InlineIcon from '../inline-icon/inline-icon.jsx';
 
 import styles from './sound-editor.css';
 
@@ -160,9 +161,8 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.undo)}
                         onClick={props.onUndo}
                     >
-                        <img
+                        <InlineIcon
                             className={styles.undoIcon}
-                            draggable={false}
                             src={undoIcon}
                         />
                     </button>
@@ -172,9 +172,8 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.redo)}
                         onClick={props.onRedo}
                     >
-                        <img
+                        <InlineIcon
                             className={styles.redoIcon}
-                            draggable={false}
                             src={redoIcon}
                         />
                     </button>
@@ -234,10 +233,7 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.stop)}
                         onClick={props.onStop}
                     >
-                        <img
-                            draggable={false}
-                            src={stopIcon}
-                        />
+                        <InlineIcon src={stopIcon} />
                     </button>
                 ) : (
                     <button
@@ -245,10 +241,7 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.play)}
                         onClick={props.onPlay}
                     >
-                        <img
-                            draggable={false}
-                            src={playIcon}
-                        />
+                        <InlineIcon src={playIcon} />
                     </button>
                 )}
             </div>

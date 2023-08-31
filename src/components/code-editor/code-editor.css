@@ -16,7 +16,7 @@
     display: flex;
 
     overflow: hidden;
-    color: $text-code;
+    color: $text-primary;
 }
 
 [dir="ltr"] .code-editor {
@@ -42,9 +42,17 @@
 
 .code-editor :global(.cm-gutters) {
     background-color: transparent;
-    border-color: $ui-black-transparent;
     color: $text-primary-transparent;
     user-select: none;
+}
+
+[dir="ltr"] .code-editor :global(.cm-gutters) {
+    border-right: 1px solid $ui-black-transparent;
+}
+
+[dir="rtl"] .code-editor :global(.cm-gutters) {
+    border-left: 1px solid $ui-black-transparent;
+    border-right: none;
 }
 
 .code-editor :global(.cm-selectionBackground) {
@@ -53,4 +61,8 @@
 
 .code-editor :global(.cm-editor.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground) {
     background-color: $selection;
+}
+
+.code-editor :global(.cm-cursor) {
+    border-left-color: $text-primary;
 }

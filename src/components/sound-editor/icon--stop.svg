@@ -3,16 +3,13 @@
     <!-- Generator: Sketch 43.2 (39069) - http://www.bohemiancoding.com/sketch -->
     <title>stop-playback</title>
     <desc>Created with Sketch.</desc>
-    <defs>
-        <rect id="path-1" x="0" y="0" width="44" height="44" rx="4"></rect>
-    </defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Desktop---1280x720" transform="translate(-619.000000, -345.000000)">
-            <g id="Step-4---Playing-Trim" transform="translate(0.000000, 42.000000)">
-                <g id="Play-/-Record-/-Stop" transform="translate(623.000000, 307.000000)">
-                    <g id="stop-playback">
-                        <use fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-1"></use>
-                        <rect stroke="#FFFFFF" stroke-width="1" x="0.5" y="0.5" width="43" height="43" rx="4"></rect>
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-619.000000, -345.000000)">
+            <g transform="translate(0.000000, 42.000000)">
+                <g transform="translate(623.000000, 307.000000)">
+                    <g>
+                        <rect fill="currentColor" fill-rule="evenodd" x="0" y="0" width="44" height="44" rx="4"></rect>
+                        <rect stroke="currentColor" stroke-width="1" x="0.5" y="0.5" width="43" height="43" rx="4"></rect>
                     </g>
                 </g>
             </g>

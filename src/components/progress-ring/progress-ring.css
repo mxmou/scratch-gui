@@ -13,6 +13,6 @@
 }
 
 .progress-ring .progress-ring-value {
-    stroke: $motion-tertiary;
+    stroke: $motion-accent;
     stroke-linecap: round;
 }

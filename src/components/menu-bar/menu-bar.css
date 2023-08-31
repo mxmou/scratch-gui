@@ -27,7 +27,7 @@
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: $menu-bar-standard-font-size;
     font-weight: bold;
-    background-color: $motion-tertiary;
+    background-color: $menu-bar;
     color: $ui-white;
 }
 
@@ -100,12 +100,12 @@
 }
 
 .feedback-link {
-    color: $motion-tertiary;
+    color: $motion-accent;
     text-decoration: none;
 }
 
 .feedback-button {
-    background-color: $ui-white;
+    background-color: $ui-white-bg;
     height: 34px;
 }
 

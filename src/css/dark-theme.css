@@ -1,0 +1,50 @@
+.dark-theme {
+    color-scheme: dark;
+
+    --ui-primary: hsla(225, 15%, 15%, 1); /* #21232C */
+    --ui-secondary: hsla(225, 15%, 20%, 1); /* #2B2F3B */
+    --ui-tertiary: hsla(225, 15%, 18%, 1); /* #272A35 */
+
+    --ui-white-bg: hsla(225, 15%, 25%, 1); /* #363B49 */
+    --ui-white-bg-dim: hsla(225, 15%, 25%, 0.75); /* 75% transparent version of ui-white-bg */
+    --input-field: hsla(0, 0%, 0%, 0.25); /* 25% transparent version of black */
+
+    --ui-black-transparent: hsla(0, 0%, 0%, 0.25); /* 25% transparent version of black */
+
+    --text-primary: hsla(0, 100%, 100%, 1); /* #FFFFFF */
+    --text-primary-transparent: hsla(0, 100%, 100%, 0.75); /* 75% transparent version of text-primary */
+    --text-light-transparent: hsla(0, 100%, 100%, 0.5); /* 50% transparent version of text-primary */
+    --text-on-accent: hsla(225, 15%, 25%, 1); /* #363B49 */
+    --text-on-accent-dim: hsla(225, 15%, 25%, 0.75); /* 75% transparent version of text-on-accent */
+
+    --menu-bar: hsla(225, 15%, 25%, 1); /* #363B49 */
+    --menu-bar-border: hsla(0, 0%, 0%, 0.25); /* 25% transparent version of black */
+    --motion-accent: hsla(215, 100%, 75%, 1); /* #80B5FF */
+    --motion-dark: hsla(215, 100%, 65%, 1); /* #4C97FF */
+    --motion-transparent: hsla(215, 100%, 75%, 0.35); /* 35% transparent version of motion-accent */
+    --motion-light-transparent: hsla(215, 100%, 75%, 0.15); /* 15% transparent version of motion-accent */
+
+    --sound-accent: hsla(300, 53%, 75%); /* #E19DE1 */
+    --data-accent: hsla(30, 100%, 65%, 1); /* #FFA54C */
+    --error-accent: hsla(30, 100%, 65%, 1); /* #FFA54C */
+    --extensions-accent: hsla(163, 85%, 50%, 1); /* #13ECAF */
+
+    --drop-highlight: hsla(215, 60%, 50%, 1); /* #3373CC */
+    --selection: hsla(215, 100%, 75%, 0.35); /* 35% transparent version of motion-accent */
+}
+
+/* Override default react-popover styles */
+
+.dark-theme :global(.Popover-body) {
+    background-color: var(--ui-white-bg);
+    border-color: var(--ui-black-transparent);
+}
+
+.dark-theme :global(.Popover-tipShape) {
+    fill: var(--ui-white-bg);
+    stroke: var(--ui-black-transparent);
+}
+
+.dark-theme :global(.resize-sensor) {
+    color-scheme: light;
+}

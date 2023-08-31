@@ -1,15 +1,15 @@
 import cookie from 'cookie';
 
-import {DEFAULT_THEME, HIGH_CONTRAST_THEME} from '.';
+import {DEFAULT_THEME, DARK_THEME} from '.';
 
-const PREFERS_HIGH_CONTRAST_QUERY = '(prefers-contrast: more)';
+const PREFERS_DARK_THEME_QUERY = '(prefers-color-scheme: dark)';
 const COOKIE_KEY = 'scratchtheme';
 
-// Dark mode isn't enabled yet
-const isValidTheme = theme => [DEFAULT_THEME, HIGH_CONTRAST_THEME].includes(theme);
+// The high contrast theme isn't supported in TB3
+const isValidTheme = theme => [DEFAULT_THEME, DARK_THEME].includes(theme);
 
 const systemPreferencesTheme = () => {
-    if (window.matchMedia && window.matchMedia(PREFERS_HIGH_CONTRAST_QUERY).matches) return HIGH_CONTRAST_THEME;
+    if (window.matchMedia && window.matchMedia(PREFERS_DARK_THEME_QUERY).matches) return DARK_THEME;
 
     return DEFAULT_THEME;
 };

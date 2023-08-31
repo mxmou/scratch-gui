@@ -19,7 +19,8 @@ $more-button-size: 2.25rem;
     justify-content: center;
     cursor: pointer;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background: $motion-tertiary;
+    background: $motion-accent;
+    color: $text-on-accent;
     outline: none;
     border: none;
     transition: background-color 0.2s;
@@ -30,7 +31,7 @@ button::-moz-focus-inner {
 }
 
 .button:hover {
-    background: $extensions-primary;
+    background: $extensions-accent;
 }
 
 .button:active {
@@ -72,7 +73,7 @@ button::-moz-focus-inner {
     */
     overflow-y: hidden;
 
-    background: $motion-tertiary-dark;
+    background: $motion-dark;
     border-top-left-radius: $more-button-size;
     border-top-right-radius: $more-button-size;
     width: $more-button-size;
@@ -115,7 +116,7 @@ button::-moz-focus-inner {
 .more-button {
     width: $more-button-size;
     height: $more-button-size;
-    background: $motion-tertiary-dark;
+    background: $motion-dark;
 }
 
 .more-icon {
@@ -133,7 +134,8 @@ button::-moz-focus-inner {
     is not very easy to style.
 */
 .tooltip {
-    background-color: $extensions-primary !important;
+    background-color: $extensions-accent !important;
+    color: $text-on-accent !important;
     opacity: 1 !important;
     border: 1px solid hsla(0, 0%, 0%, .1) !important;
     box-shadow: 0 0 .5rem hsla(0, 0%, 0%, .25) !important;
@@ -141,7 +143,7 @@ button::-moz-focus-inner {
 }
 
 .tooltip:after {
-    background-color: $extensions-primary;
+    background-color: $extensions-accent;
 }
 
 .coming-soon-tooltip {

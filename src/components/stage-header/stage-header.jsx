@@ -8,6 +8,7 @@ import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
 import ToggleButtons from '../toggle-buttons/toggle-buttons.jsx';
 import Controls from '../../containers/controls.jsx';
+import InlineIcon from '../inline-icon/inline-icon.jsx';
 import {getStageDimensions} from '../../lib/screen-utils';
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 
@@ -85,10 +86,9 @@ const StageHeaderComponent = function (props) {
                     onClick={onSetStageUnFull}
                     onKeyPress={onKeyPress}
                 >
-                    <img
+                    <InlineIcon
                         alt={props.intl.formatMessage(messages.unFullStageSizeMessage)}
                         className={styles.stageButtonIcon}
-                        draggable={false}
                         src={unFullScreenIcon}
                         title={props.intl.formatMessage(messages.fullscreenControl)}
                     />
@@ -143,10 +143,9 @@ const StageHeaderComponent = function (props) {
                                 className={styles.stageButton}
                                 onClick={onSetStageFull}
                             >
-                                <img
+                                <InlineIcon
                                     alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
                                     className={styles.stageButtonIcon}
-                                    draggable={false}
                                     src={fullScreenIcon}
                                     title={props.intl.formatMessage(messages.fullscreenControl)}
                                 />

@@ -29,9 +29,11 @@ import Alerts from '../../containers/alerts.jsx';
 import DragLayer from '../../containers/drag-layer.jsx';
 import ConnectionModal from '../../containers/connection-modal.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
+import InlineIcon from '../inline-icon/inline-icon.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
+import {DARK_THEME} from '../../lib/themes';
 
 import styles from './gui.css';
 import codeIcon from './icon--code.svg';
@@ -108,6 +110,7 @@ const GUIComponent = props => {
         stageSizeMode,
         targetIsStage,
         telemetryModalVisible,
+        theme,
         tipsLibraryVisible,
         vm,
         ...componentProps
@@ -128,6 +131,8 @@ const GUIComponent = props => {
     if (isRendererSupported === null) {
         isRendererSupported = Renderer.isSupported();
     }
+
+    document.documentElement.classList.toggle(styles.darkTheme, theme === DARK_THEME);
 
     return (<MediaQuery minWidth={layout.fullSizeMinWidth}>{isFullSize => {
         const stageSize = resolveStageSize(stageSizeMode, isFullSize);
@@ -243,10 +248,7 @@ const GUIComponent = props => {
                             >
                                 <TabList className={tabClassNames.tabList}>
                                     <Tab className={tabClassNames.tab}>
-                                        <img
-                                            draggable={false}
-                                            src={codeIcon}
-                                        />
+                                        <InlineIcon src={codeIcon} />
                                         <FormattedMessage
                                             defaultMessage="Code"
                                             description="Button to get to the code panel"
@@ -257,10 +259,7 @@ const GUIComponent = props => {
                                         className={tabClassNames.tab}
                                         onClick={onActivateCostumesTab}
                                     >
-                                        <img
-                                            draggable={false}
-                                            src={costumesIcon}
-                                        />
+                                        <InlineIcon src={costumesIcon} />
                                         {targetIsStage ? (
                                             <FormattedMessage
                                                 defaultMessage="Backdrops"
@@ -279,10 +278,7 @@ const GUIComponent = props => {
                                         className={tabClassNames.tab}
                                         onClick={onActivateSoundsTab}
                                     >
-                                        <img
-                                            draggable={false}
-                                            src={soundsIcon}
-                                        />
+                                        <InlineIcon src={soundsIcon} />
                                         <FormattedMessage
                                             defaultMessage="Sounds"
                                             description="Button to get to the sounds panel"
@@ -393,6 +389,7 @@ GUIComponent.propTypes = {
     targetIsStage: PropTypes.bool,
     telemetryModalVisible: PropTypes.bool,
     tipsLibraryVisible: PropTypes.bool,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 GUIComponent.defaultProps = {
@@ -420,7 +417,8 @@ GUIComponent.defaultProps = {
 
 const mapStateToProps = state => ({
     // This is the button's mode, as opposed to the actual current state
-    stageSizeMode: state.scratchGui.stageSize.stageSize
+    stageSizeMode: state.scratchGui.stageSize.stageSize,
+    theme: state.scratchGui.theme.theme
 });
 
 export default injectIntl(connect(

@@ -9,7 +9,7 @@
 .backpack-header {
     margin-top: 0.5rem;
     border: 1px solid $ui-black-transparent;
-    background: $ui-white;
+    background: $ui-white-bg;
     padding: 0.25rem;
     text-align: center;
     font-size: 0.85rem;
@@ -88,8 +88,8 @@
 }
 
 .more {
-    background: $motion-tertiary;
-    color: $ui-white;
+    background: $motion-accent;
+    color: $text-on-accent;
     border: none;
     outline: none;
     font-weight: bold;

@@ -20,7 +20,7 @@
     height: 90%;
     position: absolute;
     top: 5%;
-    background: $ui-white;
+    background: $ui-white-bg;
     border: 1px solid $ui-tertiary;
     width: .75rem;
     z-index: 10;
@@ -214,7 +214,7 @@
 }
 
 .deck-name {
-    color: $motion-tertiary;
+    color: $motion-accent;
     font-weight: bold;
     font-size: 0.85rem;
     margin: .625rem 0px;
@@ -260,13 +260,12 @@
 .see-all-button {
     cursor: pointer;
     padding: 0.5rem 1rem;
-    background-color: $motion-tertiary;
-    color: white;
+    background-color: $motion-accent;
+    color: $text-on-accent;
     font-weight: bold;
     border-radius: 0.25rem;
     display: flex;
     align-items: center;
-    color: $ui-white;
     font-size: .75rem;
     font-weight: bold;
     line-height: 1rem;

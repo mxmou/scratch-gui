@@ -7,7 +7,7 @@
     align-items: center;
     flex-grow: 1;
 
-    background: $ui-white;
+    background: $ui-white-bg;
     border-radius: 10rem;
     user-select: none;
     height: $library-filter-bar-height;
@@ -21,6 +21,8 @@
 
     height: 1rem;
     width: 1rem;
+
+    color: $motion-accent;
 }
 
 [dir="ltr"] .filter-icon {
@@ -89,6 +91,7 @@
 .x-icon {
     position: relative;
     margin: 0.25rem;
+    color: $motion-accent;
     user-select: none;
     transform: translateX(0.5rem);
     transition: transform 0.085s cubic-bezier(0.78, 1, 1, 1);

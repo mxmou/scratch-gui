@@ -8,11 +8,11 @@ can set a width for example or what it should do in a flex box (eg. grow).
 */
 
 .title-field {
-    border: 1px dashed $ui-black-transparent;
+    border: 1px dashed $ui-white-transparent;
     border-radius: $form-radius;
     -webkit-border-radius: $form-radius;
     -moz-border-radius: $form-radius;
-    background-color: $ui-white-transparent;
+    background-color: $ui-black-transparent;
     background-clip: padding-box;
     -webkit-background-clip: padding-box;
     height: auto;
@@ -33,14 +33,14 @@ can set a width for example or what it should do in a flex box (eg. grow).
 }
 
 .title-field:hover {
-    background-color: hsla(0, 100%, 100%, 0.5);
+    border-color: $ui-white-dim;
 }
 
 .title-field:focus {
     outline:none;
-    border: 1px solid $ui-transparent;
+    border: 1px solid $ui-white;
     -webkit-box-shadow: 0 0 0 calc($space * .5) $ui-white-transparent;
     box-shadow: 0 0 0 calc($space * .5) $ui-white-transparent;
-    background-color: $ui-white;
+    background-color: $ui-white-bg;
     color: $text-primary;
 }

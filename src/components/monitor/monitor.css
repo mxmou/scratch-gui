@@ -75,7 +75,7 @@
 }
 
 .list-header {
-    background: $ui-white;
+    background: $ui-white-bg;
     border-bottom: 1px solid $ui-black-transparent;
     text-align: center;
     padding: 3px;
@@ -121,7 +121,7 @@
 }
 
 .list-footer {
-    background: $ui-white;
+    background: $ui-white-bg;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

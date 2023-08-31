@@ -3,9 +3,9 @@
 
 .tag-button {
     padding: .625rem 1rem;
-    background: $motion-tertiary;
+    background: $motion-accent;
     border-radius: 1.375rem;
-    color: $ui-white;
+    color: $text-on-accent;
     height: $library-filter-bar-height;
 }
 
@@ -15,5 +15,5 @@
 }
 
 .active {
-    background: $data-primary;
+    background: $data-accent;
 }

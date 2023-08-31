@@ -19,12 +19,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.button > img {
-    display: block;
-    transition: transform 0.1s;
-    filter: grayscale(100%) opacity(.5);
+    color: $text-light-transparent;
 }
 
 .button:not(:last-child) {
@@ -43,7 +38,7 @@
     right: -1px;
     bottom: -1px;
     left: -1px;
-    border: 1px solid $motion-tertiary;
+    border: 1px solid $motion-accent;
 }
 
 /* round corners for first and last buttons */
@@ -66,10 +61,7 @@
 
 .button[aria-pressed='true'] {
     background-color: $motion-light-transparent;
-}
-
-.button[aria-pressed='true'] > img {
-    filter: none;
+    color: $motion-accent;
 }
 
 /* pressed button styling */

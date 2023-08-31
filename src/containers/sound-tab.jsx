@@ -6,7 +6,9 @@ import VM from 'scratch-vm';
 
 import AssetPanel from '../components/asset-panel/asset-panel.jsx';
 import soundIcon from '../components/asset-panel/icon--sound.svg';
+import soundIconWhite from '../components/asset-panel/icon--sound-white.svg';
 import soundIconRtl from '../components/asset-panel/icon--sound-rtl.svg';
+import soundIconRtlWhite from '../components/asset-panel/icon--sound-rtl-white.svg';
 import addSoundFromLibraryIcon from '../components/asset-panel/icon--add-sound-lib.svg';
 import addSoundFromRecordingIcon from '../components/asset-panel/icon--add-sound-record.svg';
 import fileUploadIcon from '../components/action-menu/icon--file-upload.svg';
@@ -22,6 +24,7 @@ import {handleFileUpload, soundUpload} from '../lib/file-uploader.js';
 import errorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
 import DragConstants from '../lib/drag-constants';
 import downloadBlob from '../lib/download-blob';
+import {themeMap} from '../lib/themes';
 
 import {connect} from 'react-redux';
 
@@ -176,6 +179,7 @@ class SoundTab extends React.Component {
             dispatchUpdateRestore, // eslint-disable-line no-unused-vars
             intl,
             isRtl,
+            theme,
             vm,
             onNewSoundFromLibraryClick,
             onNewSoundFromRecordingClick
@@ -189,7 +193,9 @@ class SoundTab extends React.Component {
 
         const sounds = sprite.sounds ? sprite.sounds.map(sound => (
             {
-                url: isRtl ? soundIconRtl : soundIcon,
+                url: isRtl
+                    ? (themeMap[theme].dark ? soundIconRtlWhite : soundIconRtl)
+                    : (themeMap[theme].dark ? soundIconWhite : soundIcon),
                 name: sound.name,
                 details: (sound.sampleCount / sound.rate).toFixed(2),
                 dragPayload: sound
@@ -301,6 +307,7 @@ SoundTab.propTypes = {
             name: PropTypes.string.isRequired
         }))
     }),
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
@@ -310,7 +317,8 @@ const mapStateToProps = state => ({
     sprites: state.scratchGui.targets.sprites,
     stage: state.scratchGui.targets.stage,
     soundLibraryVisible: state.scratchGui.modals.soundLibrary,
-    soundRecorderVisible: state.scratchGui.modals.soundRecorder
+    soundRecorderVisible: state.scratchGui.modals.soundRecorder,
+    theme: state.scratchGui.theme.theme
 });
 
 const mapDispatchToProps = dispatch => ({

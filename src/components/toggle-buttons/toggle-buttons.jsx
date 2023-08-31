@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
+import InlineIcon from '../inline-icon/inline-icon.jsx';
+
 import styles from './toggle-buttons.css';
 
 const ToggleButtons = ({buttons, className, disabled}) => (
@@ -24,9 +26,8 @@ const ToggleButtons = ({buttons, className, disabled}) => (
                 onClick={button.handleClick}
                 disabled={disabled}
             >
-                <img
+                <InlineIcon
                     src={button.icon}
-                    aria-hidden="true"
                     className={button.iconClassName}
                 />
             </button>

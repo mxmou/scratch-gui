@@ -8,7 +8,7 @@
     margin: 2px 0 0; /* To keep the menu below the cursor comfortably */
     font-size: 0.85rem;
     text-align: left;
-    background-color: $ui-white;
+    background-color: $ui-white-bg;
     border: 1px solid $ui-black-transparent;
     border-radius: calc($space / 2);
     box-shadow: 0px 0px 5px 1px $ui-black-transparent;
@@ -25,8 +25,8 @@
 }
 
 .menu-item:hover {
-    background: $motion-tertiary;
-    color: white;
+    background: $motion-accent;
+    color: $text-on-accent;
 }
 
 .menu-item-bordered {
@@ -34,5 +34,5 @@
 }
 
 .menu-item-danger:hover {
-    background: $error-primary;
+    background: $error-accent;
 }

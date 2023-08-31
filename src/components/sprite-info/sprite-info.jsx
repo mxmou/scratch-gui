@@ -7,6 +7,7 @@ import Label from '../forms/label.jsx';
 import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 import DirectionPicker from '../../containers/direction-picker.jsx';
+import InlineIcon from '../inline-icon/inline-icon.jsx';
 
 import {injectIntl, intlShape, defineMessages, FormattedMessage} from 'react-intl';
 
@@ -107,8 +108,7 @@ class SpriteInfo extends React.Component {
                 {
                     (stageSize === STAGE_DISPLAY_SIZES.large) ?
                         <div className={styles.iconWrapper}>
-                            <img
-                                aria-hidden="true"
+                            <InlineIcon
                                 className={classNames(styles.xIcon, styles.icon)}
                                 src={xIcon}
                             />
@@ -134,8 +134,7 @@ class SpriteInfo extends React.Component {
                 {
                     (stageSize === STAGE_DISPLAY_SIZES.large) ?
                         <div className={styles.iconWrapper}>
-                            <img
-                                aria-hidden="true"
+                            <InlineIcon
                                 className={classNames(styles.yIcon, styles.icon)}
                                 src={yIcon}
                             />

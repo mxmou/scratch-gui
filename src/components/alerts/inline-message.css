@@ -2,7 +2,7 @@
 @import "../../css/units.css";
 
 .inline-message {
-    color: $ui-white;
+    color: $text-on-accent;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: flex-end;
@@ -11,11 +11,11 @@
 }
 
 .success {
-    color: $ui-white-dim;
+    color: $text-on-accent-dim;
 }
 
 .info {
-    color: $ui-white;
+    color: $text-on-accent;
 }
 
 .warn {

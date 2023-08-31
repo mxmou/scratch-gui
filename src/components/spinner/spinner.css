@@ -86,5 +86,5 @@
     border-color: $motion-transparent;
 }
 .spinner.primary::after {
-    border-top-color: $motion-tertiary;
+    border-top-color: $motion-accent;
 }
