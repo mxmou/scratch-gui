@@ -31,6 +31,9 @@
 
     --drop-highlight: hsla(215, 60%, 50%, 1); /* #3373CC */
     --selection: hsla(215, 100%, 75%, 0.35); /* 35% transparent version of motion-accent */
+
+    /* Used by scratch-paint */
+    --paint-scrollbar: hsla(225, 15%, 40%, 0.8); /* 80% transparent version of #575E75 */
 }
 
 /* Override default react-popover styles */

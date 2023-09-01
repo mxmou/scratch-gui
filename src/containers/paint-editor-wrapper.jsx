@@ -7,6 +7,8 @@ import {inlineSvgFonts} from 'scratch-svg-renderer';
 
 import {connect} from 'react-redux';
 
+import {themeMap} from '../lib/themes';
+
 class PaintEditorWrapper extends React.Component {
     constructor (props) {
         super(props);
@@ -18,7 +20,8 @@ class PaintEditorWrapper extends React.Component {
     shouldComponentUpdate (nextProps) {
         return this.props.imageId !== nextProps.imageId ||
             this.props.rtl !== nextProps.rtl ||
-            this.props.name !== nextProps.name;
+            this.props.name !== nextProps.name ||
+            this.props.theme !== nextProps.theme;
     }
     handleUpdateName (name) {
         this.props.vm.renameCostume(this.props.selectedCostumeIndex, name);
@@ -43,6 +46,7 @@ class PaintEditorWrapper extends React.Component {
         if (!this.props.imageId) return null;
         const {
             selectedCostumeIndex,
+            theme,
             vm,
             ...componentProps
         } = this.props;
@@ -50,6 +54,7 @@ class PaintEditorWrapper extends React.Component {
         return (
             <PaintEditor
                 {...componentProps}
+                darkTheme={themeMap[theme].dark}
                 image={vm.getCostume(selectedCostumeIndex)}
                 onUpdateImage={this.handleUpdateImage}
                 onUpdateName={this.handleUpdateName}
@@ -67,6 +72,7 @@ PaintEditorWrapper.propTypes = {
     rotationCenterY: PropTypes.number,
     rtl: PropTypes.bool,
     selectedCostumeIndex: PropTypes.number.isRequired,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM)
 };
 
@@ -85,6 +91,7 @@ const mapStateToProps = (state, {selectedCostumeIndex}) => {
         imageId: targetId && `${targetId}${costume.skinId}`,
         rtl: state.locales.isRtl,
         selectedCostumeIndex: index,
+        theme: state.scratchGui.theme.theme,
         vm: state.scratchGui.vm,
         zoomLevelId: targetId
     };
