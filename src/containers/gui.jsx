@@ -36,6 +36,7 @@ import vmListenerHOC from '../lib/vm-listener-hoc.jsx';
 import vmManagerHOC from '../lib/vm-manager-hoc.jsx';
 import cloudManagerHOC from '../lib/cloud-manager-hoc.jsx';
 import systemPreferencesHOC from '../lib/system-preferences-hoc.jsx';
+import {STAGE_SIZE_MODES} from '../lib/layout-constants';
 
 import GUIComponent from '../components/gui/gui.jsx';
 import {setIsScratchDesktop} from '../lib/isScratchDesktop.js';
@@ -54,6 +55,10 @@ class GUI extends React.Component {
             // this only notifies container when a project changes from not yet loaded to loaded
             // At this time the project view in www doesn't need to know when a project is unloaded
             this.props.onProjectLoaded();
+        }
+        if (this.props.stageSizeMode !== prevProps.stageSizeMode) {
+            // Resize paint editor canvas - this is done in the Blocks component in vanilla Scratch
+            window.dispatchEvent(new Event("resize"));
         }
     }
     render () {
@@ -113,6 +118,7 @@ GUI.propTypes = {
     onVmInit: PropTypes.func,
     projectHost: PropTypes.string,
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
     telemetryModalVisible: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired
 };
@@ -123,7 +129,8 @@ GUI.defaultProps = {
     onStorageInit: storageInstance => storageInstance.addOfficialScratchWebStores(),
     onProjectLoaded: () => {},
     onUpdateProjectId: () => {},
-    onVmInit: (/* vm */) => {}
+    onVmInit: (/* vm */) => {},
+    stageSizeMode: STAGE_SIZE_MODES.large
 };
 
 const mapStateToProps = state => {
@@ -146,6 +153,8 @@ const mapStateToProps = state => {
         loadingStateVisible: state.scratchGui.modals.loadingProject,
         projectId: state.scratchGui.projectState.projectId,
         soundsTabVisible: state.scratchGui.editorTab.activeTabIndex === SOUNDS_TAB_INDEX,
+        // This is the button's mode, as opposed to the actual current state
+        stageSizeMode: state.scratchGui.stageSize.stageSize,
         targetIsStage: (
             state.scratchGui.targets.stage &&
             state.scratchGui.targets.stage.id === state.scratchGui.targets.editingTarget
