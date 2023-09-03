@@ -3,67 +3,78 @@ const blockColors = {
         primary: '#0F1E33',
         secondary: '#4C4C4C',
         tertiary: '#4C97FF',
-        quaternary: '#4C97FF'
+        quaternary: '#4C97FF',
+        code: '#80B5FF'
     },
     looks: {
         primary: '#1E1433',
         secondary: '#4C4C4C',
         tertiary: '#9966FF',
-        quaternary: '#9966FF'
+        quaternary: '#9966FF',
+        code: '#CCB3FF'
     },
     sounds: {
         primary: '#291329',
         secondary: '#4C4C4C',
         tertiary: '#CF63CF',
-        quaternary: '#CF63CF'
+        quaternary: '#CF63CF',
+        code: '#E19DE1'
     },
     control: {
         primary: '#332205',
         secondary: '#4C4C4C',
         tertiary: '#FFAB19',
-        quaternary: '#FFAB19'
+        quaternary: '#FFAB19',
+        code: '#FFBE4C'
     },
     event: {
         primary: '#332600',
         secondary: '#4C4C4C',
         tertiary: '#FFBF00',
-        quaternary: '#FFBF00'
+        quaternary: '#FFBF00',
+        code: '#FFD966'
     },
     sensing: {
         primary: '#12232A',
         secondary: '#4C4C4C',
         tertiary: '#5CB1D6',
-        quaternary: '#5CB1D6'
+        quaternary: '#5CB1D6',
+        code: '#85C4E0'
     },
     pen: {
         primary: '#03251C',
         secondary: '#4C4C4C',
         tertiary: '#0fBD8C',
-        quaternary: '#0fBD8C'
+        quaternary: '#0fBD8C',
+        code: '#13ECAF'
     },
     operators: {
         primary: '#112611',
         secondary: '#4C4C4C',
         tertiary: '#59C059',
-        quaternary: '#59C059'
+        quaternary: '#59C059',
+        code: '#7ECE7E'
     },
     data: {
         primary: '#331C05',
         secondary: '#4C4C4C',
         tertiary: '#FF8C1A',
-        quaternary: '#FF8C1A'
+        quaternary: '#FF8C1A',
+        code: '#FFA54C'
     },
     data_lists: {
         primary: '#331405',
         secondary: '#4C4C4C',
         tertiary: '#FF661A',
-        quaternary: '#FF661A'
+        quaternary: '#FF661A',
+        code: '#FF9966'
     },
     more: {
         primary: '#331419',
         secondary: '#4C4C4C',
         tertiary: '#FF6680',
-        quaternary: '#FF6680'
+        quaternary: '#FF6680',
+        code: '#FFCCD5'
     },
     text: 'rgba(255, 255, 255, .7)',
     textFieldText: '#E5E5E5',
@@ -73,7 +84,10 @@ const blockColors = {
     toolbox: '#121212',
     flyout: '#121212',
     textField: '#4C4C4C',
-    menuHover: 'rgba(255, 255, 255, 0.3)'
+    menuHover: 'rgba(255, 255, 255, 0.3)',
+    codeTransparentText: 'rgba(255, 255, 255, 0.75)',
+    customBlockParameter: '#FF99AA',
+    error: '#FF6666'
 };
 
 const extensions = {};
