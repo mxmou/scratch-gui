@@ -211,11 +211,6 @@
     border-top-left-radius: $space;
 }
 
-.data-panel {
-    width: 250px;
-    background-color: $ui-secondary;
-}
-
 .code-editor {
     flex-grow: 1;
 }

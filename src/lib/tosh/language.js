@@ -1129,7 +1129,7 @@ function cleanName(kind, name, seen, stageSeen) {
   var original = name;
   var lastToken;
   while (true) {
-    var tokens = Language.tokenize(name);
+    var tokens = tokenize(name);
     if (!tokens.length) break;
 
     var lastToken = tokens[tokens.length - 1];
@@ -1192,10 +1192,14 @@ function cleanName(kind, name, seen, stageSeen) {
     /^[0-9]+(\.[0-9]+)?$/.test(name)
   );
 
+  function has(obj, name) {
+    return Object.prototype.hasOwnProperty.call(obj, name);
+  }
+
   // if ambiguous or non-unique, add shortKind
   if (name !== "_" && (
         isInvalid ||
-        ((stageSeen.hasOwnProperty(name) || seen.hasOwnProperty(name)) && kind === 'parameter')
+        ((has(stageSeen, name) || has(seen, name)) && kind === 'parameter')
       )) {
     if (name) name += " ";
     name += shortKind;
@@ -1204,7 +1208,7 @@ function cleanName(kind, name, seen, stageSeen) {
   // if still not unique, add a number
   var offset = 1;
   var prefix = name;
-  while (name === "_" || name === shortKind || stageSeen.hasOwnProperty(name) || seen.hasOwnProperty(name)) {
+  while (name === "_" || name === shortKind || has(stageSeen, name) || has(seen, name)) {
     name = prefix + offset;
     offset++;
   }
@@ -1277,14 +1281,14 @@ function modeGrammar(modeCfg) {
   var grammar = g.copy();
   modeCfg.variables.forEach(function(variable) {
     var name = variable._name();
-    Language.addDefinition(grammar, { name: name, });
+    addDefinition(grammar, { name: name, });
   });
   modeCfg.lists.forEach(function(list) {
     var name = list._name();
-    Language.addDefinition(grammar, { name: name, value: [] });
+    addDefinition(grammar, { name: name, value: [] });
   });
   modeCfg.definitions.forEach(function(result) {
-    Language.addCustomBlock(grammar, result);
+    addCustomBlock(grammar, result);
   });
   return grammar;
 }

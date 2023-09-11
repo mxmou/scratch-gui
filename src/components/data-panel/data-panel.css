@@ -1,0 +1,66 @@
+@import "../../css/colors.css";
+
+.data-panel {
+    width: 250px;
+    padding: 0.75rem;
+    background-color: $ui-secondary;
+    font-size: 0.75rem;
+}
+
+.header {
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    user-select: none;
+}
+
+.new-button-container {
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+    width: fit-content;
+    background-color: $ui-white-bg;
+    border-radius: 0.25rem;
+}
+
+.new-button {
+    height: 2rem;
+    padding: 0 0.75rem;
+    background-color: $ui-white-bg;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.25rem;
+    color: $text-primary;
+    font: inherit;
+    cursor: pointer;
+    user-select: none;
+}
+
+.new-button:active {
+    background-color: $motion-transparent;
+}
+
+.variable-list-title {
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+    font-weight: bold;
+    user-select: none;
+}
+
+.variable-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.variable-list-item {
+    font-family: monospace;
+    font-size: initial;
+    line-height: 1.4;
+}
+
+.variable-list-item.variable {
+    color: $variable-accent;
+}
+
+.variable-list-item.list {
+    color: $list-accent;
+}

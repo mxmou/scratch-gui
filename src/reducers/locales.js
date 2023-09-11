@@ -2,6 +2,7 @@ import {addLocaleData} from 'react-intl';
 
 import {localeData, isRtl} from 'scratch-l10n';
 import editorMessages from 'scratch-l10n/locales/editor-msgs';
+import blocksMessages from 'scratch-l10n/locales/blocks-msgs';
 
 addLocaleData(localeData);
 
@@ -12,7 +13,9 @@ const initialState = {
     isRtl: false,
     locale: 'en',
     messagesByLocale: editorMessages,
-    messages: editorMessages.en
+    messages: editorMessages.en,
+    blocksMessagesByLocale: blocksMessages,
+    blocksMessages: blocksMessages.en
 };
 
 const reducer = function (state, action) {
@@ -23,14 +26,18 @@ const reducer = function (state, action) {
             isRtl: isRtl(action.locale),
             locale: action.locale,
             messagesByLocale: state.messagesByLocale,
-            messages: state.messagesByLocale[action.locale]
+            messages: state.messagesByLocale[action.locale],
+            blocksMessagesByLocale: state.blocksMessagesByLocale,
+            blocksMessages: state.blocksMessagesByLocale[action.locale]
         });
     case UPDATE_LOCALES:
         return Object.assign({}, state, {
             isRtl: state.isRtl,
             locale: state.locale,
             messagesByLocale: action.messagesByLocale,
-            messages: action.messagesByLocale[state.locale]
+            messages: action.messagesByLocale[state.locale],
+            blocksMessagesByLocale: action.blocksMessagesByLocale,
+            blocksMessages: action.blocksMessagesByLocale[state.locale]
         });
     default:
         return state;
@@ -44,10 +51,11 @@ const selectLocale = function (locale) {
     };
 };
 
-const setLocales = function (localesMessages) {
+const setLocales = function (localesMessages, localesBlocksMessages) {
     return {
         type: UPDATE_LOCALES,
-        messagesByLocale: localesMessages
+        messagesByLocale: localesMessages,
+        blocksM: localesBlocksMessages
     };
 };
 const initLocale = function (currentState, locale) {

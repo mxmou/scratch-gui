@@ -26,6 +26,8 @@
 
     --sound-accent: hsla(300, 53%, 75%); /* #E19DE1 */
     --data-accent: hsla(30, 100%, 65%, 1); /* #FFA54C */
+    --variable-accent: hsla(30, 100%, 65%, 1); /* #FFA54C */
+    --list-accent: hsla(20, 100%, 70%, 1); /* #FF9966 */
     --error-accent: hsla(30, 100%, 65%, 1); /* #FFA54C */
     --extensions-accent: hsla(163, 85%, 50%, 1); /* #13ECAF */
 

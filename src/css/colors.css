@@ -45,6 +45,8 @@ $control-primary: hsla(38, 100%, 55%, 1); /* #FFAB19 */
 
 $data-primary: hsla(30, 100%, 55%, 1); /* #FF8C1A */
 $data-accent: var(--data-accent, hsla(20, 100%, 40%, 1)); /* #CC4400 */
+$variable-accent: var(--variable-accent, hsla(30, 100%, 43%, 1)); /* #DB6E00 */
+$list-accent: var(--list-accent, hsla(20, 100%, 45%, 1)); /* #E64D00 */
 
 $pen-primary: hsla(163, 85%, 40%, 1); /* #0FBD8C */
 $pen-transparent: hsla(163, 85%, 40%, 0.25); /* #0FBD8C */

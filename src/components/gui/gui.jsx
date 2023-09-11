@@ -11,6 +11,7 @@ import VM from 'scratch-vm';
 import Renderer from 'scratch-render';
 
 import CodeEditor from '../../containers/code-editor.jsx';
+import DataPanel from '../../containers/data-panel.jsx';
 import CostumeTab from '../../containers/costume-tab.jsx';
 import TargetPane from '../../containers/target-pane.jsx';
 import SoundTab from '../../containers/sound-tab.jsx';
@@ -288,7 +289,10 @@ const GUIComponent = props => {
                                 </TabList>
                                 <TabPanel className={tabClassNames.tabPanel}>
                                     <div className={styles.codeWrapper}>
-                                        <div className={styles.dataPanel} />
+                                        <DataPanel
+                                            vm={vm}
+                                            canUseCloud={canUseCloud}
+                                        />
                                         <CodeEditor className={styles.codeEditor} />
                                     </div>
                                 </TabPanel>

@@ -30,5 +30,15 @@ export default defineMessages({
         id: 'gui.sharedMessages.loadFromComputerTitle',
         defaultMessage: 'Load from your computer',
         description: 'Title for uploading a project from your computer'
+    },
+    forAllSprites: {
+        defaultMessage: 'For all sprites',
+        description: 'Option message when creating a variable for making it available to all sprites',
+        id: 'gui.gui.variableScopeOptionAllSprites'
+    },
+    forThisSprite: {
+        defaultMessage: 'For this sprite only',
+        description: 'Option message when creating a varaible for making it only available to the current sprite',
+        id: 'gui.gui.variableScopeOptionSpriteOnly'
     }
 });

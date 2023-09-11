@@ -5,21 +5,12 @@ import React from 'react';
 
 import Box from '../box/box.jsx';
 import Modal from '../../containers/modal.jsx';
+import sharedMessages from '../../lib/shared-messages';
 
 import styles from './prompt.css';
 
 
 const messages = defineMessages({
-    forAllSpritesMessage: {
-        defaultMessage: 'For all sprites',
-        description: 'Option message when creating a variable for making it available to all sprites',
-        id: 'gui.gui.variableScopeOptionAllSprites'
-    },
-    forThisSpriteMessage: {
-        defaultMessage: 'For this sprite only',
-        description: 'Option message when creating a varaible for making it only available to the current sprite',
-        id: 'gui.gui.variableScopeOptionSpriteOnly'
-    },
     cloudVarOptionMessage: {
         defaultMessage: 'Cloud variable (stored on server)',
         description: 'Option message when creating a variable for making it a cloud variable, a variable that is stored on the server', /* eslint-disable-line max-len */
@@ -84,7 +75,7 @@ const PromptComponent = props => (
                                     onChange={props.onScopeOptionSelection}
                                 />
                                 <FormattedMessage
-                                    {...messages.forAllSpritesMessage}
+                                    {...sharedMessages.forAllSprites}
                                 />
                             </label>
                             <label
@@ -99,7 +90,7 @@ const PromptComponent = props => (
                                     onChange={props.onScopeOptionSelection}
                                 />
                                 <FormattedMessage
-                                    {...messages.forThisSpriteMessage}
+                                    {...sharedMessages.forThisSprite}
                                 />
                             </label>
                         </Box>}

@@ -27,12 +27,24 @@
 .variable-name-text-input {
     margin-bottom: 1.5rem;
     width: 100%;
+    background-color: $input-field;
     border: 1px solid $ui-black-transparent;
     border-radius: 5px;
     padding: 0 1rem;
     height: 3rem;
     color: $text-primary-transparent;
     font-size: .875rem;
+    transition: all 0.25s ease-out;
+}
+
+.variable-name-text-input:hover {
+    border-color: $motion-accent;
+}
+
+.variable-name-text-input:focus {
+    outline: none;
+    border-color: $motion-accent;
+    box-shadow: 0 0 0 0.25rem $motion-transparent;
 }
 
 .info-message {
@@ -59,8 +71,10 @@
     border-radius: 0.25rem;
     background: $ui-white-bg;
     border: 1px solid $ui-black-transparent;
+    color: $text-primary;
     font-weight: 600;
     font-size: 0.85rem;
+    cursor: pointer;
 }
 
 .button-row button.ok-button {
