@@ -18,7 +18,13 @@ import {
     historyKeymap
 } from '@codemirror/commands';
 import {searchKeymap} from '@codemirror/search';
-import {syntaxHighlighting, StreamLanguage, HighlightStyle} from '@codemirror/language';
+import {
+    syntaxHighlighting,
+    StreamLanguage,
+    HighlightStyle,
+    indentOnInput
+} from '@codemirror/language';
+import {closeBrackets, closeBracketsKeymap} from '@codemirror/autocomplete';
 import {Tag, tags} from '@lezer/highlight';
 
 import CodeEditorComponent from '../components/code-editor/code-editor.jsx';
@@ -74,7 +80,10 @@ class CodeEditor extends React.Component {
                 EditorState.allowMultipleSelections.of(true),
                 rectangularSelection(),
                 crosshairCursor(),
+                closeBrackets(),
+                indentOnInput(),
                 keymap.of([
+                    ...closeBracketsKeymap,
                     ...defaultKeymap,
                     indentWithTab,
                     ...historyKeymap,

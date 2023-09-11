@@ -171,5 +171,11 @@ export default function(modeCfg) {
       // return number of spaces to indent, taking indentUnit into account
       return indent * context.unit;
     },
+
+    languageData: {
+      commentTokens: {line: '//'},
+      indentOnInput: /^\s*(else|end)$/,
+      closeBrackets: {brackets: ['(', '[', "'", '"']},
+    }
   };
 }
