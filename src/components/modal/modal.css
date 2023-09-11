@@ -48,6 +48,11 @@
     border-radius: 0;
 }
 
+.modal-content::selection,
+.modal-content ::selection {
+    background-color: $selection;
+}
+
 
 /*
     Modal header has 3 items:
