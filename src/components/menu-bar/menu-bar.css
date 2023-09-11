@@ -78,6 +78,10 @@
     flex: 1;
 }
 
+.menu-bar-item:empty {
+    padding: 0;
+}
+
 .title-field-growable {
     flex-grow: 1;
     width: 2rem;
