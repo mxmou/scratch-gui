@@ -43,7 +43,10 @@
     min-width: 40px;
     text-align: center;
     margin: 0 5px;
+    background-color: $ui-white-bg;
+    border: 1px solid $ui-black-transparent;
     border-radius: calc($space / 2);
+    color: $text-primary;
     padding: 0 2px;
     white-space: pre-wrap;
     transform: translateZ(0); /* Fixes flickering in Safari */
@@ -54,6 +57,7 @@
     min-width: 3rem;
     padding: 0.1rem 0.25rem;
     text-align: center;
+    color: $text-primary;
     font-size: 1rem;
     white-space: pre-wrap;
     transform: translateZ(0); /* Fixes flickering in Safari */
@@ -115,7 +119,9 @@
     text-align: left;
     margin: 0 3px;
     border-radius: calc($space / 2);
+    background-color: $ui-white-bg;
     border: 1px solid $ui-black-transparent;
+    color: $text-primary;
     flex-grow: 1;
     height: 22px;
 }
@@ -142,7 +148,7 @@
     overflow: hidden;
     display: flex;
     align-items: center;
-    background: rgba(0, 0, 0, 0.1);
+    background: $motion-light-transparent;
 }
 
 .value-inner {
@@ -169,6 +175,7 @@
 .remove-button {
     padding: 0;
     padding-right: 5px;
+    color: $text-primary-transparent;
     cursor: pointer;
 }
 

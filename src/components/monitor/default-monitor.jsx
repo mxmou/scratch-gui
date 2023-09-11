@@ -10,10 +10,7 @@ const DefaultMonitor = ({categoryColor, label, value}) => (
             </div>
             <div
                 className={styles.value}
-                style={{
-                    background: categoryColor.background,
-                    color: categoryColor.text
-                }}
+                style={{color: categoryColor}}
             >
                 {value}
             </div>
@@ -22,10 +19,7 @@ const DefaultMonitor = ({categoryColor, label, value}) => (
 );
 
 DefaultMonitor.propTypes = {
-    categoryColor: PropTypes.shape({
-        background: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired
-    }).isRequired,
+    categoryColor: PropTypes.string,
     label: PropTypes.string.isRequired,
     value: PropTypes.oneOfType([
         PropTypes.string,

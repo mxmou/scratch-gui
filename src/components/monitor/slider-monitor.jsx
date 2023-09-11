@@ -12,10 +12,7 @@ const SliderMonitor = ({categoryColor, isDiscrete, label, min, max, value, onSli
             </div>
             <div
                 className={styles.value}
-                style={{
-                    background: categoryColor.background,
-                    color: categoryColor.text
-                }}
+                style={{color: categoryColor}}
             >
                 {value}
             </div>
@@ -36,10 +33,7 @@ const SliderMonitor = ({categoryColor, isDiscrete, label, min, max, value, onSli
 );
 
 SliderMonitor.propTypes = {
-    categoryColor: PropTypes.shape({
-        background: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired
-    }).isRequired,
+    categoryColor: PropTypes.string,
     isDiscrete: PropTypes.bool,
     label: PropTypes.string.isRequired,
     max: PropTypes.number,

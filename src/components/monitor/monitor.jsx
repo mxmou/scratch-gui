@@ -34,10 +34,7 @@ const modes = {
 
 const getCategoryColor = (theme, category) => {
     const colors = getColorsForTheme(theme);
-    return {
-        background: colors[categoryColorMap[category]].primary,
-        text: colors.text
-    };
+    return colors[categoryColorMap[category]].code;
 };
 
 const MonitorComponent = props => (
