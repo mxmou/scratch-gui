@@ -293,7 +293,10 @@ const GUIComponent = props => {
                                             vm={vm}
                                             canUseCloud={canUseCloud}
                                         />
-                                        <CodeEditor className={styles.codeEditor} />
+                                        <CodeEditor
+                                            className={styles.codeEditor}
+                                            vm={vm}
+                                        />
                                     </div>
                                 </TabPanel>
                                 <TabPanel className={tabClassNames.tabPanel}>

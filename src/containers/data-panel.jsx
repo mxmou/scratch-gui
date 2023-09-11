@@ -204,8 +204,7 @@ class DataPanel extends React.Component {
             }
             this.createMonitorBlock(id, name, type);
         }
-        this.props.vm.runtime.emitProjectChanged();
-        this.forceUpdate();
+        this.props.vm.emitTargetsUpdate();
     }
     handleToggleVisibility (id) {
         return (e) => {
@@ -250,8 +249,7 @@ class DataPanel extends React.Component {
                 const stage = this.props.vm.runtime.getTargetForStage();
                 stage.deleteVariable(id);
             }
-            this.props.vm.runtime.emitProjectChanged();
-            this.forceUpdate();
+            this.props.vm.emitTargetsUpdate();
         };
     }
     render () {

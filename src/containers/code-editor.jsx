@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 import {
@@ -26,6 +27,8 @@ import {
 } from '@codemirror/language';
 import {closeBrackets, closeBracketsKeymap} from '@codemirror/autocomplete';
 import {Tag, tags} from '@lezer/highlight';
+import VM from 'scratch-vm';
+import Variable from 'scratch-vm/src/engine/variable';
 
 import CodeEditorComponent from '../components/code-editor/code-editor.jsx';
 import {themeMap, getColorsForTheme} from '../lib/themes';
@@ -68,6 +71,7 @@ class CodeEditor extends React.Component {
         this.element = null;
         this.view = null;
         this.themeOptions = new Compartment();
+        this.parserOptions = new Compartment();
     }
     componentDidMount () {
         this.view = new EditorView({
@@ -93,26 +97,62 @@ class CodeEditor extends React.Component {
                     EditorView.darkTheme.of(themeMap[this.props.theme].dark),
                     syntaxHighlighting(this.getHighlightStyle())
                 ]),
-                StreamLanguage.define(toshParser({
-                    variables: [],
-                    lists: [],
-                    definitions: []
-                }))
+                this.parserOptions.of([])
             ]
         });
+        this.updateParserOptions();
         if (document.activeElement === document.body) this.view.focus();
     }
     componentDidUpdate () {
         this.updateTheme();
+        this.updateParserOptions();
+    }
+    getVariableNamesOfType (variables, type) {
+        return Object.values(variables)
+            .filter(variable => variable.type === type)
+            .map(variable => ({
+                _name: () => variable.name
+            }));
     }
     setElement (element) {
         this.element = element;
+        if (this.view) {
+            this.element.appendChild(this.view.dom);
+        }
     }
     updateTheme () {
         this.view.dispatch({
             effects: this.themeOptions.reconfigure([
                 EditorView.darkTheme.of(themeMap[this.props.theme].dark),
                 syntaxHighlighting(this.getHighlightStyle())
+            ])
+        });
+    }
+    updateParserOptions () {
+        const target = this.props.vm.editingTarget;
+        if (!target) {
+            return;
+        }
+        let variableNames = this.getVariableNamesOfType(target.variables, Variable.SCALAR_TYPE);
+        let listNames = this.getVariableNamesOfType(target.variables, Variable.LIST_TYPE);
+        if (!target.isStage) {
+            variableNames = [
+                ...variableNames,
+                ...this.getVariableNamesOfType(this.props.stage.variables, Variable.SCALAR_TYPE)
+            ];
+            listNames = [
+                ...listNames,
+                ...this.getVariableNamesOfType(this.props.stage.variables, Variable.LIST_TYPE)
+            ];
+        }
+
+        this.view.dispatch({
+            effects: this.parserOptions.reconfigure([
+                StreamLanguage.define(toshParser({
+                    variables: variableNames,
+                    lists: listNames,
+                    definitions: []
+                }))
             ])
         });
     }
@@ -141,16 +181,38 @@ class CodeEditor extends React.Component {
         ]);
     }
     render () {
+        const {
+            vm,
+            sprites,
+            stage,
+            editingTarget,
+            theme,
+            ...componentProps
+        } = this.props;
+        if (!vm.editingTarget) {
+            return null;
+        }
         return (
             <CodeEditorComponent
                 containerRef={this.setElement}
-                {...this.props}
+                {...componentProps}
             />
         );
     }
 }
 
+CodeEditor.propTypes = {
+    editingTarget: PropTypes.string,
+    theme: PropTypes.string,
+    sprites: PropTypes.object,
+    stage: PropTypes.object,
+    vm: PropTypes.instanceOf(VM).isRequired
+};
+
 const mapStateToProps = state => ({
+    editingTarget: state.scratchGui.targets.editingTarget,
+    sprites: state.scratchGui.targets.sprites,
+    stage: state.scratchGui.targets.stage,
     theme: state.scratchGui.theme.theme
 });
 
