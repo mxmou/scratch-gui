@@ -2,7 +2,10 @@
 
 .data-panel {
     width: 250px;
+    height: 0; /* for scrolling */
+    min-height: 100%;
     padding: 0.75rem;
+    overflow-y: auto;
     background-color: $ui-secondary;
     font-size: 0.75rem;
 }
@@ -53,6 +56,8 @@
 
 .variable-list-item {
     display: flex;
+    align-items: center;
+    position: relative;
     font-family: monospace;
     font-size: initial;
     line-height: 1.4;
@@ -66,11 +71,61 @@
     color: $list-accent;
 }
 
+.checkbox {
+    margin: 0;
+    flex-shrink: 0;
+    width: 1rem;
+    height: 1rem;
+    appearance: none;
+    background-color: $ui-white-bg;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+[dir="ltr"] .checkbox {
+    margin-right: 0.375rem;
+}
+
+[dir="rtl"] .checkbox {
+    margin-left: 0.375rem;
+}
+
+.checkbox:checked {
+    background-color: $motion-accent;
+}
+
+.checked-icon {
+    display: none;
+    position: absolute;
+    top: calc(50% - 0.5rem);
+    width: 1rem;
+    height: 1rem;
+    color: $text-on-accent;
+    pointer-events: none;
+}
+
+[dir="ltr"] .checked-icon {
+    left: 0;
+}
+
+[dir="rtl"] .checked-icon {
+    right: 0;
+}
+
+.checkbox:checked + span > .checked-icon {
+    display: block;
+}
+
 .variable-name {
     flex-grow: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .variable-action {
+    flex-shrink: 0;
     width: 1rem;
     height: 1rem;
     padding: 0;

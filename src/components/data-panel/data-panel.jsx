@@ -28,6 +28,7 @@ const DataPanelComponent = ({
     promptDefaultValue,
     onPromptClose,
     onPromptOk,
+    onToggleVisibility,
     onRenameVariableClick,
     onRenameListClick,
     onDeleteClick
@@ -50,6 +51,7 @@ const DataPanelComponent = ({
             items={globalVariables}
             itemClassName={styles.variable}
             blocksMessages={blocksMessages}
+            onToggleVisibility={onToggleVisibility}
             onRenameClick={onRenameVariableClick}
             onDeleteClick={onDeleteClick}
         />
@@ -58,6 +60,7 @@ const DataPanelComponent = ({
             items={localVariables}
             itemClassName={styles.variable}
             blocksMessages={blocksMessages}
+            onToggleVisibility={onToggleVisibility}
             onRenameClick={onRenameVariableClick}
             onDeleteClick={onDeleteClick}
         />
@@ -75,6 +78,7 @@ const DataPanelComponent = ({
             items={globalLists}
             itemClassName={styles.list}
             blocksMessages={blocksMessages}
+            onToggleVisibility={onToggleVisibility}
             onRenameClick={onRenameListClick}
             onDeleteClick={onDeleteClick}
         />
@@ -83,6 +87,7 @@ const DataPanelComponent = ({
             items={localLists}
             itemClassName={styles.list}
             blocksMessages={blocksMessages}
+            onToggleVisibility={onToggleVisibility}
             onRenameClick={onRenameListClick}
             onDeleteClick={onDeleteClick}
         />
@@ -129,27 +134,21 @@ const DataPanelComponent = ({
     </div>
 );
 
+const variableShape = PropTypes.shape({
+    id: PropTypes.string.isRequired,
+    monitorVisible: PropTypes.bool,
+    name: PropTypes.string.isRequired
+});
+
 DataPanelComponent.propTypes = {
     blocksMessages: PropTypes.object.isRequired,
     canUseCloud: PropTypes.bool,
-    globalLists: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired
-    })).isRequired,
-    globalVariables: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired
-    })).isRequired,
+    globalLists: PropTypes.arrayOf(variableShape).isRequired,
+    globalVariables: PropTypes.arrayOf(variableShape).isRequired,
     intl: intlShape,
     isStage: PropTypes.bool,
-    localLists: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired
-    })).isRequired,
-    localVariables: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired
-    })).isRequired,
+    localLists: PropTypes.arrayOf(variableShape).isRequired,
+    localVariables: PropTypes.arrayOf(variableShape).isRequired,
     newPromptOpen: PropTypes.bool,
     onDeleteClick: PropTypes.func.isRequired,
     onNewListClick: PropTypes.func,
@@ -158,6 +157,7 @@ DataPanelComponent.propTypes = {
     onPromptOk: PropTypes.func,
     onRenameListClick: PropTypes.func.isRequired,
     onRenameVariableClick: PropTypes.func.isRequired,
+    onToggleVisibility: PropTypes.func.isRequired,
     promptDefaultValue: PropTypes.string,
     promptType: PropTypes.oneOf([
         Variable.SCALAR_TYPE,

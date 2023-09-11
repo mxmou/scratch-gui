@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import bindAll from 'lodash.bindall';
+import {OrderedMap} from 'immutable';
 import VM from 'scratch-vm';
 import Variable from 'scratch-vm/src/engine/variable';
 
@@ -18,6 +19,7 @@ class DataPanel extends React.Component {
             'handleNewListClick',
             'handlePromptClose',
             'handlePromptOk',
+            'handleToggleVisibility',
             'handleRenameListClick',
             'handleRenameVariableClick',
             'handleDeleteClick'
@@ -32,7 +34,14 @@ class DataPanel extends React.Component {
     getVariablesOfType (variables, type) {
         return Object.entries(variables)
             .filter(([_, variable]) => variable.type === type)
-            .map(([id, variable]) => ({id, name: variable.name}))
+            .map(([id, variable]) => {
+                const monitor = this.props.monitors.get(id);
+                return {
+                    id,
+                    name: variable.name,
+                    monitorVisible: monitor && monitor.visible
+                }
+            })
             .sort((a, b) => {
                 if (a.name < b.name) return -1;
                 if (a.name > b.name) return 1;
@@ -44,6 +53,18 @@ class DataPanel extends React.Component {
             this.getVariablesOfType(variables, Variable.SCALAR_TYPE),
             this.getVariablesOfType(variables, Variable.LIST_TYPE)
         ];
+    }
+    findVariable (id) {
+        const target = this.props.vm.editingTarget;
+        if (!target) {
+            return null;
+        }
+        const isLocal = Object.prototype.hasOwnProperty.call(target.variables, id);
+        if (isLocal) {
+            return target.variables[id];
+        } else {
+            return this.props.stage.variables[id];
+        }
     }
     getExistingVariableNames (isLocal) {
         // Finds names that might conflict with a new variable
@@ -80,6 +101,34 @@ class DataPanel extends React.Component {
             id[i] = soup.charAt(Math.random() * soup.length);
         }
         return id.join('');
+    }
+    createMonitorBlock (id, name, type) {
+        const fieldName = {
+            [Variable.SCALAR_TYPE]: 'VARIABLE',
+            [Variable.LIST_TYPE]: 'LIST'
+        }[type];
+        this.props.vm.runtime.monitorBlocks.createBlock({
+            id,
+            topLevel: true,
+            parent: null,
+            shadow: false,
+            opcode: {
+                [Variable.SCALAR_TYPE]: 'data_variable',
+                [Variable.LIST_TYPE]: 'data_listcontents'
+            }[type],
+            fields: {
+                [fieldName]: {
+                    name: fieldName,
+                    id,
+                    value: name,
+                    variableType: type
+                }
+            },
+            inputs: {},
+            next: null,
+            x: 0,
+            y: 0
+        });
     }
     handleNewVariableClick () {
         this.setState({
@@ -153,9 +202,24 @@ class DataPanel extends React.Component {
             } else {
                 stage.createVariable(id, name, type, newVariableOptions.isCloud);
             }
+            this.createMonitorBlock(id, name, type);
         }
         this.props.vm.runtime.emitProjectChanged();
         this.forceUpdate();
+    }
+    handleToggleVisibility (id) {
+        return (e) => {
+            if (!this.props.vm.runtime.monitorBlocks.getBlock(id)) {
+                const variable = this.findVariable(id);
+                if (!variable) return;
+                this.createMonitorBlock(id, variable.name, variable.type);
+            }
+            this.props.vm.runtime.monitorBlocks.changeBlock({
+                id,
+                element: 'checkbox',
+                value: e.target.checked
+            });
+        }
     }
     handleRenameVariableClick (id, name) {
         return () => {
@@ -227,6 +291,7 @@ class DataPanel extends React.Component {
                 promptDefaultValue={this.state.promptDefaultValue}
                 onPromptClose={this.handlePromptClose}
                 onPromptOk={this.handlePromptOk}
+                onToggleVisibility={this.handleToggleVisibility}
                 onRenameVariableClick={this.handleRenameVariableClick}
                 onRenameListClick={this.handleRenameListClick}
                 onDeleteClick={this.handleDeleteClick}
@@ -236,12 +301,17 @@ class DataPanel extends React.Component {
 }
 
 DataPanel.propTypes = {
+    editingTarget: PropTypes.string,
+    monitors: PropTypes.instanceOf(OrderedMap).isRequired,
+    sprites: PropTypes.object,
+    stage: PropTypes.object,
     vm: PropTypes.instanceOf(VM).isRequired
 }
 
 const mapStateToProps = state => ({
     blocksMessages: state.locales.blocksMessages,
     editingTarget: state.scratchGui.targets.editingTarget,
+    monitors: state.scratchGui.monitors,
     sprites: state.scratchGui.targets.sprites,
     stage: state.scratchGui.targets.stage
 });
