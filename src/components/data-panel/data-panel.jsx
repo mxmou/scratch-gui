@@ -22,10 +22,15 @@ const DataPanelComponent = ({
     localLists,
     onNewVariableClick,
     onNewListClick,
-    promptOpen,
+    newPromptOpen,
+    renamePromptOpen,
     promptType,
+    promptDefaultValue,
     onPromptClose,
-    onPromptOk
+    onPromptOk,
+    onRenameVariableClick,
+    onRenameListClick,
+    onDeleteClick
 }) => (
     <div className={styles.dataPanel}>
         <div className={styles.header}>
@@ -44,11 +49,17 @@ const DataPanelComponent = ({
             title={intl.formatMessage(sharedMessages.forAllSprites)}
             items={globalVariables}
             itemClassName={styles.variable}
+            blocksMessages={blocksMessages}
+            onRenameClick={onRenameVariableClick}
+            onDeleteClick={onDeleteClick}
         />
         <VariableList
             title={intl.formatMessage(sharedMessages.forThisSprite)}
             items={localVariables}
             itemClassName={styles.variable}
+            blocksMessages={blocksMessages}
+            onRenameClick={onRenameVariableClick}
+            onDeleteClick={onDeleteClick}
         />
         <div className={styles.newButtonContainer}>
             <button
@@ -63,13 +74,19 @@ const DataPanelComponent = ({
             title={intl.formatMessage(sharedMessages.forAllSprites)}
             items={globalLists}
             itemClassName={styles.list}
+            blocksMessages={blocksMessages}
+            onRenameClick={onRenameListClick}
+            onDeleteClick={onDeleteClick}
         />
         <VariableList
             title={intl.formatMessage(sharedMessages.forThisSprite)}
             items={localLists}
             itemClassName={styles.list}
+            blocksMessages={blocksMessages}
+            onRenameClick={onRenameListClick}
+            onDeleteClick={onDeleteClick}
         />
-        {promptOpen ? (
+        {newPromptOpen ? (
             <Prompt
                 title={{
                     [Variable.SCALAR_TYPE]: blocksMessages.VARIABLE_MODAL_TITLE,
@@ -83,6 +100,26 @@ const DataPanelComponent = ({
                 isStage={isStage}
                 showListMessage={promptType === Variable.LIST_TYPE}
                 showVariableOptions={true}
+                showCloudOption={promptType === Variable.SCALAR_TYPE && canUseCloud}
+                vm={vm}
+                onCancel={onPromptClose}
+                onOk={onPromptOk}
+            />
+        ) : null}
+        {renamePromptOpen ? (
+            <Prompt
+                title={{
+                    [Variable.SCALAR_TYPE]: blocksMessages.RENAME_VARIABLE_MODAL_TITLE,
+                    [Variable.LIST_TYPE]: blocksMessages.RENAME_LIST_MODAL_TITLE
+                }[promptType]}
+                label={{
+                    [Variable.SCALAR_TYPE]: blocksMessages.RENAME_VARIABLE_TITLE.replace('%1', promptDefaultValue),
+                    [Variable.LIST_TYPE]: blocksMessages.RENAME_LIST_TITLE.replace('%1', promptDefaultValue)
+                }[promptType]}
+                defaultValue={promptDefaultValue}
+                isStage={isStage}
+                showListMessage={promptType === Variable.LIST_TYPE}
+                showVariableOptions={false}
                 showCloudOption={promptType === Variable.SCALAR_TYPE && canUseCloud}
                 vm={vm}
                 onCancel={onPromptClose}
@@ -113,15 +150,20 @@ DataPanelComponent.propTypes = {
         id: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired
     })).isRequired,
+    newPromptOpen: PropTypes.bool,
+    onDeleteClick: PropTypes.func.isRequired,
     onNewListClick: PropTypes.func,
     onNewVariableClick: PropTypes.func,
     onPromptClose: PropTypes.func,
     onPromptOk: PropTypes.func,
-    promptOpen: PropTypes.bool,
+    onRenameListClick: PropTypes.func.isRequired,
+    onRenameVariableClick: PropTypes.func.isRequired,
+    promptDefaultValue: PropTypes.string,
     promptType: PropTypes.oneOf([
         Variable.SCALAR_TYPE,
         Variable.LIST_TYPE
     ]),
+    renamePromptOpen: PropTypes.bool,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

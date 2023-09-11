@@ -52,6 +52,7 @@
 }
 
 .variable-list-item {
+    display: flex;
     font-family: monospace;
     font-size: initial;
     line-height: 1.4;
@@ -63,4 +64,31 @@
 
 .variable-list-item.list {
     color: $list-accent;
+}
+
+.variable-name {
+    flex-grow: 1;
+}
+
+.variable-action {
+    width: 1rem;
+    height: 1rem;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    color: $text-primary-transparent;
+    cursor: pointer;
+}
+
+[dir="ltr"] .variable-action {
+    margin-left: 0.25rem;
+}
+
+[dir="rtl"] .variable-action {
+    margin-right: 0.25rem;
+}
+
+.variable-action-icon {
+    width: 1rem;
+    height: 1rem;
 }

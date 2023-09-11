@@ -17,11 +17,16 @@ class DataPanel extends React.Component {
             'handleNewVariableClick',
             'handleNewListClick',
             'handlePromptClose',
-            'handlePromptOk'
+            'handlePromptOk',
+            'handleRenameListClick',
+            'handleRenameVariableClick',
+            'handleDeleteClick'
         ]);
         this.state = {
             promptOpen: false,
-            promptType: Variable.SCALAR_TYPE
+            promptType: Variable.SCALAR_TYPE,
+            promptDefaultValue: '',
+            idToRename: null
         };
     }
     getVariablesOfType (variables, type) {
@@ -59,6 +64,10 @@ class DataPanel extends React.Component {
                 ...this.props.vm.runtime.getAllVarNamesOfType(Variable.LIST_TYPE)
             ];
         }
+        // Don't include the variable that's being renamed
+        existingVariableNames = existingVariableNames.filter(
+            name => name !== this.state.promptDefaultValue
+        );
         return existingVariableNames;
     }
     generateVariableId () {
@@ -75,19 +84,23 @@ class DataPanel extends React.Component {
     handleNewVariableClick () {
         this.setState({
             promptOpen: true,
-            promptType: Variable.SCALAR_TYPE
+            promptType: Variable.SCALAR_TYPE,
+            promptDefaultValue: '',
+            idToRename: null
         });
     }
     handleNewListClick () {
         this.setState({
             promptOpen: true,
-            promptType: Variable.LIST_TYPE
+            promptType: Variable.LIST_TYPE,
+            promptDefaultValue: '',
+            idToRename: null
         });
     }
     handlePromptClose () {
         this.setState({promptOpen: false});
     }
-    handlePromptOk (name, {scope, isCloud}) {
+    handlePromptOk (name, newVariableOptions) {
         this.handlePromptClose();
 
         // Do nothing if name is empty
@@ -96,7 +109,7 @@ class DataPanel extends React.Component {
             return;
         }
 
-        if (isCloud) {
+        if (newVariableOptions && newVariableOptions.isCloud) {
             name = CLOUD_PREFIX + name;
         }
 
@@ -105,7 +118,12 @@ class DataPanel extends React.Component {
             return;
         }
         const type = this.state.promptType;
-        const isLocal = scope === 'local' && !target.isStage;
+        let isLocal;
+        if (this.state.idToRename) {
+            isLocal = Object.prototype.hasOwnProperty.call(target.variables, this.state.idToRename);
+        } else {
+            isLocal = newVariableOptions.scope === 'local' && !target.isStage;
+        }
         const existingVariableNames = this.getExistingVariableNames(isLocal);
         const existingVariablesMap = {};
         for (let name of existingVariableNames) {
@@ -121,14 +139,56 @@ class DataPanel extends React.Component {
             {}
         );
 
-        const id = this.generateVariableId();
-        if (isLocal) {
-            target.createVariable(id, name, type);
+        const stage = this.props.vm.runtime.getTargetForStage();
+        if (this.state.idToRename) {
+            if (isLocal) {
+                target.renameVariable(this.state.idToRename, name);
+            } else {
+                stage.renameVariable(this.state.idToRename, name);
+            }
         } else {
-            const stage = this.props.vm.runtime.getTargetForStage();
-            stage.createVariable(id, name, type, isCloud);
+            const id = this.generateVariableId();
+            if (isLocal) {
+                target.createVariable(id, name, type);
+            } else {
+                stage.createVariable(id, name, type, newVariableOptions.isCloud);
+            }
         }
         this.props.vm.runtime.emitProjectChanged();
+        this.forceUpdate();
+    }
+    handleRenameVariableClick (id, name) {
+        return () => {
+            this.setState({
+                promptOpen: true,
+                promptType: Variable.SCALAR_TYPE,
+                promptDefaultValue: name,
+                idToRename: id
+            });
+        };
+    }
+    handleRenameListClick (id, name) {
+        return () => {
+            this.setState({
+                promptOpen: true,
+                promptType: Variable.LIST_TYPE,
+                promptDefaultValue: name,
+                idToRename: id
+            });
+        };
+    }
+    handleDeleteClick (id) {
+        return () => {
+            const target = this.props.vm.editingTarget;
+            if (Object.prototype.hasOwnProperty.call(target.variables, id)) {
+                target.deleteVariable(id);
+            } else {
+                const stage = this.props.vm.runtime.getTargetForStage();
+                stage.deleteVariable(id);
+            }
+            this.props.vm.runtime.emitProjectChanged();
+            this.forceUpdate();
+        };
     }
     render () {
         const {
@@ -161,10 +221,15 @@ class DataPanel extends React.Component {
                 localLists={localLists}
                 onNewVariableClick={this.handleNewVariableClick}
                 onNewListClick={this.handleNewListClick}
-                promptOpen={this.state.promptOpen}
+                newPromptOpen={!!(this.state.promptOpen && !this.state.idToRename)}
+                renamePromptOpen={!!(this.state.promptOpen && this.state.idToRename)}
                 promptType={this.state.promptType}
+                promptDefaultValue={this.state.promptDefaultValue}
                 onPromptClose={this.handlePromptClose}
                 onPromptOk={this.handlePromptOk}
+                onRenameVariableClick={this.handleRenameVariableClick}
+                onRenameListClick={this.handleRenameListClick}
+                onDeleteClick={this.handleDeleteClick}
             />
         )
     }
