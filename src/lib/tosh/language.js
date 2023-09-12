@@ -29,7 +29,7 @@ function getValue(token) {
 var TOKENS = [
   ['ellips',  /\.{3}/],
   ['comment', /\/{2}(.*)$/],
-  ['false',   /\<\>/],
+  ['false',   /<>/],
   ['zero',    /\(\)/],
   ['empty',   /_( |$)/],
   ['number',  /([0-9]+(\.[0-9]+)?e-?[0-9]+)/], // 123[.123]e[-]123
@@ -40,13 +40,13 @@ var TOKENS = [
   ['string',  /"((\\["\\]|[^"\\])*)"/], // strings are backslash-escaped
   ['string',  /'((\\['\\]|[^'\\])*)'/],
   ['lparen',  /\(/],   ['rparen',  /\)/],
-  ['langle',  /\</],   ['rangle',  /\>/],
+  ['langle',  /</],   ['rangle',  />/],
   ['lsquare', /\[/],   ['rsquare', /\]/],
   ['cloud',   /[☁]/],
   ['input',   /%[a-z](?:\.[a-zA-Z]+)?/],
   ['symbol',  /[-%#+*/=^,?]/],                // single character
   ['symbol',  /[_A-Za-z][-_A-Za-z0-9:',.]*/], // word, as in a block
-  ['iden',    /[^ \t"'()<>=*\/+-]+/],     // user-defined names
+  ['iden',    /[^ \t"'()<>=*/+-]+/],     // user-defined names
 ];
 
 var backslashEscapeSingle = /(\\['\\])/g;
@@ -71,11 +71,11 @@ var tokenize = function(input) {
   var expectedWhitespace = false;
   while (remain) {
     var kind = null;
-    for (var i=0; i<TOKENS.length; i++) {
-      var kind_and_pat = TOKENS[i],
-          kind = kind_and_pat[0],
-          pat  = kind_and_pat[1];
-      var m = pat.exec(remain);
+    for (var i = 0; i < TOKENS.length; i++) {
+      var kindAndPat = TOKENS[i];
+      kind = kindAndPat[0];
+      var pat = kindAndPat[1];
+      m = pat.exec(remain);
       if (m && m.index == 0) {
         var text = m[0];
         var value = m[1] === undefined ? m[0] : m[1];
@@ -100,7 +100,7 @@ var tokenize = function(input) {
     remain = remain.slice(text.length);
 
     // consume whitespace
-    var m = whitespacePat.exec(remain);
+    m = whitespacePat.exec(remain);
     sawWhitespace = Boolean(m);
     if (m) {
       remain = remain.slice(m[0].length);
@@ -140,7 +140,7 @@ function splitStringToken(token) {
   var parts = token.text.split(backslashEscape);
   assert(token.kind === 'string', "Want string token, not " + token);
   var tokens = [];
-  for (var i=0; i<parts.length; i++) {
+  for (var i = 0; i < parts.length; i++) {
     var text = parts[i];
     if (!text) continue;
 
@@ -233,7 +233,7 @@ function box(x) { return [x]; }
 
 function textSymbols(text) {
   return text.split(" ").map(box).map(function(x) {
-    var tokens = tokenize(x[0])
+    var tokens = tokenize(x[0]);
     assert(tokens.length === 1, text + ": " + tokens);
     var token = tokens[0];
     if (token.kind !== "symbol") {
@@ -255,16 +255,14 @@ function brackets(a, b, c) {
   return new Block(b.info, b.args, [a].concat(b.tokens).concat([c]));
 }
 function constant(x) {
-  return function() { return x; }
+  return function() { return x; };
 }
-function first(a) { return a; }
-function second(a, b) { return b; }
 function embed() {
   return {embed: [].slice.apply(arguments)};
 }
 function embedConstant(x) {
   return function() {
-    return {constant: x, embed: [].slice.apply(arguments) };
+    return {constant: x, embed: [].slice.apply(arguments)};
   };
 }
 
@@ -290,7 +288,7 @@ function paintLiteral(category) {
     assert(arguments.length == 1);
     a.category = category;
     return a.value;
-  }
+  };
 }
 
 function paintLiteralWords(category) {
@@ -301,7 +299,7 @@ function paintLiteralWords(category) {
       a.category = category;
       return a.value;
     }).join(" ");
-  }
+  };
 }
 
 function paint(category) {
@@ -322,7 +320,7 @@ function paintList(category) {
       token.category = category;
       return token.value;
     }).join(" ");
-  }
+  };
 }
 
 
@@ -336,19 +334,12 @@ function param(a, b, c) {
     case "langle": return {arg: "b", name: b};
     case "lsquare": return {arg: "s", name: b};
   }
-};
+}
 
 function hackedParam(i, a, b, c) {
   // warning: mutates arguments
   i.category = a.category = c.category = "parameter";
   return {arg: i.value.slice(1), name: b};
-};
-
-
-function listItems(a, b, c) {
-  // warning: mutates arguments
-  a.category = c.category = "list";
-  return b;
 }
 
 function definition(a, parts) {
@@ -416,7 +407,7 @@ var Block = function(info, args, tokens) {
   this.info = info;
   this.args = args;
   this.tokens = tokens;
-}
+};
 
 function block(selector) {
   var indexes = [].slice.apply(arguments, [1]);
@@ -464,7 +455,7 @@ function blockArgs(info) {
     }
 
     // Coerce all the arguments to match their slots!
-    for (var i=0; i<args.length; i++) {
+    for (var i = 0; i < args.length; i++) {
       args[i] = convertArg(args[i], info.inputs[i]);
     }
 
@@ -500,7 +491,7 @@ function stringLiteral(a) {
   var parts = a.value.split(backslashEscape);
   return parts.map(function(p) {
     if (p === "\\\\") return "\\";
-    if (p === "\\"+quote) return quote;
+    if (p === "\\" + quote) return quote;
     return p;
   }).join("");
 }
@@ -745,7 +736,8 @@ var menusThatAcceptReporters = ['broadcast', 'costume', 'backdrop',
     'spriteOrStage', 'touching'];
 
 var menuOptions = {
-  'attribute': ['x position', 'y position', 'direction', 'costume #', 'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
+  'attribute': ['x position', 'y position', 'direction', 'costume #',
+    'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
   'backdrop': [],
   'booleanSensor': ['button pressed', 'A connected', 'B connected',
   'C connected', 'D connected'],
@@ -806,7 +798,7 @@ var menuValues = {
   'edge': '_edge_',
   'random position': '_random_',
   // 'stageOrThis' does not use this
-}
+};
 
 menus.forEach(function(name) {
   if (menusThatAcceptReporters.indexOf(name) > -1) {
@@ -866,8 +858,8 @@ var precedenceLevels = [
   ['+', '-'],
   ['=', '<', '>', 'list:contains:'],
   ['not'],
-  ['&',],  // actually & and | have the same precedence!
-  ['|',],  // except they must be parenthesised when inside each other.
+  ['&'],  // actually & and | have the same precedence!
+  ['|'],  // except they must be parenthesised when inside each other.
   // [ stack blocks ]
 ];
 
@@ -912,7 +904,7 @@ Scratch.blocks.forEach(function(block) {
   var symbols = [];
   var argIndexes = [];
 
-  block.parts.forEach(function(part, i) {
+  block.parts.forEach(function(part) {
     var m = Scratch.inputPat.exec(part);
     if (!m) {
       part.split(/(\?)|[ ]+/g).forEach(function(word) {
@@ -926,7 +918,7 @@ Scratch.blocks.forEach(function(block) {
         }
       });
     } else {
-      var input = m[1].slice(1).replace(".", "_")
+      var input = m[1].slice(1).replace(".", "_");
       if (!/^[mdc]/.test(input)) {
         assert(!(block.shape === "reporter" || block.shape === "predicate"),
                 block.selector + " " + block.spec);
@@ -968,17 +960,6 @@ defineGrammar.rules.forEach(g.addRule.bind(g));
 
 /* for parsing `define`s */
 
-function paintSymbols(category) {
-  // warning: mutates arguments
-  return function() {
-    var tokens = [].slice.apply(arguments);
-    tokens.forEach(function(token) {
-      token.category = category;
-    });
-    return tokens.map(function(t) { return t.value; }).join(" ");
-  };
-}
-
 function addDefinition(grammar, result) {
   var symbols = nameSymbols(result.name);
   var kind = result.value instanceof Array ? "ListName" : "VariableName";
@@ -986,12 +967,11 @@ function addDefinition(grammar, result) {
 }
 
 function addCustomBlock(grammar, result) {
-  var isAtomic = result.args[3];
   var specParts = result._parts;
 
   var parts = [];
 
-  specParts.forEach(function(x, index) {
+  specParts.forEach(function(x) {
     if (x.arg) {
       parts.push("%" + x.arg);
     } else {
@@ -1003,7 +983,7 @@ function addCustomBlock(grammar, result) {
   // spec = cleanName('custom', spec, {}, {});
 
   var symbols = [];
-  var parts = spec.split(Scratch.inputPat);
+  parts = spec.split(Scratch.inputPat);
   var argIndexes = [];
   parts.forEach(function(part) {
     if (!part) return;
@@ -1037,10 +1017,9 @@ function addCustomBlock(grammar, result) {
 }
 
 function addParameters(grammar, result) {
-  var isAtomic = result.args[3];
   var specParts = result._parts;
 
-  specParts.forEach(function(x, index) {
+  specParts.forEach(function(x) {
     if (x.arg) {
       var name = x.arg === 'b' ? "BooleanParam" : "ReporterParam";
       grammar.addRule(new Rule(name, nameSymbols(x.name),
@@ -1132,7 +1111,7 @@ function cleanName(kind, name, seen, stageSeen) {
     var tokens = tokenize(name);
     if (!tokens.length) break;
 
-    var lastToken = tokens[tokens.length - 1];
+    lastToken = tokens[tokens.length - 1];
     var suffix = "";
     if (lastToken.kind !== 'error') break;
 
@@ -1142,19 +1121,20 @@ function cleanName(kind, name, seen, stageSeen) {
       suffix = lastToken.text.slice(1);
     }
     tokens.pop();
-    var name = tokens.map(getValue).join(" ");
+    name = tokens.map(getValue).join(" ");
     name += suffix;
   }
   tokens.forEach(function(token, index) {
+    var next;
     if (token.kind === 'lparen' || token.kind === 'langle') {
-      var next = tokens[index + 1];
+      next = tokens[index + 1];
       if (next && (next.kind === 'iden' || next.kind === 'symbol')) {
         next.value = '_' + next.value;
         next.kind = 'iden';
       }
     }
     if (token.kind === 'rparen' || token.kind === 'rangle') {
-      var next = tokens[index - 1];
+      next = tokens[index - 1];
       if (next && (next.kind === 'iden' || next.kind === 'symbol')) {
         next.value = next.value + '_';
         next.kind = 'iden';
@@ -1163,7 +1143,7 @@ function cleanName(kind, name, seen, stageSeen) {
   });
   tokens = tokens.filter(function(token, index) {
     return (
-      (token.kind === 'symbol' && !/^[=*\/+-]$/.test(token.value)) ||
+      (token.kind === 'symbol' && !/^[=*/+-]$/.test(token.value)) ||
       token.kind === 'iden' ||
       token.kind === 'number' ||
       (token.kind === 'cloud' && index === 0) ||
@@ -1226,7 +1206,7 @@ var LineSpec = function(obj) {
 
 LineSpec.prototype.match = function(block) {
   var keys = Object.keys(this.obj);
-  for (var i=0; i<keys.length; i++) {
+  for (var i = 0; i < keys.length; i++) {
     var key = keys[i];
     if (block.info[key] !== this.obj[key]) return false;
   }
@@ -1236,19 +1216,6 @@ LineSpec.prototype.match = function(block) {
 var ShapeRule = function(s) {
   return Rule(s, [new LineSpec({shape: s})], identity);
 };
-
-function cons(a, b) {
-  b = b.slice();
-  b.splice(0, 0, a);
-  return b;
-}
-
-function consPush(a, b, c) {
-  b = b.slice();
-  b.splice(0, 0, a);
-  b.push(c);
-  return b;
-}
 
 // TODO remove or use
 var blockGrammar = new Grammar([
@@ -1281,11 +1248,11 @@ function modeGrammar(modeCfg) {
   var grammar = g.copy();
   modeCfg.variables.forEach(function(variable) {
     var name = variable._name();
-    addDefinition(grammar, { name: name, });
+    addDefinition(grammar, {name: name});
   });
   modeCfg.lists.forEach(function(list) {
     var name = list._name();
-    addDefinition(grammar, { name: name, value: [] });
+    addDefinition(grammar, {name: name, value: []});
   });
   modeCfg.definitions.forEach(function(result) {
     addCustomBlock(grammar, result);
@@ -1297,7 +1264,7 @@ function modeGrammar(modeCfg) {
 // selectors sorted for completion:
 // - part based on block usage data
 // - part based on usability guesswork (eg. blocks before their `and wait` versions)
-// - part opinionated (eg. I use cloning a lot, and phosphorus doesn't support video) 
+// - part opinionated (eg. I use cloning a lot, and phosphorus doesn't support video)
 
 var preferSelectors = [
   /* predicates */
@@ -1361,7 +1328,7 @@ var preferSelectors = [
 
   'broadcast:',
   'doBroadcastAndWait',
-,
+
   'changeXposBy:',
   'changeYposBy:',
   'changeGraphicEffect:by:',

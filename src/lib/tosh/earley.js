@@ -26,7 +26,7 @@ var Rule = function(name, symbols, process) {
 
 Rule.prototype.toString = function(position) {
   var r = this.name + " →";
-  for (var i=0; i<this.symbols.length; i++) {
+  for (var i = 0; i < this.symbols.length; i++) {
     if (i === position) r += " •";
     var symbol = this.symbols[i];
     r += " " + (typeof symbol === "string" ? symbol : stringify(symbol));
@@ -108,7 +108,7 @@ Grammar.prototype.reverse = function() {
       rule._original = r;
       return rule;
     });
-    var undefinedRules = Object.keys(this.undefinedRulesSet)
+    var undefinedRules = Object.keys(this.undefinedRulesSet);
     this._reversed = new Grammar(rules, undefinedRules);
   }
   return this._reversed;
@@ -121,7 +121,7 @@ var Parser = function(grammar) {
   this.table = [];
 };
 
-Parser.prototype._predict = function(name, origin, item, column) {
+Parser.prototype._predict = function(name, origin, item) {
   var rules = this.grammar.rulesByName[name];
   if (!rules) {
     if (!this.grammar.undefinedRulesSet[name]) {
@@ -130,12 +130,12 @@ Parser.prototype._predict = function(name, origin, item, column) {
       var err = new Error(m);
       err.rule = item.rule;
       throw err;
-    };
+    }
     return [];
   }
 
   var predictedItems = [];
-  for (var i=0; i<rules.length; i++) {
+  for (var i = 0; i < rules.length; i++) {
     predictedItems.push(new Item(rules[i], origin));
   }
   return predictedItems;
@@ -143,7 +143,7 @@ Parser.prototype._predict = function(name, origin, item, column) {
 
 Parser.prototype._complete = function(item) {
   var results = [];
-  for (var i=0; i<item.predictedBy.length; i++) {
+  for (var i = 0; i < item.predictedBy.length; i++) {
     results.push(item.predictedBy[i].next(item));
   }
   return results;
@@ -155,7 +155,7 @@ Parser.prototype.parse = function(tokens) {
   if (table.length) {
     assert(this.table.length <= this.tokens.length + 1, "argh");
     var maxIndex = Math.min(tokens.length, this.table.length - 1);
-    for (resume=0; resume < maxIndex; resume++) {
+    for (resume = 0; resume < maxIndex; resume++) {
       if (!this.tokens[resume].isEqual(tokens[resume])) {
         break;
       }
@@ -166,20 +166,23 @@ Parser.prototype.parse = function(tokens) {
 
   // if (resume !== null) console.log("resuming from " + resume);
 
-  var grammar = this.grammar;
   var column;
+  var newColumn;
+  var token;
+  var item;
+  var err;
   if (resume === null) {
     assert(!table.length);
     column = this._predict(this.grammar.toplevel, 0, null);
-    table.push(column)
+    table.push(column);
   } else if (resume < tokens.length) {
     // resume: create new column by advancing states which match the new token
     this.index = resume;
-    var token = tokens[resume];
+    token = tokens[resume];
     column = table[resume];
-    var newColumn = [];
-    for (var j=0; j<column.length; j++) {
-      var item = column[j];
+    newColumn = [];
+    for (let j = 0; j < column.length; j++) {
+      item = column[j];
       if (!item.isFinished) {
         if (typeof item.expect !== "string") {
           // advance: consume token
@@ -190,7 +193,7 @@ Parser.prototype.parse = function(tokens) {
       }
     }
     if (!newColumn.length) {
-      var err = this._makeError(token.value);
+      err = this._makeError(token.value);
       err.index = index;
       err.found = tokens[resume];
       throw err;
@@ -207,12 +210,12 @@ Parser.prototype.parse = function(tokens) {
   for (var index = resume || 0; index <= tokens.length; index++) {
     this.index = index;
 
-    var token = tokens[index];
-    var newColumn = [];
+    token = tokens[index];
+    newColumn = [];
     var predictedRules = {};
 
-    for (var j=0; j<column.length; j++) {
-      var item = column[j];
+    for (let j = 0; j < column.length; j++) {
+      item = column[j];
       if (!item.isFinished) {
         // non-terminal
         if (typeof item.expect === "string") {
@@ -224,7 +227,7 @@ Parser.prototype.parse = function(tokens) {
           } else {
             predictedItems = predictedRules[item.expect];
           }
-          for (var k=0; k<predictedItems.length; k++) {
+          for (var k = 0; k < predictedItems.length; k++) {
             predictedItems[k].predictedBy.push(item);
           }
         // terminal
@@ -242,7 +245,7 @@ Parser.prototype.parse = function(tokens) {
 
     if (index < tokens.length) {
       if (!newColumn.length) {
-        var err = this._makeError(token.value);
+        err = this._makeError(token.value);
         err.index = index;
         err.found = tokens[index];
         throw err;
@@ -278,10 +281,10 @@ Parser.prototype._makeError = function(message) {
   }, this);
 
   ruleNames = ruleNames.filter(function(ruleNameToFilter) {
-    for (var i=0; i<ruleNames.length; i++) {
+    for (var i = 0; i < ruleNames.length; i++) {
       var name = ruleNames[i];
       var rules = this.grammar.rulesByName[name] || [];
-      for (var j=0; j<rules.length; j++) {
+      for (var j = 0; j < rules.length; j++) {
         var rule = rules[j];
         if (rule.symbols.length !== 1) continue;
         var symbol = rule.symbols[0];
@@ -321,7 +324,7 @@ Result.prototype.process = function() {
 
   function process(item) {
     var children = [];
-    for (var i=0; i<item.node.length; i++) {
+    for (var i = 0; i < item.node.length; i++) {
       var child = item.node[i];
       if (child.node) { // Item
         child = process(child);
@@ -346,7 +349,7 @@ Result.prototype.pretty = function() {
     var children = [item.rule.name];
     var info = item.rule.process._info;
     if (info) children.push(JSON.stringify(info.selector));
-    for (var i=0; i<item.node.length; i++) {
+    for (var i = 0; i < item.node.length; i++) {
       var child = item.node[i];
       if (child.node) { // Item
         child = pretty(child);
@@ -408,12 +411,11 @@ Completer.prototype.complete = function(tokens, cursor) {
 
   var completions = [];
 
-  for (var i=0; i<leftColumn.length; i++) {
-    for (var j=0; j<rightColumn.length; j++) {
+  for (var i = 0; i < leftColumn.length; i++) {
+    for (var j = 0; j < rightColumn.length; j++) {
       var l = leftColumn[i];
       var r = rightColumn[j];
-      if (l.rule === r.rule._original 
-        ){
+      if (l.rule === r.rule._original) {
 
         var symbols = l.rule.symbols;
         var li = l.position,
@@ -434,10 +436,6 @@ Completer.prototype.complete = function(tokens, cursor) {
         });
       }
     }
-  }
-
-  function pretty(symbol) {
-    return (typeof symbol === "string" ? symbol : stringify(symbol));
   }
 
   // console.log("Completions table:");

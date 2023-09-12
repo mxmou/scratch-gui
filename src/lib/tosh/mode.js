@@ -60,10 +60,10 @@ export default function(modeCfg) {
     switch (result ? result.info.shape : null) {
       case 'c-block':
       case 'c-block cap':
-        this.indent.push('c')
+        this.indent.push('c');
         break;
       case 'if-block':
-        this.indent.push('if')
+        this.indent.push('if');
         break;
       case 'end':
         this.indent.pop();
@@ -84,30 +84,18 @@ export default function(modeCfg) {
     paintBlocks(result);
     this.lastLine = result;
     return result;
-  }
+  };
 
   function paintBlocks(b) {
     if (!b) return;
     b.tokens.forEach(function(p) {
       if (p.info) {
         paintBlocks(p);
-      } else {
-        if (typeof p === "object") p.category = b.info.category;
+      } else if (typeof p === 'object') {
+        p.category = b.info.category;
         // TODO paint variables
       }
     });
-  }
-
-  function repr(b) {
-    if (!b) return b;
-    if (b.value) return b.value;
-    if (!b.info) return b;
-    switch (b.info.selector) {
-      case "+": case "-": case "*": case "/": case "%": case "&": case "|":
-        return [repr(b.args[0]), b.info.selector, repr(b.args[1])];
-      default:
-        return [b.info.selector || b.info.spec].concat(b.args.map(repr));
-    }
   }
 
   /* CodeMirror mode */
@@ -149,7 +137,16 @@ export default function(modeCfg) {
         return "s-" + token.category;
       } else if (token.kind === 'string') {
         return 'string';
-      } else if (['number', 'color', 'empty', 'zero', 'false', 'comment', 'ellips', 'escape'].indexOf(token.kind) !== -1) {
+      } else if ([
+        'number',
+        'color',
+        'empty',
+        'zero',
+        'false',
+        'comment',
+        'ellips',
+        'escape',
+      ].indexOf(token.kind) !== -1) {
         return "s-" + token.kind;
       }
     },
@@ -176,6 +173,6 @@ export default function(modeCfg) {
       commentTokens: {line: '//'},
       indentOnInput: /^\s*(else|end)$/,
       closeBrackets: {brackets: ['(', '[', "'", '"']},
-    }
+    },
   };
 }
