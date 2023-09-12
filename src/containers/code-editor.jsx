@@ -122,8 +122,8 @@ class CodeEditor extends React.Component {
     }
     setElement (element) {
         this.element = element;
-        if (this.view) {
-            this.element.appendChild(this.view.dom);
+        if (element && this.view) {
+            element.appendChild(this.view.dom);
         }
     }
     updateTheme () {
