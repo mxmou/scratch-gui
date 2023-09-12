@@ -85,7 +85,7 @@ const base = {
             use: [{
                 loader: 'url-loader',
                 options: {
-                    limit: 16 * 1024
+                    limit: 32 * 1024
                 }
             }]
         }]
