@@ -33,6 +33,8 @@ import Variable from 'scratch-vm/src/engine/variable';
 import CodeEditorComponent from '../components/code-editor/code-editor.jsx';
 import {themeMap, getColorsForTheme} from '../lib/themes';
 import toshParser from '../lib/tosh/mode';
+import * as ToshEarley from '../lib/tosh/earley';
+import * as ToshLanguage from '../lib/tosh/language';
 
 tags['s-number'] = Tag.define(tags.number);
 tags['s-menu'] = Tag.define(tags.string);
@@ -66,12 +68,15 @@ class CodeEditor extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'setElement'
+            'setElement',
+            'updateParserOptions',
+            'handleViewUpdate'
         ]);
         this.element = null;
         this.view = null;
         this.themeOptions = new Compartment();
         this.parserOptions = new Compartment();
+        this.repaintTimeout = null;
     }
     componentDidMount () {
         this.view = new EditorView({
@@ -93,6 +98,7 @@ class CodeEditor extends React.Component {
                     ...historyKeymap,
                     ...searchKeymap
                 ]),
+                EditorView.updateListener.of(this.handleViewUpdate),
                 this.themeOptions.of([
                     EditorView.darkTheme.of(themeMap[this.props.theme].dark),
                     syntaxHighlighting(this.getHighlightStyle())
@@ -133,25 +139,44 @@ class CodeEditor extends React.Component {
         if (!target) {
             return;
         }
-        let variableNames = this.getVariableNamesOfType(target.variables, Variable.SCALAR_TYPE);
-        let listNames = this.getVariableNamesOfType(target.variables, Variable.LIST_TYPE);
+        let variables = this.getVariableNamesOfType(target.variables, Variable.SCALAR_TYPE);
+        let lists = this.getVariableNamesOfType(target.variables, Variable.LIST_TYPE);
         if (!target.isStage) {
-            variableNames = [
-                ...variableNames,
+            variables = [
+                ...variables,
                 ...this.getVariableNamesOfType(this.props.stage.variables, Variable.SCALAR_TYPE)
             ];
-            listNames = [
-                ...listNames,
+            lists = [
+                ...lists,
                 ...this.getVariableNamesOfType(this.props.stage.variables, Variable.LIST_TYPE)
             ];
+        }
+
+        // Update definitions - based on ScriptsEditor.checkDefinitions from tosh
+        const definitions = [];
+        const defineParser = new ToshEarley.Parser(ToshLanguage.defineGrammar);
+        for (const line of this.view.state.doc.iterLines()) {
+            if (!ToshLanguage.isDefinitionLine(line)) continue;
+            const tokens = ToshLanguage.tokenize(line);
+            let results;
+            try {
+                results = defineParser.parse(tokens);
+            } catch {
+                continue;
+            }
+            if (results.length > 1) {
+                console.log(`ambiguous define. count: ${results.length}`); // eslint-disable-line no-console
+                continue;
+            }
+            definitions.push(results[0].process());
         }
 
         this.view.dispatch({
             effects: this.parserOptions.reconfigure([
                 StreamLanguage.define(toshParser({
-                    variables: variableNames,
-                    lists: listNames,
-                    definitions: []
+                    variables,
+                    lists,
+                    definitions
                 }))
             ])
         });
@@ -179,6 +204,27 @@ class CodeEditor extends React.Component {
             {tag: tags['s-error'], color: colors.error},
             {tag: tags['s-grey'], color: colors.codeTransparentText}
         ]);
+    }
+    handleViewUpdate (update) {
+        if (update.docChanged) {
+            const doc = this.view.state.doc;
+            const changedLines = new Set();
+            update.changes.iterChanges((fromA, toA, fromB, toB) => {
+                const firstLine = doc.lineAt(fromB).number;
+                const lastLine = doc.lineAt(toB).number;
+                for (let line = firstLine; line <= lastLine; line++) {
+                    changedLines.add(line);
+                }
+            });
+            for (const lineNumber of changedLines) {
+                if (ToshLanguage.isDefinitionLine(doc.line(lineNumber).text)) {
+                    // Definition changed - need to repaint
+                    if (this.repaintTimeout) clearTimeout(this.repaintTimeout);
+                    this.repaintTimeout = setTimeout(this.updateParserOptions, 1000);
+                    break;
+                }
+            }
+        }
     }
     render () {
         /* eslint-disable no-unused-vars */
