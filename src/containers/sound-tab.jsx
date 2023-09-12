@@ -193,9 +193,9 @@ class SoundTab extends React.Component {
 
         const sounds = sprite.sounds ? sprite.sounds.map(sound => (
             {
-                url: isRtl
-                    ? (themeMap[theme].dark ? soundIconRtlWhite : soundIconRtl)
-                    : (themeMap[theme].dark ? soundIconWhite : soundIcon),
+                url: isRtl ?
+                    (themeMap[theme].dark ? soundIconRtlWhite : soundIconRtl) :
+                    (themeMap[theme].dark ? soundIconWhite : soundIcon),
                 name: sound.name,
                 details: (sound.sampleCount / sound.rate).toFixed(2),
                 dragPayload: sound

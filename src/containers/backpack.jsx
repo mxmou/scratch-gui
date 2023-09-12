@@ -8,8 +8,7 @@ import {
     deleteBackpackObject,
     soundPayload,
     costumePayload,
-    spritePayload,
-    codePayload
+    spritePayload
 } from '../lib/backpack-api';
 import DragConstants from '../lib/drag-constants';
 import DropAreaHOC from '../lib/drop-area-hoc.jsx';

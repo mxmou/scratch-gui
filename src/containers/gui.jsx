@@ -58,7 +58,7 @@ class GUI extends React.Component {
         }
         if (this.props.stageSizeMode !== prevProps.stageSizeMode) {
             // Resize paint editor canvas - this is done in the Blocks component in vanilla Scratch
-            window.dispatchEvent(new Event("resize"));
+            window.dispatchEvent(new Event('resize'));
         }
     }
     render () {

@@ -46,6 +46,7 @@ import soundsIcon from './icon--sounds.svg';
 let isRendererSupported = null;
 
 const GUIComponent = props => {
+    /* eslint-disable no-unused-vars */
     const {
         accountNavOpen,
         activeTabIndex,
@@ -116,6 +117,7 @@ const GUIComponent = props => {
         vm,
         ...componentProps
     } = omit(props, 'dispatch');
+    /* eslint-enable no-unused-vars */
     if (children) {
         return <Box {...componentProps}>{children}</Box>;
     }

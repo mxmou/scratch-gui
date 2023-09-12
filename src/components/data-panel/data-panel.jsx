@@ -104,7 +104,7 @@ const DataPanelComponent = ({
                 defaultValue=""
                 isStage={isStage}
                 showListMessage={promptType === Variable.LIST_TYPE}
-                showVariableOptions={true}
+                showVariableOptions
                 showCloudOption={promptType === Variable.SCALAR_TYPE && canUseCloud}
                 vm={vm}
                 onCancel={onPromptClose}
@@ -141,7 +141,7 @@ const variableShape = PropTypes.shape({
 });
 
 DataPanelComponent.propTypes = {
-    blocksMessages: PropTypes.object.isRequired,
+    blocksMessages: PropTypes.objectOf(PropTypes.string).isRequired,
     canUseCloud: PropTypes.bool,
     globalLists: PropTypes.arrayOf(variableShape).isRequired,
     globalVariables: PropTypes.arrayOf(variableShape).isRequired,

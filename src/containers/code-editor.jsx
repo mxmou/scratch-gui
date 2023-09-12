@@ -181,6 +181,7 @@ class CodeEditor extends React.Component {
         ]);
     }
     render () {
+        /* eslint-disable no-unused-vars */
         const {
             vm,
             sprites,
@@ -189,6 +190,7 @@ class CodeEditor extends React.Component {
             theme,
             ...componentProps
         } = this.props;
+        /* eslint-enable no-unused-vars */
         if (!vm.editingTarget) {
             return null;
         }
@@ -201,11 +203,19 @@ class CodeEditor extends React.Component {
     }
 }
 
+const targetShape = PropTypes.shape({
+    variables: PropTypes.objectOf(PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        type: PropTypes.string
+    }))
+});
+
 CodeEditor.propTypes = {
     editingTarget: PropTypes.string,
     theme: PropTypes.string,
-    sprites: PropTypes.object,
-    stage: PropTypes.object,
+    sprites: PropTypes.objectOf(targetShape),
+    stage: targetShape,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

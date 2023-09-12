@@ -33,14 +33,14 @@ class DataPanel extends React.Component {
     }
     getVariablesOfType (variables, type) {
         return Object.entries(variables)
-            .filter(([_, variable]) => variable.type === type)
+            .filter(([id, variable]) => variable.type === type) // eslint-disable-line no-unused-vars
             .map(([id, variable]) => {
                 const monitor = this.props.monitors.get(id);
                 return {
                     id,
                     name: variable.name,
                     monitorVisible: monitor && monitor.visible
-                }
+                };
             })
             .sort((a, b) => {
                 if (a.name < b.name) return -1;
@@ -62,9 +62,8 @@ class DataPanel extends React.Component {
         const isLocal = Object.prototype.hasOwnProperty.call(target.variables, id);
         if (isLocal) {
             return target.variables[id];
-        } else {
-            return this.props.stage.variables[id];
         }
+        return this.props.stage.variables[id];
     }
     getExistingVariableNames (isLocal) {
         // Finds names that might conflict with a new variable
@@ -175,8 +174,8 @@ class DataPanel extends React.Component {
         }
         const existingVariableNames = this.getExistingVariableNames(isLocal);
         const existingVariablesMap = {};
-        for (let name of existingVariableNames) {
-            existingVariablesMap[name] = true;
+        for (const existingName of existingVariableNames) {
+            existingVariablesMap[existingName] = true;
         }
         name = ToshLanguage.cleanName(
             {
@@ -207,7 +206,7 @@ class DataPanel extends React.Component {
         this.props.vm.emitTargetsUpdate();
     }
     handleToggleVisibility (id) {
-        return (e) => {
+        return e => {
             if (!this.props.vm.runtime.monitorBlocks.getBlock(id)) {
                 const variable = this.findVariable(id);
                 if (!variable) return;
@@ -218,7 +217,7 @@ class DataPanel extends React.Component {
                 element: 'checkbox',
                 value: e.target.checked
             });
-        }
+        };
     }
     handleRenameVariableClick (id, name) {
         return () => {
@@ -253,6 +252,7 @@ class DataPanel extends React.Component {
         };
     }
     render () {
+        /* eslint-disable no-unused-vars */
         const {
             vm,
             sprites,
@@ -260,6 +260,7 @@ class DataPanel extends React.Component {
             editingTarget,
             ...componentProps
         } = this.props;
+        /* eslint-enable no-unused-vars */
         if (!vm.editingTarget) {
             return null;
         }
@@ -294,17 +295,25 @@ class DataPanel extends React.Component {
                 onRenameListClick={this.handleRenameListClick}
                 onDeleteClick={this.handleDeleteClick}
             />
-        )
+        );
     }
 }
+
+const targetShape = PropTypes.shape({
+    variables: PropTypes.objectOf(PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        type: PropTypes.string
+    }))
+});
 
 DataPanel.propTypes = {
     editingTarget: PropTypes.string,
     monitors: PropTypes.instanceOf(OrderedMap).isRequired,
-    sprites: PropTypes.object,
-    stage: PropTypes.object,
+    sprites: PropTypes.objectOf(targetShape),
+    stage: targetShape,
     vm: PropTypes.instanceOf(VM).isRequired
-}
+};
 
 const mapStateToProps = state => ({
     blocksMessages: state.locales.blocksMessages,

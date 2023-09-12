@@ -17,7 +17,8 @@ const CodeEditorComponent = ({
 );
 
 CodeEditorComponent.propTypes = {
-    className: PropTypes.string
+    className: PropTypes.string,
+    containerRef: PropTypes.func
 };
 
 export default CodeEditorComponent;

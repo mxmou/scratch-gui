@@ -18,10 +18,10 @@ class InlineIcon extends React.Component {
     }
     componentDidUpdate (prevProps) {
         if (
-            this.props.alt !== prevProps.alt
-            || this.props.className !== prevProps.className
-            || this.props.src !== prevProps.src
-            || this.props.title !== prevProps.title
+            this.props.alt !== prevProps.alt ||
+            this.props.className !== prevProps.className ||
+            this.props.src !== prevProps.src ||
+            this.props.title !== prevProps.title
         ) {
             this.updateIcon();
         }
@@ -38,8 +38,8 @@ class InlineIcon extends React.Component {
                 const svgDocument = new DOMParser().parseFromString(responseText, 'image/svg+xml');
                 if (this.props.title) {
                     svgDocument.title = this.props.title;
-                } else if (svgDocument.querySelector("title")) {
-                    svgDocument.querySelector("title").remove();
+                } else if (svgDocument.querySelector('title')) {
+                    svgDocument.querySelector('title').remove();
                 }
                 this.svgElement = svgDocument.documentElement;
                 if (this.props.className) {
@@ -52,7 +52,7 @@ class InlineIcon extends React.Component {
                     this.svgElement.setAttribute('aria-hidden', true);
                 }
                 this.element.appendChild(this.svgElement);
-            })
+            });
         });
     }
     render () {

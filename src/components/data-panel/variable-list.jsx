@@ -22,7 +22,7 @@ const VariableList = ({
         <React.Fragment>
             <div className={styles.variableListTitle}>{title}</div>
             <ul className={styles.variableList}>
-                {items.map(({ id, name, monitorVisible }) => (
+                {items.map(({id, name, monitorVisible}) => (
                     <li
                         key={id}
                         className={classNames(styles.variableListItem, itemClassName)}
@@ -77,7 +77,7 @@ const VariableList = ({
 );
 
 VariableList.propTypes = {
-    blocksMessages: PropTypes.object.isRequired,
+    blocksMessages: PropTypes.objectOf(PropTypes.string).isRequired,
     itemClassName: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string.isRequired,
