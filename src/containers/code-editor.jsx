@@ -107,7 +107,6 @@ class CodeEditor extends React.Component {
             ]
         });
         this.updateParserOptions();
-        if (document.activeElement === document.body) this.view.focus();
     }
     componentDidUpdate () {
         this.updateTheme();
@@ -124,6 +123,7 @@ class CodeEditor extends React.Component {
         this.element = element;
         if (element && this.view) {
             element.appendChild(this.view.dom);
+            if (document.activeElement === document.body) this.view.focus();
         }
     }
     updateTheme () {
