@@ -82,7 +82,7 @@ class CodeEditor extends React.Component {
     }
     componentDidUpdate () {
         this.updateTheme();
-        this.updateParserOptions();
+        if (!this.repaintTimeout) this.repaintTimeout = setTimeout(this.updateParserOptions, 1000);
     }
     getVariableNamesOfType (variables, type) {
         return Object.values(variables)
@@ -107,6 +107,8 @@ class CodeEditor extends React.Component {
         });
     }
     updateParserOptions () {
+        this.repaintTimeout = null;
+
         const target = this.props.vm.editingTarget;
         if (!target) {
             return;
