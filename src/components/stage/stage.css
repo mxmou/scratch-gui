@@ -27,7 +27,7 @@
 }
 
 .stage.full-screen {
-    border: $stage-full-screen-border-width solid rgb(126, 133, 151);
+    border: $stage-full-screen-border-width solid $full-screen-stage-border;
 }
 
 .with-color-picker {

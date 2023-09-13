@@ -7,6 +7,9 @@ $ui-white-bg-dim: var(--ui-white-bg-dim, hsla(0, 100%, 100%, 0.75)); /* 75% tran
 $input-field: var(--input-field, hsla(0, 100%, 100%, 1)); /* #FFFFFF */
 
 $ui-modal-overlay: hsla(215, 60%, 50%, 0.9); /* 90% transparent version of motion */
+$full-screen-background: var(--full-screen-background, hsla(0, 100%, 100%, 1)); /* #FFFFFF */
+$full-screen-header: var(--full-screen-header, hsla(215, 25%, 95%, 1)); /* #EFF2F5 */
+$full-screen-stage-border: hsla(225, 15%, 55%, 1); /* #7B849D */
 
 $ui-white: hsla(0, 100%, 100%, 1); /* #FFFFFF */
 $ui-white-dim: hsla(0, 100%, 100%, 0.75); /* 25% transparent version of ui-white */

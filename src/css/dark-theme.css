@@ -9,6 +9,9 @@
     --ui-white-bg-dim: hsla(225, 15%, 25%, 0.75); /* 75% transparent version of ui-white-bg */
     --input-field: hsla(0, 0%, 0%, 0.25); /* 25% transparent version of black */
 
+    --full-screen-background: hsla(225, 15%, 15%, 1); /* #21232C */
+    --full-screen-header: hsla(225, 15%, 20%, 1); /* #2B2F3B */
+
     --ui-black-transparent: hsla(0, 0%, 0%, 0.25); /* 25% transparent version of black */
 
     --text-primary: hsla(0, 100%, 100%, 1); /* #FFFFFF */
