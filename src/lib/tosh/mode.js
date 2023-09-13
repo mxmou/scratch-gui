@@ -1,6 +1,7 @@
 import assert from './assert';
 import * as Earley from './earley';
 import * as Language from './language';
+import toshTags from '../code-editor/tags';
 
 export default function(modeCfg) {
 
@@ -150,6 +151,7 @@ export default function(modeCfg) {
         return "s-" + token.kind;
       }
     },
+    tokenTable: toshTags,
 
     blankLine: function(state) {
       state.parseAndPaint([]);
