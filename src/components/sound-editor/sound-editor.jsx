@@ -186,7 +186,7 @@ const SoundEditor = props => (
             <IconButton
                 className={styles.toolButton}
                 disabled={props.trimStart === null}
-                img={getIconsForTheme(props.theme).delete.accent}
+                img={getIconsForTheme(props.theme).trim.accent}
                 title={props.intl.formatMessage(messages.delete)}
                 onClick={props.onDelete}
             />

@@ -19,7 +19,6 @@ import clearIcon from '../../../components/filter/icon--x-dark-mode.svg';
 import codeIconAccent from '../../../components/gui/icon--code-dark-mode.svg';
 import copyIcon from '../../../components/sound-editor/icon--copy-dark-mode.svg';
 import copyToNewIcon from '../../../components/sound-editor/icon--copy-to-new-dark-mode.svg';
-import deleteIconAccent from '../../../components/sound-editor/icon--delete-dark-mode.svg';
 import dontRotateIconAccent from '../../../components/direction-picker/icon--dont-rotate-dark-mode.svg';
 import filterIcon from '../../../components/filter/icon--filter-dark-mode.svg';
 import hideIconAccent from '../../../components/sprite-info/icon--hide-dark-mode.svg';
@@ -32,6 +31,7 @@ import rotateLeftRightIconAccent from '../../../components/direction-picker/icon
 import showIconAccent from '../../../components/sprite-info/icon--show-dark-mode.svg';
 import smallStageIconAccent from '../../../components/stage-header/icon--small-stage-dark-mode.svg';
 import soundIconAccent from '../../../components/gui/icon--sounds-dark-mode.svg';
+import trimIcon from '../../../components/sound-editor/icon--delete-dark-mode.svg';
 import undoIcon from '../../../components/sound-editor/icon--undo-dark-mode.svg';
 
 import checkIcon from '../../../components/data-panel/icon--check-black.svg';
@@ -170,7 +170,6 @@ const icons = {
     },
     delete: {
         default: deleteIconDefault,
-        accent: deleteIconAccent,
         onAccent: deleteIconOnAccent
     },
     dontRotate: {
@@ -251,6 +250,9 @@ const icons = {
     },
     surprise: {
         onAccent: surpriseIcon
+    },
+    trim: {
+        accent: trimIcon
     },
     undo: {
         accent: undoIcon

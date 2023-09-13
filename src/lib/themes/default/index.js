@@ -19,7 +19,6 @@ import clearIcon from '../../../components/filter/icon--x.svg';
 import codeIconAccent from '../../../components/gui/icon--code.svg';
 import copyIcon from '../../../components/sound-editor/icon--copy.svg';
 import copyToNewIcon from '../../../components/sound-editor/icon--copy-to-new.svg';
-import deleteIconAccent from '../../../components/sound-editor/icon--delete.svg';
 import dontRotateIconAccent from '../../../components/direction-picker/icon--dont-rotate.svg';
 import filterIcon from '../../../components/filter/icon--filter.svg';
 import hideIconAccent from '../../../components/sprite-info/icon--hide.svg';
@@ -32,6 +31,7 @@ import rotateLeftRightIconAccent from '../../../components/direction-picker/icon
 import showIconAccent from '../../../components/sprite-info/icon--show.svg';
 import smallStageIconAccent from '../../../components/stage-header/icon--small-stage.svg';
 import soundIconAccent from '../../../components/gui/icon--sounds.svg';
+import trimIcon from '../../../components/sound-editor/icon--delete.svg';
 import undoIcon from '../../../components/sound-editor/icon--undo.svg';
 
 import checkIcon from '../../../components/data-panel/icon--check.svg';
@@ -192,7 +192,6 @@ const icons = {
     },
     delete: {
         default: deleteIconDefault,
-        accent: deleteIconAccent,
         onAccent: deleteIconOnAccent
     },
     dontRotate: {
@@ -273,6 +272,9 @@ const icons = {
     },
     surprise: {
         onAccent: surpriseIcon
+    },
+    trim: {
+        accent: trimIcon
     },
     undo: {
         accent: undoIcon
