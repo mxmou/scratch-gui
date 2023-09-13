@@ -1,6 +1,7 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {connect} from 'react-redux';
 
 import DirectionComponent, {RotationStyles} from '../components/direction-picker/direction-picker.jsx';
 
@@ -41,6 +42,7 @@ class DirectionPicker extends React.Component {
                 labelAbove={this.props.labelAbove}
                 popoverOpen={this.state.popoverOpen && !this.props.disabled}
                 rotationStyle={this.props.rotationStyle}
+                theme={this.props.theme}
                 onChangeDirection={this.props.onChangeDirection}
                 onClickAllAround={this.handleClickAllAround}
                 onClickDontRotate={this.handleClickDontRotate}
@@ -58,7 +60,12 @@ DirectionPicker.propTypes = {
     labelAbove: PropTypes.bool,
     onChangeDirection: PropTypes.func,
     onChangeRotationStyle: PropTypes.func,
-    rotationStyle: PropTypes.string
+    rotationStyle: PropTypes.string,
+    theme: PropTypes.string
 };
 
-export default DirectionPicker;
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default connect(mapStateToProps)(DirectionPicker);

@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
-import InlineIcon from '../inline-icon/inline-icon.jsx';
 import styles from './icon-button.css';
 
 const IconButton = ({
@@ -20,8 +19,9 @@ const IconButton = ({
         role="button"
         onClick={disabled ? null : onClick}
     >
-        <InlineIcon
+        <img
             className={styles.icon}
+            draggable={false}
             src={img}
         />
         <div className={styles.title}>

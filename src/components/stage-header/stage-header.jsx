@@ -8,14 +8,9 @@ import Box from '../box/box.jsx';
 import Button from '../button/button.jsx';
 import ToggleButtons from '../toggle-buttons/toggle-buttons.jsx';
 import Controls from '../../containers/controls.jsx';
-import InlineIcon from '../inline-icon/inline-icon.jsx';
 import {getStageDimensions} from '../../lib/screen-utils';
 import {STAGE_SIZE_MODES} from '../../lib/layout-constants';
-
-import fullScreenIcon from './icon--fullscreen.svg';
-import largeStageIcon from './icon--large-stage.svg';
-import smallStageIcon from './icon--small-stage.svg';
-import unFullScreenIcon from './icon--unfullscreen.svg';
+import {getIconsForTheme} from '../../lib/themes';
 
 import tb3Logo from '../menu-bar/tb3-logo.svg';
 import styles from './stage-header.css';
@@ -59,6 +54,7 @@ const StageHeaderComponent = function (props) {
         onSetStageUnFull,
         showBranding,
         stageSizeMode,
+        theme,
         vm
     } = props;
 
@@ -86,10 +82,11 @@ const StageHeaderComponent = function (props) {
                     onClick={onSetStageUnFull}
                     onKeyPress={onKeyPress}
                 >
-                    <InlineIcon
+                    <img
                         alt={props.intl.formatMessage(messages.unFullStageSizeMessage)}
                         className={styles.stageButtonIcon}
-                        src={unFullScreenIcon}
+                        draggable={false}
+                        src={getIconsForTheme(theme).exitFullScreen.default}
                         title={props.intl.formatMessage(messages.fullscreenControl)}
                     />
                 </Button>
@@ -116,14 +113,16 @@ const StageHeaderComponent = function (props) {
                         buttons={[
                             {
                                 handleClick: onSetStageSmall,
-                                icon: smallStageIcon,
+                                icon: getIconsForTheme(theme).smallStage.default,
+                                selectedIcon: getIconsForTheme(theme).smallStage.accent,
                                 iconClassName: styles.stageButtonIcon,
                                 isSelected: stageSizeMode === STAGE_SIZE_MODES.small,
                                 title: props.intl.formatMessage(messages.smallStageSizeMessage)
                             },
                             {
                                 handleClick: onSetStageLarge,
-                                icon: largeStageIcon,
+                                icon: getIconsForTheme(theme).largeStage.default,
+                                selectedIcon: getIconsForTheme(theme).largeStage.accent,
                                 iconClassName: styles.stageButtonIcon,
                                 isSelected: stageSizeMode === STAGE_SIZE_MODES.large,
                                 title: props.intl.formatMessage(messages.largeStageSizeMessage)
@@ -143,10 +142,11 @@ const StageHeaderComponent = function (props) {
                                 className={styles.stageButton}
                                 onClick={onSetStageFull}
                             >
-                                <InlineIcon
+                                <img
                                     alt={props.intl.formatMessage(messages.fullStageSizeMessage)}
                                     className={styles.stageButtonIcon}
-                                    src={fullScreenIcon}
+                                    draggable={false}
+                                    src={getIconsForTheme(theme).fullScreen.default}
                                     title={props.intl.formatMessage(messages.fullscreenControl)}
                                 />
                             </Button>
@@ -176,6 +176,7 @@ StageHeaderComponent.propTypes = {
     onSetStageUnFull: PropTypes.func.isRequired,
     showBranding: PropTypes.bool.isRequired,
     stageSizeMode: PropTypes.oneOf(Object.keys(STAGE_SIZE_MODES)),
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

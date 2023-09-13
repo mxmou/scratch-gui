@@ -10,28 +10,9 @@ import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 import AudioSelector from '../../containers/audio-selector.jsx';
 import IconButton from '../icon-button/icon-button.jsx';
-import InlineIcon from '../inline-icon/inline-icon.jsx';
+import {getIconsForTheme} from '../../lib/themes';
 
 import styles from './sound-editor.css';
-
-import playIcon from './icon--play.svg';
-import stopIcon from './icon--stop.svg';
-import redoIcon from './icon--redo.svg';
-import undoIcon from './icon--undo.svg';
-import fasterIcon from './icon--faster.svg';
-import slowerIcon from './icon--slower.svg';
-import louderIcon from './icon--louder.svg';
-import softerIcon from './icon--softer.svg';
-import robotIcon from './icon--robot.svg';
-import reverseIcon from './icon--reverse.svg';
-import fadeOutIcon from './icon--fade-out.svg';
-import fadeInIcon from './icon--fade-in.svg';
-import muteIcon from './icon--mute.svg';
-
-import deleteIcon from './icon--delete.svg';
-import copyIcon from './icon--copy.svg';
-import pasteIcon from './icon--paste.svg';
-import copyToNewIcon from './icon--copy-to-new.svg';
 
 const BufferedInput = BufferedInputHOC(Input);
 
@@ -161,9 +142,10 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.undo)}
                         onClick={props.onUndo}
                     >
-                        <InlineIcon
+                        <img
                             className={styles.undoIcon}
-                            src={undoIcon}
+                            draggable={false}
+                            src={getIconsForTheme(props.theme).undo.accent}
                         />
                     </button>
                     <button
@@ -172,9 +154,10 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.redo)}
                         onClick={props.onRedo}
                     >
-                        <InlineIcon
+                        <img
                             className={styles.redoIcon}
-                            src={redoIcon}
+                            draggable={false}
+                            src={getIconsForTheme(props.theme).redo.accent}
                         />
                     </button>
                 </div>
@@ -182,20 +165,20 @@ const SoundEditor = props => (
             <div className={styles.inputGroup}>
                 <IconButton
                     className={styles.toolButton}
-                    img={copyIcon}
+                    img={getIconsForTheme(props.theme).copy.accent}
                     title={props.intl.formatMessage(messages.copy)}
                     onClick={props.onCopy}
                 />
                 <IconButton
                     className={styles.toolButton}
                     disabled={props.canPaste === false}
-                    img={pasteIcon}
+                    img={getIconsForTheme(props.theme).paste.accent}
                     title={props.intl.formatMessage(messages.paste)}
                     onClick={props.onPaste}
                 />
                 <IconButton
                     className={classNames(styles.toolButton, styles.flipInRtl)}
-                    img={copyToNewIcon}
+                    img={getIconsForTheme(props.theme).copyToNew.accent}
                     title={props.intl.formatMessage(messages.copyToNew)}
                     onClick={props.onCopyToNew}
                 />
@@ -203,7 +186,7 @@ const SoundEditor = props => (
             <IconButton
                 className={styles.toolButton}
                 disabled={props.trimStart === null}
-                img={deleteIcon}
+                img={getIconsForTheme(props.theme).delete.accent}
                 title={props.intl.formatMessage(messages.delete)}
                 onClick={props.onDelete}
             />
@@ -233,7 +216,10 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.stop)}
                         onClick={props.onStop}
                     >
-                        <InlineIcon src={stopIcon} />
+                        <img
+                            draggable={false}
+                            src={getIconsForTheme(props.theme).stop.onAccent}
+                        />
                     </button>
                 ) : (
                     <button
@@ -241,62 +227,65 @@ const SoundEditor = props => (
                         title={props.intl.formatMessage(messages.play)}
                         onClick={props.onPlay}
                     >
-                        <InlineIcon src={playIcon} />
+                        <img
+                            draggable={false}
+                            src={getIconsForTheme(props.theme).play.onAccent}
+                        />
                     </button>
                 )}
             </div>
             <IconButton
                 className={styles.effectButton}
-                img={fasterIcon}
+                img={getIconsForTheme(props.theme).faster}
                 title={<FormattedMessage {...messages.faster} />}
                 onClick={props.onFaster}
             />
             <IconButton
                 className={styles.effectButton}
-                img={slowerIcon}
+                img={getIconsForTheme(props.theme).slower}
                 title={<FormattedMessage {...messages.slower} />}
                 onClick={props.onSlower}
             />
             <IconButton
                 disabled={props.tooLoud}
                 className={classNames(styles.effectButton, styles.flipInRtl)}
-                img={louderIcon}
+                img={getIconsForTheme(props.theme).louder}
                 title={<FormattedMessage {...messages.louder} />}
                 onClick={props.onLouder}
             />
             <IconButton
                 className={classNames(styles.effectButton, styles.flipInRtl)}
-                img={softerIcon}
+                img={getIconsForTheme(props.theme).softer}
                 title={<FormattedMessage {...messages.softer} />}
                 onClick={props.onSofter}
             />
             <IconButton
                 className={classNames(styles.effectButton, styles.flipInRtl)}
-                img={muteIcon}
+                img={getIconsForTheme(props.theme).mute}
                 title={<FormattedMessage {...messages.mute} />}
                 onClick={props.onMute}
             />
             <IconButton
                 className={styles.effectButton}
-                img={fadeInIcon}
+                img={getIconsForTheme(props.theme).fadeIn}
                 title={<FormattedMessage {...messages.fadeIn} />}
                 onClick={props.onFadeIn}
             />
             <IconButton
                 className={styles.effectButton}
-                img={fadeOutIcon}
+                img={getIconsForTheme(props.theme).fadeOut}
                 title={<FormattedMessage {...messages.fadeOut} />}
                 onClick={props.onFadeOut}
             />
             <IconButton
                 className={styles.effectButton}
-                img={reverseIcon}
+                img={getIconsForTheme(props.theme).reverse}
                 title={<FormattedMessage {...messages.reverse} />}
                 onClick={props.onReverse}
             />
             <IconButton
                 className={styles.effectButton}
-                img={robotIcon}
+                img={getIconsForTheme(props.theme).robot}
                 title={<FormattedMessage {...messages.robot} />}
                 onClick={props.onRobot}
             />
@@ -334,6 +323,7 @@ SoundEditor.propTypes = {
     onUndo: PropTypes.func.isRequired,
     playhead: PropTypes.number,
     setRef: PropTypes.func,
+    theme: PropTypes.string,
     tooLoud: PropTypes.bool.isRequired,
     trimEnd: PropTypes.number,
     trimStart: PropTypes.number

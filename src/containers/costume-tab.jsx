@@ -13,6 +13,7 @@ import DragConstants from '../lib/drag-constants';
 import {emptyCostume} from '../lib/empty-assets';
 import sharedMessages from '../lib/shared-messages';
 import downloadBlob from '../lib/download-blob';
+import {getIconsForTheme} from '../lib/themes';
 
 import {
     openCostumeLibrary,
@@ -26,13 +27,6 @@ import {
 
 import {setRestore} from '../reducers/restore-deletion';
 import {showStandardAlert, closeAlertWithId} from '../reducers/alerts';
-
-import addLibraryBackdropIcon from '../components/asset-panel/icon--add-backdrop-lib.svg';
-import addLibraryCostumeIcon from '../components/asset-panel/icon--add-costume-lib.svg';
-import fileUploadIcon from '../components/action-menu/icon--file-upload.svg';
-import paintIcon from '../components/action-menu/icon--paint.svg';
-import surpriseIcon from '../components/action-menu/icon--surprise.svg';
-import searchIcon from '../components/action-menu/icon--search.svg';
 
 import costumeLibraryContent from '../lib/libraries/costumes.json';
 import backdropLibraryContent from '../lib/libraries/backdrops.json';
@@ -248,6 +242,7 @@ class CostumeTab extends React.Component {
             isRtl,
             onNewLibraryBackdropClick,
             onNewLibraryCostumeClick,
+            theme,
             vm
         } = this.props;
 
@@ -262,7 +257,7 @@ class CostumeTab extends React.Component {
         const addFileMessage = isStage ? messages.addFileBackdropMsg : messages.addFileCostumeMsg;
         const addSurpriseFunc = isStage ? this.handleSurpriseBackdrop : this.handleSurpriseCostume;
         const addLibraryFunc = isStage ? onNewLibraryBackdropClick : onNewLibraryCostumeClick;
-        const addLibraryIcon = isStage ? addLibraryBackdropIcon : addLibraryCostumeIcon;
+        const addLibraryIcon = getIconsForTheme(theme)[isStage ? 'newBackdrop' : 'newSprite'].onAccent;
 
         const costumeData = target.costumes ? target.costumes.map(costume => ({
             name: costume.name,
@@ -280,7 +275,7 @@ class CostumeTab extends React.Component {
                     },
                     {
                         title: intl.formatMessage(addFileMessage),
-                        img: fileUploadIcon,
+                        img: getIconsForTheme(theme).upload.onAccent,
                         onClick: this.handleFileUploadClick,
                         fileAccept: '.svg, .png, .bmp, .jpg, .jpeg, .gif',
                         fileChange: this.handleCostumeUpload,
@@ -289,17 +284,17 @@ class CostumeTab extends React.Component {
                     },
                     {
                         title: intl.formatMessage(messages.addSurpriseCostumeMsg),
-                        img: surpriseIcon,
+                        img: getIconsForTheme(theme).surprise.onAccent,
                         onClick: addSurpriseFunc
                     },
                     {
                         title: intl.formatMessage(messages.addBlankCostumeMsg),
-                        img: paintIcon,
+                        img: getIconsForTheme(theme).paint.onAccent,
                         onClick: this.handleNewBlankCostume
                     },
                     {
                         title: intl.formatMessage(addLibraryMessage),
-                        img: searchIcon,
+                        img: getIconsForTheme(theme).search.onAccent,
                         onClick: addLibraryFunc
                     }
                 ]}
@@ -349,6 +344,7 @@ CostumeTab.propTypes = {
             name: PropTypes.string.isRequired
         }))
     }),
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM)
 };
 
@@ -357,7 +353,8 @@ const mapStateToProps = state => ({
     isRtl: state.locales.isRtl,
     sprites: state.scratchGui.targets.sprites,
     stage: state.scratchGui.targets.stage,
-    dragging: state.scratchGui.assetDrag.dragging
+    dragging: state.scratchGui.assetDrag.dragging,
+    theme: state.scratchGui.theme.theme
 });
 
 const mapDispatchToProps = dispatch => ({

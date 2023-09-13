@@ -2,6 +2,7 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {connect} from 'react-redux';
 import VM from 'scratch-vm';
 
 import costumeLibraryContent from '../lib/libraries/costumes.json';
@@ -40,6 +41,7 @@ class CostumeLibrary extends React.PureComponent {
                 data={costumeLibraryContent}
                 id="costumeLibrary"
                 tags={spriteTags}
+                theme={this.props.theme}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
                 onItemSelected={this.handleItemSelected}
                 onRequestClose={this.props.onRequestClose}
@@ -51,7 +53,12 @@ class CostumeLibrary extends React.PureComponent {
 CostumeLibrary.propTypes = {
     intl: intlShape.isRequired,
     onRequestClose: PropTypes.func,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
-export default injectIntl(CostumeLibrary);
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default injectIntl(connect(mapStateToProps)(CostumeLibrary));

@@ -17,7 +17,6 @@ $ui-black-transparent: var(--ui-black-transparent, hsla(0, 0%, 0%, 0.15)); /* 15
 
 $text-primary: var(--text-primary, hsla(225, 15%, 40%, 1)); /* #575E75 */
 $text-primary-transparent: var(--text-primary-transparent, hsla(225, 15%, 40%, 0.75));
-$text-light-transparent: var(--text-light-transparent, hsla(225, 15%, 40%, 0.5)); /* 50% transparent version of text-primary */
 $text-on-accent: var(--text-on-accent, hsla(0, 100%, 100%, 1)); /* #FFFFFF */
 $text-on-accent-dim: var(--text-on-accent-dim, hsla(0, 100%, 100%, 0.75)); /* 75% transparent version of text-on-accent */
 

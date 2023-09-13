@@ -101,7 +101,6 @@
     top: calc(50% - 0.5rem);
     width: 1rem;
     height: 1rem;
-    color: $text-on-accent;
     pointer-events: none;
 }
 
@@ -113,7 +112,7 @@
     right: 0;
 }
 
-.checkbox:checked + span > .checked-icon {
+.checkbox:checked + .checked-icon {
     display: block;
 }
 
@@ -131,7 +130,6 @@
     padding: 0;
     background-color: transparent;
     border: none;
-    color: $text-primary-transparent;
     cursor: pointer;
 }
 
@@ -146,4 +144,5 @@
 .variable-action-icon {
     width: 1rem;
     height: 1rem;
+    opacity: 0.75;
 }

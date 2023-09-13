@@ -51,6 +51,7 @@ const SpriteSelectorItem = props => (
             <DeleteButton
                 className={styles.deleteButton}
                 onClick={props.onDeleteButtonClick}
+                theme={props.theme}
             />
         ) : null }
         {props.onDuplicateButtonClick || props.onDeleteButtonClick || props.onExportButtonClick ? (
@@ -102,7 +103,8 @@ SpriteSelectorItem.propTypes = {
     onMouseEnter: PropTypes.func,
     onMouseLeave: PropTypes.func,
     preventContextMenu: PropTypes.bool,
-    selected: PropTypes.bool.isRequired
+    selected: PropTypes.bool.isRequired,
+    theme: PropTypes.string
 };
 
 export default SpriteSelectorItem;

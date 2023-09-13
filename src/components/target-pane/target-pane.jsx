@@ -44,6 +44,7 @@ const TargetPane = ({
     stage,
     stageSize,
     sprites,
+    theme,
     vm,
     ...componentProps
 }) => (
@@ -60,6 +61,7 @@ const TargetPane = ({
             spriteFileInput={fileInputRef}
             sprites={sprites}
             stageSize={stageSize}
+            theme={theme}
             onChangeSpriteDirection={onChangeSpriteDirection}
             onChangeSpriteName={onChangeSpriteName}
             onChangeSpriteRotationStyle={onChangeSpriteRotationStyle}
@@ -158,6 +160,7 @@ TargetPane.propTypes = {
     sprites: PropTypes.objectOf(spriteShape),
     stage: spriteShape,
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM)
 };
 

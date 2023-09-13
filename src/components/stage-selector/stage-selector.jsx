@@ -7,12 +7,7 @@ import Box from '../box/box.jsx';
 import ActionMenu from '../action-menu/action-menu.jsx';
 import styles from './stage-selector.css';
 import {isRtl} from 'scratch-l10n';
-
-import backdropIcon from '../action-menu/icon--backdrop.svg';
-import fileUploadIcon from '../action-menu/icon--file-upload.svg';
-import paintIcon from '../action-menu/icon--paint.svg';
-import surpriseIcon from '../action-menu/icon--surprise.svg';
-import searchIcon from '../action-menu/icon--search.svg';
+import {getIconsForTheme} from '../../lib/themes';
 
 const messages = defineMessages({
     addBackdropFromLibrary: {
@@ -47,6 +42,7 @@ const StageSelector = props => {
         selected,
         raised,
         receivedBlocks,
+        theme,
         url,
         onBackdropFileUploadClick,
         onBackdropFileUpload,
@@ -96,11 +92,11 @@ const StageSelector = props => {
             <div className={styles.count}>{backdropCount}</div>
             <ActionMenu
                 className={styles.addButton}
-                img={backdropIcon}
+                img={getIconsForTheme(theme).newBackdrop.onAccent}
                 moreButtons={[
                     {
                         title: intl.formatMessage(messages.addBackdropFromFile),
-                        img: fileUploadIcon,
+                        img: getIconsForTheme(theme).upload.onAccent,
                         onClick: onBackdropFileUploadClick,
                         fileAccept: '.svg, .png, .bmp, .jpg, .jpeg, .gif',
                         fileChange: onBackdropFileUpload,
@@ -108,16 +104,16 @@ const StageSelector = props => {
                         fileMultiple: true
                     }, {
                         title: intl.formatMessage(messages.addBackdropFromSurprise),
-                        img: surpriseIcon,
+                        img: getIconsForTheme(theme).surprise.onAccent,
                         onClick: onSurpriseBackdropClick
 
                     }, {
                         title: intl.formatMessage(messages.addBackdropFromPaint),
-                        img: paintIcon,
+                        img: getIconsForTheme(theme).paint.onAccent,
                         onClick: onEmptyBackdropClick
                     }, {
                         title: intl.formatMessage(messages.addBackdropFromLibrary),
-                        img: searchIcon,
+                        img: getIconsForTheme(theme).search.onAccent,
                         onClick: onNewBackdropClick
                     }
                 ]}
@@ -146,6 +142,7 @@ StageSelector.propTypes = {
     raised: PropTypes.bool.isRequired,
     receivedBlocks: PropTypes.bool.isRequired,
     selected: PropTypes.bool.isRequired,
+    theme: PropTypes.string,
     url: PropTypes.string
 };
 

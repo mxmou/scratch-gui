@@ -1,3 +1,62 @@
+import codeIconDefault from '../../../components/gui/icon--code-gray.svg';
+import deleteIconDefault from '../../../components/delete-button/icon--delete-gray.svg';
+import dontRotateIconDefault from '../../../components/direction-picker/icon--dont-rotate-gray.svg';
+import editIcon from '../../../components/menu-bar/icon--edit-gray.svg';
+import exitFullScreenIcon from '../../../components/stage-header/icon--unfullscreen.svg';
+import fullScreenIcon from '../../../components/stage-header/icon--fullscreen.svg';
+import hideIconDefault from '../../../components/sprite-info/icon--hide-gray.svg';
+import largeStageIconDefault from '../../../components/stage-header/icon--large-stage-gray.svg';
+import paintIconDefault from '../../../components/gui/icon--costumes-gray.svg';
+import rotateAllAroundIconDefault from '../../../components/direction-picker/icon--all-around-gray.svg';
+import rotateLeftRightIconDefault from '../../../components/direction-picker/icon--left-right-gray.svg';
+import showIconDefault from '../../../components/sprite-info/icon--show-gray.svg';
+import smallStageIconDefault from '../../../components/stage-header/icon--small-stage-gray.svg';
+import soundIconDefault from '../../../components/gui/icon--sounds-gray.svg';
+import xPositionIcon from '../../../components/sprite-info/icon--x.svg';
+import yPositionIcon from '../../../components/sprite-info/icon--y.svg';
+
+import clearIcon from '../../../components/filter/icon--x.svg';
+import codeIconAccent from '../../../components/gui/icon--code.svg';
+import copyIcon from '../../../components/sound-editor/icon--copy.svg';
+import copyToNewIcon from '../../../components/sound-editor/icon--copy-to-new.svg';
+import deleteIconAccent from '../../../components/sound-editor/icon--delete.svg';
+import dontRotateIconAccent from '../../../components/direction-picker/icon--dont-rotate.svg';
+import filterIcon from '../../../components/filter/icon--filter.svg';
+import hideIconAccent from '../../../components/sprite-info/icon--hide.svg';
+import largeStageIconAccent from '../../../components/stage-header/icon--large-stage.svg';
+import paintIconAccent from '../../../components/gui/icon--costumes.svg';
+import pasteIcon from '../../../components/sound-editor/icon--paste.svg';
+import redoIcon from '../../../components/sound-editor/icon--redo.svg';
+import rotateAllAroundIconAccent from '../../../components/direction-picker/icon--all-around.svg';
+import rotateLeftRightIconAccent from '../../../components/direction-picker/icon--left-right.svg';
+import showIconAccent from '../../../components/sprite-info/icon--show.svg';
+import smallStageIconAccent from '../../../components/stage-header/icon--small-stage.svg';
+import soundIconAccent from '../../../components/gui/icon--sounds.svg';
+import undoIcon from '../../../components/sound-editor/icon--undo.svg';
+
+import checkIcon from '../../../components/data-panel/icon--check.svg';
+import deleteIconOnAccent from '../../../components/delete-button/icon--delete.svg';
+import newBackdropIcon from '../../../components/action-menu/icon--backdrop.svg';
+import newSoundIcon from '../../../components/asset-panel/icon--add-sound-lib.svg';
+import newSpriteIcon from '../../../components/action-menu/icon--sprite.svg';
+import paintIconOnAccent from '../../../components/action-menu/icon--paint.svg';
+import playIcon from '../../../components/sound-editor/icon--play.svg';
+import recordIcon from '../../../components/asset-panel/icon--add-sound-record.svg';
+import searchIcon from '../../../components/action-menu/icon--search.svg';
+import stopIcon from '../../../components/sound-editor/icon--stop.svg';
+import surpriseIcon from '../../../components/action-menu/icon--surprise.svg';
+import uploadIcon from '../../../components/action-menu/icon--file-upload.svg';
+
+import fasterIcon from '../../../components/sound-editor/icon--faster.svg';
+import slowerIcon from '../../../components/sound-editor/icon--slower.svg';
+import louderIcon from '../../../components/sound-editor/icon--louder.svg';
+import softerIcon from '../../../components/sound-editor/icon--softer.svg';
+import muteIcon from '../../../components/sound-editor/icon--mute.svg';
+import fadeInIcon from '../../../components/sound-editor/icon--fade-in.svg';
+import fadeOutIcon from '../../../components/sound-editor/icon--fade-out.svg';
+import reverseIcon from '../../../components/sound-editor/icon--reverse.svg';
+import robotIcon from '../../../components/sound-editor/icon--robot.svg';
+
 const blockColors = {
     motion: {
         primary: '#4C97FF',
@@ -114,6 +173,132 @@ const blockColors = {
     error: '#E60000'
 };
 
+const icons = {
+    check: {
+        onAccent: checkIcon
+    },
+    clear: {
+        accent: clearIcon
+    },
+    code: {
+        default: codeIconDefault,
+        accent: codeIconAccent
+    },
+    copy: {
+        accent: copyIcon
+    },
+    copyToNew: {
+        accent: copyToNewIcon
+    },
+    delete: {
+        default: deleteIconDefault,
+        accent: deleteIconAccent,
+        onAccent: deleteIconOnAccent
+    },
+    dontRotate: {
+        default: dontRotateIconDefault,
+        accent: dontRotateIconAccent
+    },
+    edit: {
+        default: editIcon
+    },
+    exitFullScreen: {
+        default: exitFullScreenIcon
+    },
+    filter: {
+        accent: filterIcon
+    },
+    fullScreen: {
+        default: fullScreenIcon
+    },
+    hide: {
+        default: hideIconDefault,
+        accent: hideIconAccent
+    },
+    largeStage: {
+        default: largeStageIconDefault,
+        accent: largeStageIconAccent
+    },
+    newBackdrop: {
+        onAccent: newBackdropIcon
+    },
+    newSound: {
+        onAccent: newSoundIcon
+    },
+    newSprite: {
+        onAccent: newSpriteIcon
+    },
+    paint: {
+        default: paintIconDefault,
+        accent: paintIconAccent,
+        onAccent: paintIconOnAccent
+    },
+    paste: {
+        accent: pasteIcon
+    },
+    play: {
+        onAccent: playIcon
+    },
+    record: {
+        onAccent: recordIcon
+    },
+    redo: {
+        accent: redoIcon
+    },
+    rotateAllAround: {
+        default: rotateAllAroundIconDefault,
+        accent: rotateAllAroundIconAccent
+    },
+    rotateLeftRight: {
+        default: rotateLeftRightIconDefault,
+        accent: rotateLeftRightIconAccent
+    },
+    search: {
+        onAccent: searchIcon
+    },
+    show: {
+        default: showIconDefault,
+        accent: showIconAccent
+    },
+    smallStage: {
+        default: smallStageIconDefault,
+        accent: smallStageIconAccent
+    },
+    sound: {
+        default: soundIconDefault,
+        accent: soundIconAccent
+    },
+    stop: {
+        onAccent: stopIcon
+    },
+    surprise: {
+        onAccent: surpriseIcon
+    },
+    undo: {
+        accent: undoIcon
+    },
+    upload: {
+        onAccent: uploadIcon
+    },
+    xPosition: {
+        default: xPositionIcon
+    },
+    yPosition: {
+        default: yPositionIcon
+    },
+    // Sound effects
+    faster: fasterIcon,
+    slower: slowerIcon,
+    louder: louderIcon,
+    softer: softerIcon,
+    mute: muteIcon,
+    fadeIn: fadeInIcon,
+    fadeOut: fadeOutIcon,
+    reverse: reverseIcon,
+    robot: robotIcon
+};
+
 export {
-    blockColors
+    blockColors,
+    icons
 };

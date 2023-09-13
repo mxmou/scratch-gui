@@ -2,6 +2,7 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {connect} from 'react-redux';
 import VM from 'scratch-vm';
 
 import backdropLibraryContent from '../lib/libraries/backdrops.json';
@@ -41,6 +42,7 @@ class BackdropLibrary extends React.Component {
                 data={backdropLibraryContent}
                 id="backdropLibrary"
                 tags={backdropTags}
+                theme={this.props.theme}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
@@ -52,7 +54,12 @@ class BackdropLibrary extends React.Component {
 BackdropLibrary.propTypes = {
     intl: intlShape.isRequired,
     onRequestClose: PropTypes.func,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
-export default injectIntl(BackdropLibrary);
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default injectIntl(connect(mapStateToProps)(BackdropLibrary));

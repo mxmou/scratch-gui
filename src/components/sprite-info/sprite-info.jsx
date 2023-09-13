@@ -7,19 +7,15 @@ import Label from '../forms/label.jsx';
 import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 import DirectionPicker from '../../containers/direction-picker.jsx';
-import InlineIcon from '../inline-icon/inline-icon.jsx';
 
 import {injectIntl, intlShape, defineMessages, FormattedMessage} from 'react-intl';
 
 import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants.js';
 import {isWideLocale} from '../../lib/locale-utils.js';
+import {getIconsForTheme} from '../../lib/themes';
 
 import styles from './sprite-info.css';
 
-import xIcon from './icon--x.svg';
-import yIcon from './icon--y.svg';
-import showIcon from './icon--show.svg';
-import hideIcon from './icon--hide.svg';
 import ToggleButtons from '../toggle-buttons/toggle-buttons.jsx';
 
 const BufferedInput = BufferedInputHOC(Input);
@@ -50,6 +46,7 @@ class SpriteInfo extends React.Component {
             this.props.name !== nextProps.name ||
             this.props.stageSize !== nextProps.stageSize ||
             this.props.visible !== nextProps.visible ||
+            this.props.theme !== nextProps.theme ||
             // Only update these if rounded value has changed
             Math.round(this.props.direction) !== Math.round(nextProps.direction) ||
             Math.round(this.props.size) !== Math.round(nextProps.size) ||
@@ -108,9 +105,11 @@ class SpriteInfo extends React.Component {
                 {
                     (stageSize === STAGE_DISPLAY_SIZES.large) ?
                         <div className={styles.iconWrapper}>
-                            <InlineIcon
+                            <img
+                                aria-hidden="true"
                                 className={classNames(styles.xIcon, styles.icon)}
-                                src={xIcon}
+                                src={getIconsForTheme(this.props.theme).xPosition.default}
+                                draggable={false}
                             />
                         </div> :
                         null
@@ -134,9 +133,11 @@ class SpriteInfo extends React.Component {
                 {
                     (stageSize === STAGE_DISPLAY_SIZES.large) ?
                         <div className={styles.iconWrapper}>
-                            <InlineIcon
+                            <img
+                                aria-hidden="true"
                                 className={classNames(styles.yIcon, styles.icon)}
-                                src={yIcon}
+                                src={getIconsForTheme(this.props.theme).yPosition.default}
+                                draggable={false}
                             />
                         </div> :
                         null
@@ -199,13 +200,15 @@ class SpriteInfo extends React.Component {
                             buttons={[
                                 {
                                     handleClick: this.props.onClickVisible,
-                                    icon: showIcon,
+                                    icon: getIconsForTheme(this.props.theme).show.default,
+                                    selectedIcon: getIconsForTheme(this.props.theme).show.accent,
                                     isSelected: this.props.visible && !this.props.disabled,
                                     title: this.props.intl.formatMessage(messages.showSpriteAction)
                                 },
                                 {
                                     handleClick: this.props.onClickNotVisible,
-                                    icon: hideIcon,
+                                    icon: getIconsForTheme(this.props.theme).hide.default,
+                                    selectedIcon: getIconsForTheme(this.props.theme).hide.accent,
                                     isSelected: !this.props.visible && !this.props.disabled,
                                     title: this.props.intl.formatMessage(messages.hideSpriteAction)
                                 }
@@ -268,6 +271,7 @@ SpriteInfo.propTypes = {
         PropTypes.number
     ]),
     stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
+    theme: PropTypes.string,
     visible: PropTypes.bool,
     x: PropTypes.oneOfType([
         PropTypes.string,

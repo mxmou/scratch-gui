@@ -90,6 +90,7 @@ class TipsLibrary extends React.PureComponent {
                 data={decksLibraryThumbnailData}
                 id="tipsLibrary"
                 tags={tutorialTags}
+                theme={this.props.theme}
                 title={this.props.intl.formatMessage(messages.tipsLibraryTitle)}
                 visible={this.props.visible}
                 onItemSelected={this.handleItemSelect}
@@ -104,12 +105,14 @@ TipsLibrary.propTypes = {
     onActivateDeck: PropTypes.func.isRequired,
     onRequestClose: PropTypes.func,
     projectId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    theme: PropTypes.string,
     visible: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
     visible: state.scratchGui.modals.tipsLibrary,
-    projectId: state.scratchGui.projectState.projectId
+    projectId: state.scratchGui.projectState.projectId,
+    theme: state.scratchGui.theme.theme
 });
 
 const mapDispatchToProps = dispatch => ({

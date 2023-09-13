@@ -2,8 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import InlineIcon from '../inline-icon/inline-icon.jsx';
-
 import styles from './toggle-buttons.css';
 
 const ToggleButtons = ({buttons, className, disabled}) => (
@@ -26,9 +24,21 @@ const ToggleButtons = ({buttons, className, disabled}) => (
                 onClick={button.handleClick}
                 disabled={disabled}
             >
-                <InlineIcon
+                <img
+                    src={button.selectedIcon || button.icon}
+                    aria-hidden="true"
+                    className={classNames(button.iconClassName, {
+                        [styles.hiddenIcon]: !button.isSelected
+                    })}
+                    draggable={false}
+                />
+                <img
                     src={button.icon}
-                    className={button.iconClassName}
+                    aria-hidden="true"
+                    className={classNames(button.iconClassName, {
+                        [styles.hiddenIcon]: button.isSelected
+                    })}
+                    draggable={false}
                 />
             </button>
         ))}
@@ -40,6 +50,7 @@ ToggleButtons.propTypes = {
         title: PropTypes.string.isRequired,
         handleClick: PropTypes.func.isRequired,
         icon: PropTypes.string.isRequired,
+        selectedIcon: PropTypes.string,
         iconClassName: PropTypes.string,
         isSelected: PropTypes.bool
     })),

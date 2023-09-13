@@ -16,10 +16,19 @@
     position: relative;
     width: 34px;
     height: 34px;
+    padding: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $text-light-transparent;
+}
+
+.button > img {
+    display: block;
+    opacity: 0.5;
+}
+
+.button > .hidden-icon {
+    display: none;
 }
 
 .button:not(:last-child) {
@@ -61,7 +70,10 @@
 
 .button[aria-pressed='true'] {
     background-color: $motion-light-transparent;
-    color: $motion-accent;
+}
+
+.button[aria-pressed='true'] > img {
+    opacity: 1;
 }
 
 /* pressed button styling */

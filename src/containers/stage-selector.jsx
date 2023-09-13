@@ -191,7 +191,8 @@ const mapStateToProps = (state, {asset, id}) => ({
     vm: state.scratchGui.vm,
     receivedBlocks: state.scratchGui.hoveredTarget.receivedBlocks &&
             state.scratchGui.hoveredTarget.sprite === id,
-    raised: state.scratchGui.blockDrag
+    raised: state.scratchGui.blockDrag,
+    theme: state.scratchGui.theme.theme
 });
 
 const mapDispatchToProps = dispatch => ({

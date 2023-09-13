@@ -170,6 +170,7 @@ class SoundLibrary extends React.PureComponent {
                 id="soundLibrary"
                 setStopHandler={this.setStopHandler}
                 tags={soundTags}
+                theme={this.props.theme}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
                 onItemMouseEnter={this.handleItemMouseEnter}
                 onItemMouseLeave={this.handleItemMouseLeave}
@@ -185,11 +186,13 @@ SoundLibrary.propTypes = {
     isRtl: PropTypes.bool,
     onNewSound: PropTypes.func.isRequired,
     onRequestClose: PropTypes.func,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
-    isRtl: state.locales.isRtl
+    isRtl: state.locales.isRtl,
+    theme: state.scratchGui.theme.theme
 });
 
 const mapDispatchToProps = () => ({});

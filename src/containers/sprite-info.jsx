@@ -1,6 +1,7 @@
 import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
+import {connect} from 'react-redux';
 
 import SpriteInfoComponent from '../components/sprite-info/sprite-info.jsx';
 
@@ -39,8 +40,13 @@ SpriteInfo.propTypes = {
     onChangeVisibility: PropTypes.func,
     onChangeX: PropTypes.func,
     onChangeY: PropTypes.func,
+    theme: PropTypes.string,
     x: PropTypes.number,
     y: PropTypes.number
 };
 
-export default SpriteInfo;
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default connect(mapStateToProps)(SpriteInfo);

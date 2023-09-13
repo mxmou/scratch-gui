@@ -8,14 +8,9 @@ import SpriteList from './sprite-list.jsx';
 import ActionMenu from '../action-menu/action-menu.jsx';
 import {STAGE_DISPLAY_SIZES} from '../../lib/layout-constants';
 import {isRtl} from 'scratch-l10n';
+import {getIconsForTheme} from '../../lib/themes';
 
 import styles from './sprite-selector.css';
-
-import fileUploadIcon from '../action-menu/icon--file-upload.svg';
-import paintIcon from '../action-menu/icon--paint.svg';
-import spriteIcon from '../action-menu/icon--sprite.svg';
-import surpriseIcon from '../action-menu/icon--surprise.svg';
-import searchIcon from '../action-menu/icon--search.svg';
 
 const messages = defineMessages({
     addSpriteFromLibrary: {
@@ -67,6 +62,7 @@ const SpriteSelectorComponent = function (props) {
         spriteFileInput,
         sprites,
         stageSize,
+        theme,
         ...componentProps
     } = props;
     let selectedSprite = sprites[selectedId];
@@ -114,11 +110,11 @@ const SpriteSelectorComponent = function (props) {
             />
             <ActionMenu
                 className={styles.addButton}
-                img={spriteIcon}
+                img={getIconsForTheme(theme).newSprite.onAccent}
                 moreButtons={[
                     {
                         title: intl.formatMessage(messages.addSpriteFromFile),
-                        img: fileUploadIcon,
+                        img: getIconsForTheme(theme).upload.onAccent,
                         onClick: onFileUploadClick,
                         fileAccept: '.svg, .png, .bmp, .jpg, .jpeg, .sprite2, .sprite3, .gif',
                         fileChange: onSpriteUpload,
@@ -126,15 +122,15 @@ const SpriteSelectorComponent = function (props) {
                         fileMultiple: true
                     }, {
                         title: intl.formatMessage(messages.addSpriteFromSurprise),
-                        img: surpriseIcon,
+                        img: getIconsForTheme(theme).surprise.onAccent,
                         onClick: onSurpriseSpriteClick // TODO need real function for this
                     }, {
                         title: intl.formatMessage(messages.addSpriteFromPaint),
-                        img: paintIcon,
+                        img: getIconsForTheme(theme).paint.onAccent,
                         onClick: onPaintSpriteClick // TODO need real function for this
                     }, {
                         title: intl.formatMessage(messages.addSpriteFromLibrary),
-                        img: searchIcon,
+                        img: getIconsForTheme(theme).search.onAccent,
                         onClick: onNewSpriteClick
                     }
                 ]}
@@ -186,7 +182,8 @@ SpriteSelectorComponent.propTypes = {
             order: PropTypes.number.isRequired
         })
     }),
-    stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired
+    stageSize: PropTypes.oneOf(Object.keys(STAGE_DISPLAY_SIZES)).isRequired,
+    theme: PropTypes.string
 };
 
 export default injectIntl(SpriteSelectorComponent);

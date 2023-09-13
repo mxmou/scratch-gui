@@ -2,10 +2,8 @@ import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-import InlineIcon from '../inline-icon/inline-icon.jsx';
+import {getIconsForTheme} from '../../lib/themes';
 
-import filterIcon from './icon--filter.svg';
-import xIcon from './icon--x.svg';
 import styles from './filter.css';
 
 const FilterComponent = props => {
@@ -15,7 +13,8 @@ const FilterComponent = props => {
         onClear,
         placeholderText,
         filterQuery,
-        inputClassName
+        inputClassName,
+        theme
     } = props;
     return (
         <div
@@ -23,9 +22,10 @@ const FilterComponent = props => {
                 [styles.isActive]: filterQuery.length > 0
             })}
         >
-            <InlineIcon
+            <img
                 className={styles.filterIcon}
-                src={filterIcon}
+                src={getIconsForTheme(theme).filter.accent}
+                draggable={false}
             />
             <input
                 className={classNames(styles.filterInput, inputClassName)}
@@ -38,9 +38,10 @@ const FilterComponent = props => {
                 className={styles.xIconWrapper}
                 onClick={onClear}
             >
-                <InlineIcon
+                <img
                     className={styles.xIcon}
-                    src={xIcon}
+                    src={getIconsForTheme(theme).clear.accent}
+                    draggable={false}
                 />
             </div>
         </div>
@@ -53,7 +54,8 @@ FilterComponent.propTypes = {
     inputClassName: PropTypes.string,
     onChange: PropTypes.func,
     onClear: PropTypes.func,
-    placeholderText: PropTypes.string
+    placeholderText: PropTypes.string,
+    theme: PropTypes.string
 };
 FilterComponent.defaultProps = {
     placeholderText: 'Search'

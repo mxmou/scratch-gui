@@ -9,11 +9,6 @@ import soundIcon from '../components/asset-panel/icon--sound.svg';
 import soundIconWhite from '../components/asset-panel/icon--sound-white.svg';
 import soundIconRtl from '../components/asset-panel/icon--sound-rtl.svg';
 import soundIconRtlWhite from '../components/asset-panel/icon--sound-rtl-white.svg';
-import addSoundFromLibraryIcon from '../components/asset-panel/icon--add-sound-lib.svg';
-import addSoundFromRecordingIcon from '../components/asset-panel/icon--add-sound-record.svg';
-import fileUploadIcon from '../components/action-menu/icon--file-upload.svg';
-import surpriseIcon from '../components/action-menu/icon--surprise.svg';
-import searchIcon from '../components/action-menu/icon--search.svg';
 
 import RecordModal from './record-modal.jsx';
 import SoundEditor from './sound-editor.jsx';
@@ -24,7 +19,7 @@ import {handleFileUpload, soundUpload} from '../lib/file-uploader.js';
 import errorBoundaryHOC from '../lib/error-boundary-hoc.jsx';
 import DragConstants from '../lib/drag-constants';
 import downloadBlob from '../lib/download-blob';
-import {themeMap} from '../lib/themes';
+import {themeMap, getIconsForTheme} from '../lib/themes';
 
 import {connect} from 'react-redux';
 
@@ -229,11 +224,11 @@ class SoundTab extends React.Component {
             <AssetPanel
                 buttons={[{
                     title: intl.formatMessage(messages.addSound),
-                    img: addSoundFromLibraryIcon,
+                    img: getIconsForTheme(theme).newSound.onAccent,
                     onClick: onNewSoundFromLibraryClick
                 }, {
                     title: intl.formatMessage(messages.fileUploadSound),
-                    img: fileUploadIcon,
+                    img: getIconsForTheme(theme).upload.onAccent,
                     onClick: this.handleFileUploadClick,
                     fileAccept: '.wav, .mp3',
                     fileChange: this.handleSoundUpload,
@@ -241,15 +236,15 @@ class SoundTab extends React.Component {
                     fileMultiple: true
                 }, {
                     title: intl.formatMessage(messages.surpriseSound),
-                    img: surpriseIcon,
+                    img: getIconsForTheme(theme).surprise.onAccent,
                     onClick: this.handleSurpriseSound
                 }, {
                     title: intl.formatMessage(messages.recordSound),
-                    img: addSoundFromRecordingIcon,
+                    img: getIconsForTheme(theme).record.onAccent,
                     onClick: onNewSoundFromRecordingClick
                 }, {
                     title: intl.formatMessage(messages.addSound),
-                    img: searchIcon,
+                    img: getIconsForTheme(theme).search.onAccent,
                     onClick: onNewSoundFromLibraryClick
                 }]}
                 dragType={DragConstants.SOUND}

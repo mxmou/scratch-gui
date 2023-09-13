@@ -2,15 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-import InlineIcon from '../inline-icon/inline-icon.jsx';
+import {getIconsForTheme} from '../../lib/themes';
 
 import styles from './data-panel.css';
-import checkedIcon from './icon--check.svg';
-import renameIcon from './icon--edit.svg';
-import deleteIcon from '../delete-button/icon--delete.svg';
 
 const VariableList = ({
     blocksMessages,
+    theme,
     title,
     items,
     itemClassName,
@@ -34,10 +32,11 @@ const VariableList = ({
                             checked={monitorVisible}
                             onChange={onToggleVisibility(id)}
                         />
-                        <InlineIcon
+                        <img
                             className={styles.checkedIcon}
-                            src={checkedIcon}
-                            alt=""
+                            src={getIconsForTheme(theme).check.onAccent}
+                            aria-hidden="true"
+                            draggable={false}
                         />
                         <span
                             className={styles.variableName}
@@ -51,10 +50,11 @@ const VariableList = ({
                             title={blocksMessages.RENAME_VARIABLE}
                             onClick={onRenameClick(id, name)}
                         >
-                            <InlineIcon
+                            <img
                                 className={styles.variableActionIcon}
-                                src={renameIcon}
-                                alt=""
+                                src={getIconsForTheme(theme).edit.default}
+                                aria-hidden="true"
+                                draggable={false}
                             />
                         </button>
                         <button
@@ -63,10 +63,11 @@ const VariableList = ({
                             title={blocksMessages.DELETE_VARIABLE.replace('%1', name)}
                             onClick={onDeleteClick(id)}
                         >
-                            <InlineIcon
+                            <img
                                 className={styles.variableActionIcon}
-                                src={deleteIcon}
-                                alt=""
+                                src={getIconsForTheme(theme).delete.default}
+                                aria-hidden="true"
+                                draggable={false}
                             />
                         </button>
                     </li>
@@ -87,6 +88,7 @@ VariableList.propTypes = {
     onDeleteClick: PropTypes.func.isRequired,
     onRenameClick: PropTypes.func.isRequired,
     onToggleVisibility: PropTypes.func.isRequired,
+    theme: PropTypes.string,
     title: PropTypes.string
 };
 

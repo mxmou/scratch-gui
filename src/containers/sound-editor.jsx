@@ -439,6 +439,7 @@ class SoundEditor extends React.Component {
                 name={this.props.name}
                 playhead={this.state.playhead}
                 setRef={this.setRef}
+                theme={this.props.theme}
                 tooLoud={this.tooLoud()}
                 trimEnd={this.state.trimEnd}
                 trimStart={this.state.trimStart}
@@ -475,6 +476,7 @@ SoundEditor.propTypes = {
     samples: PropTypes.instanceOf(Float32Array),
     soundId: PropTypes.string,
     soundIndex: PropTypes.number,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
@@ -490,7 +492,8 @@ const mapStateToProps = (state, {soundIndex}) => {
         samples: audioBuffer.getChannelData(0),
         isFullScreen: state.scratchGui.mode.isFullScreen,
         name: sound.name,
-        vm: state.scratchGui.vm
+        vm: state.scratchGui.vm,
+        theme: state.scratchGui.theme.theme
     };
 };
 

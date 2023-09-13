@@ -4,8 +4,6 @@ import classNames from 'classnames';
 import bindAll from 'lodash.bindall';
 import ReactTooltip from 'react-tooltip';
 
-import InlineIcon from '../inline-icon/inline-icon.jsx';
-
 import styles from './action-menu.css';
 
 const CLOSE_DELAY = 300; // ms
@@ -42,7 +40,8 @@ class ActionMenu extends React.Component {
         //  which should be refactored.
         return newState.isOpen !== this.state.isOpen ||
             newState.forceHide !== this.state.forceHide ||
-            newProps.title !== this.props.title;
+            newProps.title !== this.props.title ||
+            newProps.img !== this.props.img;
     }
     componentWillUnmount () {
         this.buttonRef.removeEventListener('touchstart', this.handleTouchStart);
@@ -129,8 +128,9 @@ class ActionMenu extends React.Component {
                     ref={this.setButtonRef}
                     onClick={this.clickDelayer(onClick)}
                 >
-                    <InlineIcon
+                    <img
                         className={styles.mainIcon}
+                        draggable={false}
                         src={mainImg}
                     />
                 </button>
@@ -158,8 +158,9 @@ class ActionMenu extends React.Component {
                                         data-tip={title}
                                         onClick={hasFileInput ? handleClick : this.clickDelayer(handleClick)}
                                     >
-                                        <InlineIcon
+                                        <img
                                             className={styles.moreIcon}
+                                            draggable={false}
                                             src={img}
                                         />
                                         {hasFileInput ? (

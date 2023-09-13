@@ -8,12 +8,9 @@ import Input from '../forms/input.jsx';
 import BufferedInputHOC from '../forms/buffered-input-hoc.jsx';
 import ToggleButtons from '../toggle-buttons/toggle-buttons.jsx';
 import Dial from './dial.jsx';
+import {getIconsForTheme} from '../../lib/themes';
 
 import styles from './direction-picker.css';
-
-import allAroundIcon from './icon--all-around.svg';
-import leftRightIcon from './icon--left-right.svg';
-import dontRotateIcon from './icon--dont-rotate.svg';
 
 const BufferedInput = BufferedInputHOC(Input);
 
@@ -67,19 +64,22 @@ const DirectionPicker = props => (
                         buttons={[
                             {
                                 handleClick: props.onClickAllAround,
-                                icon: allAroundIcon,
+                                icon: getIconsForTheme(props.theme).rotateAllAround.default,
+                                selectedIcon: getIconsForTheme(props.theme).rotateAllAround.accent,
                                 isSelected: props.rotationStyle === RotationStyles.ALL_AROUND,
                                 title: props.intl.formatMessage(messages.allAround)
                             },
                             {
                                 handleClick: props.onClickLeftRight,
-                                icon: leftRightIcon,
+                                icon: getIconsForTheme(props.theme).rotateLeftRight.default,
+                                selectedIcon: getIconsForTheme(props.theme).rotateLeftRight.accent,
                                 isSelected: props.rotationStyle === RotationStyles.LEFT_RIGHT,
                                 title: props.intl.formatMessage(messages.leftRight)
                             },
                             {
                                 handleClick: props.onClickDontRotate,
-                                icon: dontRotateIcon,
+                                icon: getIconsForTheme(props.theme).dontRotate.default,
+                                selectedIcon: getIconsForTheme(props.theme).dontRotate.accent,
                                 isSelected: props.rotationStyle === RotationStyles.DONT_ROTATE,
                                 title: props.intl.formatMessage(messages.dontRotate)
                             }
@@ -118,7 +118,8 @@ DirectionPicker.propTypes = {
     onClosePopover: PropTypes.func.isRequired,
     onOpenPopover: PropTypes.func.isRequired,
     popoverOpen: PropTypes.bool.isRequired,
-    rotationStyle: PropTypes.string
+    rotationStyle: PropTypes.string,
+    theme: PropTypes.string
 };
 
 DirectionPicker.defaultProps = {

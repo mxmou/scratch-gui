@@ -176,6 +176,7 @@ class LibraryComponent extends React.Component {
                                 filterQuery={this.state.filterQuery}
                                 inputClassName={styles.filterInput}
                                 placeholderText={this.props.intl.formatMessage(messages.filterPlaceholder)}
+                                theme={this.props.theme}
                                 onChange={this.handleFilterChange}
                                 onClear={this.handleFilterClear}
                             />
@@ -270,6 +271,7 @@ LibraryComponent.propTypes = {
     setStopHandler: PropTypes.func,
     showPlayButton: PropTypes.bool,
     tags: PropTypes.arrayOf(PropTypes.shape(TagButton.propTypes)),
+    theme: PropTypes.string,
     title: PropTypes.string.isRequired
 };
 

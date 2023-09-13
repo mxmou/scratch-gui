@@ -28,10 +28,9 @@ const DataPanelComponent = ({
     promptDefaultValue,
     onPromptClose,
     onPromptOk,
-    onToggleVisibility,
     onRenameVariableClick,
     onRenameListClick,
-    onDeleteClick
+    ...variableListProps
 }) => (
     <div className={styles.dataPanel}>
         <div className={styles.header}>
@@ -51,18 +50,16 @@ const DataPanelComponent = ({
             items={globalVariables}
             itemClassName={styles.variable}
             blocksMessages={blocksMessages}
-            onToggleVisibility={onToggleVisibility}
             onRenameClick={onRenameVariableClick}
-            onDeleteClick={onDeleteClick}
+            {...variableListProps}
         />
         <VariableList
             title={intl.formatMessage(sharedMessages.forThisSprite)}
             items={localVariables}
             itemClassName={styles.variable}
             blocksMessages={blocksMessages}
-            onToggleVisibility={onToggleVisibility}
             onRenameClick={onRenameVariableClick}
-            onDeleteClick={onDeleteClick}
+            {...variableListProps}
         />
         <div className={styles.newButtonContainer}>
             <button
@@ -78,18 +75,16 @@ const DataPanelComponent = ({
             items={globalLists}
             itemClassName={styles.list}
             blocksMessages={blocksMessages}
-            onToggleVisibility={onToggleVisibility}
             onRenameClick={onRenameListClick}
-            onDeleteClick={onDeleteClick}
+            {...variableListProps}
         />
         <VariableList
             title={intl.formatMessage(sharedMessages.forThisSprite)}
             items={localLists}
             itemClassName={styles.list}
             blocksMessages={blocksMessages}
-            onToggleVisibility={onToggleVisibility}
             onRenameClick={onRenameListClick}
-            onDeleteClick={onDeleteClick}
+            {...variableListProps}
         />
         {newPromptOpen ? (
             <Prompt
@@ -164,6 +159,7 @@ DataPanelComponent.propTypes = {
         Variable.LIST_TYPE
     ]),
     renamePromptOpen: PropTypes.bool,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

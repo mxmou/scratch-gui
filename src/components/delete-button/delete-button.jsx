@@ -2,10 +2,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import classNames from 'classnames';
 
-import InlineIcon from '../inline-icon/inline-icon.jsx';
+import {getIconsForTheme} from '../../lib/themes';
 
 import styles from './delete-button.css';
-import deleteIcon from './icon--delete.svg';
 
 const DeleteButton = props => (
     <div
@@ -19,9 +18,10 @@ const DeleteButton = props => (
         onClick={props.onClick}
     >
         <div className={styles.deleteButtonVisible}>
-            <InlineIcon
+            <img
                 className={styles.deleteIcon}
-                src={deleteIcon}
+                src={getIconsForTheme(props.theme).delete.onAccent}
+                draggable={false}
             />
         </div>
     </div>
@@ -31,7 +31,8 @@ const DeleteButton = props => (
 DeleteButton.propTypes = {
     className: PropTypes.string,
     onClick: PropTypes.func.isRequired,
-    tabIndex: PropTypes.number
+    tabIndex: PropTypes.number,
+    theme: PropTypes.string
 };
 
 DeleteButton.defaultProps = {

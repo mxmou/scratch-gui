@@ -2,6 +2,7 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {injectIntl, intlShape, defineMessages} from 'react-intl';
+import {connect} from 'react-redux';
 import VM from 'scratch-vm';
 
 import spriteLibraryContent from '../lib/libraries/sprites.json';
@@ -38,6 +39,7 @@ class SpriteLibrary extends React.PureComponent {
                 data={spriteLibraryContent}
                 id="spriteLibrary"
                 tags={spriteTags}
+                theme={this.props.theme}
                 title={this.props.intl.formatMessage(messages.libraryTitle)}
                 onItemSelected={this.handleItemSelect}
                 onRequestClose={this.props.onRequestClose}
@@ -50,7 +52,12 @@ SpriteLibrary.propTypes = {
     intl: intlShape.isRequired,
     onActivateBlocksTab: PropTypes.func.isRequired,
     onRequestClose: PropTypes.func,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
-export default injectIntl(SpriteLibrary);
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default injectIntl(connect(mapStateToProps)(SpriteLibrary));

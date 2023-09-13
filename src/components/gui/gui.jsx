@@ -30,16 +30,12 @@ import Alerts from '../../containers/alerts.jsx';
 import DragLayer from '../../containers/drag-layer.jsx';
 import ConnectionModal from '../../containers/connection-modal.jsx';
 import TelemetryModal from '../telemetry-modal/telemetry-modal.jsx';
-import InlineIcon from '../inline-icon/inline-icon.jsx';
 
 import layout, {STAGE_SIZE_MODES} from '../../lib/layout-constants';
 import {resolveStageSize} from '../../lib/screen-utils';
-import {DARK_THEME} from '../../lib/themes';
+import {getIconsForTheme, DARK_THEME} from '../../lib/themes';
 
 import styles from './gui.css';
-import codeIcon from './icon--code.svg';
-import costumesIcon from './icon--costumes.svg';
-import soundsIcon from './icon--sounds.svg';
 
 // Cache this value to only retrieve it once the first time.
 // Assume that it doesn't change for a session.
@@ -134,6 +130,8 @@ const GUIComponent = props => {
     if (isRendererSupported === null) {
         isRendererSupported = Renderer.isSupported();
     }
+
+    const themeIcons = getIconsForTheme(theme);
 
     document.documentElement.classList.toggle(styles.darkTheme, theme === DARK_THEME);
 
@@ -251,7 +249,16 @@ const GUIComponent = props => {
                             >
                                 <TabList className={tabClassNames.tabList}>
                                     <Tab className={tabClassNames.tab}>
-                                        <InlineIcon src={codeIcon} />
+                                        <img
+                                            className={codeTabVisible ? '' : styles.hiddenIcon}
+                                            draggable={false}
+                                            src={themeIcons.code.accent}
+                                        />
+                                        <img
+                                            className={codeTabVisible ? styles.hiddenIcon : ''}
+                                            draggable={false}
+                                            src={themeIcons.code.default}
+                                        />
                                         <FormattedMessage
                                             defaultMessage="Code"
                                             description="Button to get to the code panel"
@@ -262,7 +269,16 @@ const GUIComponent = props => {
                                         className={tabClassNames.tab}
                                         onClick={onActivateCostumesTab}
                                     >
-                                        <InlineIcon src={costumesIcon} />
+                                        <img
+                                            className={costumesTabVisible ? '' : styles.hiddenIcon}
+                                            draggable={false}
+                                            src={themeIcons.paint.accent}
+                                        />
+                                        <img
+                                            className={costumesTabVisible ? styles.hiddenIcon : ''}
+                                            draggable={false}
+                                            src={themeIcons.paint.default}
+                                        />
                                         {targetIsStage ? (
                                             <FormattedMessage
                                                 defaultMessage="Backdrops"
@@ -281,7 +297,16 @@ const GUIComponent = props => {
                                         className={tabClassNames.tab}
                                         onClick={onActivateSoundsTab}
                                     >
-                                        <InlineIcon src={soundsIcon} />
+                                        <img
+                                            className={soundsTabVisible ? '' : styles.hiddenIcon}
+                                            draggable={false}
+                                            src={themeIcons.sound.accent}
+                                        />
+                                        <img
+                                            className={soundsTabVisible ? styles.hiddenIcon : ''}
+                                            draggable={false}
+                                            src={themeIcons.sound.default}
+                                        />
                                         <FormattedMessage
                                             defaultMessage="Sounds"
                                             description="Button to get to the sounds panel"

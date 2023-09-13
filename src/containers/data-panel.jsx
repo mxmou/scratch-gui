@@ -312,6 +312,7 @@ DataPanel.propTypes = {
     monitors: PropTypes.instanceOf(OrderedMap).isRequired,
     sprites: PropTypes.objectOf(targetShape),
     stage: targetShape,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
@@ -320,7 +321,8 @@ const mapStateToProps = state => ({
     editingTarget: state.scratchGui.targets.editingTarget,
     monitors: state.scratchGui.monitors,
     sprites: state.scratchGui.targets.sprites,
-    stage: state.scratchGui.targets.stage
+    stage: state.scratchGui.targets.stage,
+    theme: state.scratchGui.theme.theme
 });
 
 export default connect(mapStateToProps)(DataPanel);
