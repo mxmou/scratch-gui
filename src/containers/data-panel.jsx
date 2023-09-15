@@ -39,7 +39,7 @@ class DataPanel extends React.Component {
                 return {
                     id,
                     name: variable.name,
-                    monitorVisible: monitor && monitor.visible
+                    monitorVisible: !!(monitor && monitor.visible)
                 };
             })
             .sort((a, b) => {
