@@ -21,6 +21,7 @@ $text-primary: var(--text-primary, hsla(225, 15%, 40%, 1)); /* #575E75 */
 $text-primary-transparent: var(--text-primary-transparent, hsla(225, 15%, 40%, 0.75));
 $text-on-accent: var(--text-on-accent, hsla(0, 100%, 100%, 1)); /* #FFFFFF */
 $text-on-accent-dim: var(--text-on-accent-dim, hsla(0, 100%, 100%, 0.75)); /* 75% transparent version of text-on-accent */
+$text-on-transparent-accent: var(--text-on-transparent-accent, hsla(225, 15%, 25%, 1)); /* #363B49 */
 
 $motion-tertiary: hsla(215, 60%, 50%, 1); /* #3373CC */
 $menu-bar: var(--menu-bar, hsla(215, 60%, 50%, 1)); /* #3373CC */

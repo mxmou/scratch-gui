@@ -16,15 +16,8 @@
     display: flex;
 
     overflow: hidden;
-    color: $text-primary;
-}
-
-[dir="ltr"] .code-editor {
     border-top-right-radius: calc($space - 1px);
-}
-
-[dir="rtl"] .code-editor {
-    border-top-left-radius: calc($space - 1px);
+    color: $text-primary;
 }
 
 .code-editor :global(.cm-editor) {
@@ -42,17 +35,9 @@
 
 .code-editor :global(.cm-gutters) {
     background-color: transparent;
+    border-right: 1px solid $ui-black-transparent;
     color: $text-primary-transparent;
     user-select: none;
-}
-
-[dir="ltr"] .code-editor :global(.cm-gutters) {
-    border-right: 1px solid $ui-black-transparent;
-}
-
-[dir="rtl"] .code-editor :global(.cm-gutters) {
-    border-left: 1px solid $ui-black-transparent;
-    border-right: none;
 }
 
 .code-editor :global(.cm-selectionBackground) {
@@ -76,4 +61,71 @@
 .code-editor :global(.cm-tooltip-autocomplete) ul li[aria-selected] {
     background-color: $selection;
     color: $text-primary;
+}
+
+.code-editor :global(.cm-panels) {
+    background-color: $ui-white-bg;
+    color: $text-primary;
+    user-select: none;
+}
+
+.code-editor :global(.cm-panels-bottom) {
+    border-top: 1px solid $ui-black-transparent;
+}
+
+.code-editor :global(.cm-panel.cm-search) label {
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.code-editor :global(.cm-panel.cm-search) input[type="checkbox"] {
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+.code-editor :global(.cm-panel.cm-search) [name="close"] {
+    color: $text-primary;
+    cursor: pointer;
+}
+
+.code-editor :global(.cm-textfield) {
+    background-color: $input-field;
+    border-color: $ui-black-transparent;
+    border-radius: 0.25rem;
+    font-family: inherit;
+    font-size: 0.75rem;
+    transition: border-color 0.25s ease-out,
+        box-shadow 0.25s ease-out;
+}
+
+.code-editor :global(.cm-textfield):focus {
+    outline: none;
+    border-color: $motion-accent;
+    box-shadow: 0 0 0 2px $motion-transparent;
+}
+
+.code-editor :global(.cm-textfield)::placeholder {
+    color: $text-primary-transparent;
+    opacity: 1;
+}
+
+.code-editor :global(.cm-button) {
+    background-color: $motion-transparent;
+    background-image: none;
+    border-color: $ui-black-transparent;
+    border-radius: 0.25rem;
+    color: $text-on-transparent-accent;
+    font-family: inherit;
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+
+.code-editor :global(.cm-button):active {
+    background-color: $ui-black-transparent;
+    background-image: none;
+}
+
+.code-editor :global(.cm-button):focus-visible {
+    outline: 1px solid $motion-accent;
+    outline-offset: 1px;
 }

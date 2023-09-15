@@ -11,6 +11,7 @@ const CodeEditorComponent = ({
     <div className={classNames(styles.codeEditorOuter, className)}>
         <div
             className={styles.codeEditor}
+            dir="ltr"
             ref={containerRef}
         />
     </div>

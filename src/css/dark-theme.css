@@ -18,6 +18,7 @@
     --text-primary-transparent: hsla(0, 100%, 100%, 0.75); /* 75% transparent version of text-primary */
     --text-on-accent: hsla(225, 15%, 25%, 1); /* #363B49 */
     --text-on-accent-dim: hsla(225, 15%, 25%, 0.75); /* 75% transparent version of text-on-accent */
+    --text-on-transparent-accent: hsla(0, 100%, 100%, 1); /* #FFFFFF */
 
     --menu-bar: hsla(225, 15%, 25%, 1); /* #363B49 */
     --menu-bar-border: hsla(0, 0%, 0%, 0.25); /* 25% transparent version of black */
