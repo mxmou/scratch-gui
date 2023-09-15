@@ -52,6 +52,14 @@
     border-left-color: $text-primary;
 }
 
+.code-editor :global(.cm-tooltip) {
+    overflow: hidden; /* prevent scrollbar and selected item from covering rounded corner */
+    background-color: $ui-white-bg;
+    border: 1px solid $ui-black-transparent;
+    border-radius: 0.25rem;
+    box-shadow: 0 0 0.5rem 1px $ui-black-transparent;
+}
+
 .code-editor :global(.cm-completionIcon) {
     /* Icons are enabled in the config but hidden with CSS.
        This allows labels to be styled based on the icon type. */
