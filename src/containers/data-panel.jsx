@@ -4,7 +4,6 @@ import {connect} from 'react-redux';
 import bindAll from 'lodash.bindall';
 import {OrderedMap} from 'immutable';
 import VM from 'scratch-vm';
-import Variable from 'scratch-vm/src/engine/variable';
 
 import DataPanelComponent from '../components/data-panel/data-panel.jsx';
 import * as ToshLanguage from '../lib/tosh/language';
@@ -26,7 +25,7 @@ class DataPanel extends React.Component {
         ]);
         this.state = {
             promptOpen: false,
-            promptType: Variable.SCALAR_TYPE,
+            promptType: VM.SCALAR_VARIABLE,
             promptDefaultValue: '',
             idToRename: null
         };
@@ -50,8 +49,8 @@ class DataPanel extends React.Component {
     }
     getVariableData (variables) {
         return [
-            this.getVariablesOfType(variables, Variable.SCALAR_TYPE),
-            this.getVariablesOfType(variables, Variable.LIST_TYPE)
+            this.getVariablesOfType(variables, VM.SCALAR_VARIABLE),
+            this.getVariablesOfType(variables, VM.LIST_VARIABLE)
         ];
     }
     findVariable (id) {
@@ -76,12 +75,12 @@ class DataPanel extends React.Component {
             existingVariableNames = [
                 ...Object.values(target.variables),
                 ...Object.values(this.props.stage.variables)
-            ].filter(variable => [Variable.SCALAR_TYPE, Variable.LIST_TYPE].includes(variable.type))
+            ].filter(variable => [VM.SCALAR_VARIABLE, VM.LIST_VARIABLE].includes(variable.type))
                 .map(variable => variable.name);
         } else {
             existingVariableNames = [
-                ...this.props.vm.runtime.getAllVarNamesOfType(Variable.SCALAR_TYPE),
-                ...this.props.vm.runtime.getAllVarNamesOfType(Variable.LIST_TYPE)
+                ...this.props.vm.runtime.getAllVarNamesOfType(VM.SCALAR_VARIABLE),
+                ...this.props.vm.runtime.getAllVarNamesOfType(VM.LIST_VARIABLE)
             ];
         }
         // Don't include the variable that's being renamed
@@ -103,8 +102,8 @@ class DataPanel extends React.Component {
     }
     createMonitorBlock (id, name, type) {
         const fieldName = {
-            [Variable.SCALAR_TYPE]: 'VARIABLE',
-            [Variable.LIST_TYPE]: 'LIST'
+            [VM.SCALAR_VARIABLE]: 'VARIABLE',
+            [VM.LIST_VARIABLE]: 'LIST'
         }[type];
         this.props.vm.runtime.monitorBlocks.createBlock({
             id,
@@ -112,8 +111,8 @@ class DataPanel extends React.Component {
             parent: null,
             shadow: false,
             opcode: {
-                [Variable.SCALAR_TYPE]: 'data_variable',
-                [Variable.LIST_TYPE]: 'data_listcontents'
+                [VM.SCALAR_VARIABLE]: 'data_variable',
+                [VM.LIST_VARIABLE]: 'data_listcontents'
             }[type],
             fields: {
                 [fieldName]: {
@@ -132,7 +131,7 @@ class DataPanel extends React.Component {
     handleNewVariableClick () {
         this.setState({
             promptOpen: true,
-            promptType: Variable.SCALAR_TYPE,
+            promptType: VM.SCALAR_VARIABLE,
             promptDefaultValue: '',
             idToRename: null
         });
@@ -140,7 +139,7 @@ class DataPanel extends React.Component {
     handleNewListClick () {
         this.setState({
             promptOpen: true,
-            promptType: Variable.LIST_TYPE,
+            promptType: VM.LIST_VARIABLE,
             promptDefaultValue: '',
             idToRename: null
         });
@@ -179,8 +178,8 @@ class DataPanel extends React.Component {
         }
         name = ToshLanguage.cleanName(
             {
-                [Variable.SCALAR_TYPE]: 'variable',
-                [Variable.LIST_TYPE]: 'list'
+                [VM.SCALAR_VARIABLE]: 'variable',
+                [VM.LIST_VARIABLE]: 'list'
             }[type],
             name,
             existingVariablesMap,
@@ -223,7 +222,7 @@ class DataPanel extends React.Component {
         return () => {
             this.setState({
                 promptOpen: true,
-                promptType: Variable.SCALAR_TYPE,
+                promptType: VM.SCALAR_VARIABLE,
                 promptDefaultValue: name,
                 idToRename: id
             });
@@ -233,7 +232,7 @@ class DataPanel extends React.Component {
         return () => {
             this.setState({
                 promptOpen: true,
-                promptType: Variable.LIST_TYPE,
+                promptType: VM.LIST_VARIABLE,
                 promptDefaultValue: name,
                 idToRename: id
             });

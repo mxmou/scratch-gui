@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {injectIntl, intlShape} from 'react-intl';
 import VM from 'scratch-vm';
-import Variable from 'scratch-vm/src/engine/variable';
 
 import Prompt from '../../containers/prompt.jsx';
 import sharedMessages from '../../lib/shared-messages';
@@ -89,18 +88,18 @@ const DataPanelComponent = ({
         {newPromptOpen ? (
             <Prompt
                 title={{
-                    [Variable.SCALAR_TYPE]: blocksMessages.VARIABLE_MODAL_TITLE,
-                    [Variable.LIST_TYPE]: blocksMessages.LIST_MODAL_TITLE
+                    [VM.SCALAR_VARIABLE]: blocksMessages.VARIABLE_MODAL_TITLE,
+                    [VM.LIST_VARIABLE]: blocksMessages.LIST_MODAL_TITLE
                 }[promptType]}
                 label={{
-                    [Variable.SCALAR_TYPE]: blocksMessages.NEW_VARIABLE_TITLE,
-                    [Variable.LIST_TYPE]: blocksMessages.NEW_LIST_TITLE
+                    [VM.SCALAR_VARIABLE]: blocksMessages.NEW_VARIABLE_TITLE,
+                    [VM.LIST_VARIABLE]: blocksMessages.NEW_LIST_TITLE
                 }[promptType]}
                 defaultValue=""
                 isStage={isStage}
-                showListMessage={promptType === Variable.LIST_TYPE}
+                showListMessage={promptType === VM.LIST_VARIABLE}
                 showVariableOptions
-                showCloudOption={promptType === Variable.SCALAR_TYPE && canUseCloud}
+                showCloudOption={promptType === VM.SCALAR_VARIABLE && canUseCloud}
                 vm={vm}
                 onCancel={onPromptClose}
                 onOk={onPromptOk}
@@ -109,18 +108,18 @@ const DataPanelComponent = ({
         {renamePromptOpen ? (
             <Prompt
                 title={{
-                    [Variable.SCALAR_TYPE]: blocksMessages.RENAME_VARIABLE_MODAL_TITLE,
-                    [Variable.LIST_TYPE]: blocksMessages.RENAME_LIST_MODAL_TITLE
+                    [VM.SCALAR_VARIABLE]: blocksMessages.RENAME_VARIABLE_MODAL_TITLE,
+                    [VM.LIST_VARIABLE]: blocksMessages.RENAME_LIST_MODAL_TITLE
                 }[promptType]}
                 label={{
-                    [Variable.SCALAR_TYPE]: blocksMessages.RENAME_VARIABLE_TITLE.replace('%1', promptDefaultValue),
-                    [Variable.LIST_TYPE]: blocksMessages.RENAME_LIST_TITLE.replace('%1', promptDefaultValue)
+                    [VM.SCALAR_VARIABLE]: blocksMessages.RENAME_VARIABLE_TITLE.replace('%1', promptDefaultValue),
+                    [VM.LIST_VARIABLE]: blocksMessages.RENAME_LIST_TITLE.replace('%1', promptDefaultValue)
                 }[promptType]}
                 defaultValue={promptDefaultValue}
                 isStage={isStage}
-                showListMessage={promptType === Variable.LIST_TYPE}
+                showListMessage={promptType === VM.LIST_VARIABLE}
                 showVariableOptions={false}
-                showCloudOption={promptType === Variable.SCALAR_TYPE && canUseCloud}
+                showCloudOption={promptType === VM.SCALAR_VARIABLE && canUseCloud}
                 vm={vm}
                 onCancel={onPromptClose}
                 onOk={onPromptOk}
@@ -155,8 +154,8 @@ DataPanelComponent.propTypes = {
     onToggleVisibility: PropTypes.func.isRequired,
     promptDefaultValue: PropTypes.string,
     promptType: PropTypes.oneOf([
-        Variable.SCALAR_TYPE,
-        Variable.LIST_TYPE
+        VM.SCALAR_VARIABLE,
+        VM.LIST_VARIABLE
     ]),
     renamePromptOpen: PropTypes.bool,
     theme: PropTypes.string,

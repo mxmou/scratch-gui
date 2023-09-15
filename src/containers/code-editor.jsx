@@ -32,7 +32,6 @@ import {
     acceptCompletion
 } from '@codemirror/autocomplete';
 import VM from 'scratch-vm';
-import Variable from 'scratch-vm/src/engine/variable';
 
 import CodeEditorComponent from '../components/code-editor/code-editor.jsx';
 import {themeMap, getColorsForTheme} from '../lib/themes';
@@ -127,16 +126,16 @@ class CodeEditor extends React.Component {
         if (!target) {
             return;
         }
-        let variables = this.getVariableNamesOfType(target.variables, Variable.SCALAR_TYPE);
-        let lists = this.getVariableNamesOfType(target.variables, Variable.LIST_TYPE);
+        let variables = this.getVariableNamesOfType(target.variables, VM.SCALAR_VARIABLE);
+        let lists = this.getVariableNamesOfType(target.variables, VM.LIST_VARIABLE);
         if (!target.isStage) {
             variables = [
                 ...variables,
-                ...this.getVariableNamesOfType(this.props.stage.variables, Variable.SCALAR_TYPE)
+                ...this.getVariableNamesOfType(this.props.stage.variables, VM.SCALAR_VARIABLE)
             ];
             lists = [
                 ...lists,
-                ...this.getVariableNamesOfType(this.props.stage.variables, Variable.LIST_TYPE)
+                ...this.getVariableNamesOfType(this.props.stage.variables, VM.LIST_VARIABLE)
             ];
         }
 
