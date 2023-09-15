@@ -30,6 +30,9 @@ module.exports = {
             ignoredNodes: [
                 'VariableDeclaration',
                 'IfStatement > .test',
+                'ForStatement > .init',
+                'ForStatement > .test',
+                'ForStatement > .update',
                 'ConditionalExpression',
                 'CallExpression',
                 'ArrayExpression'

@@ -25,7 +25,12 @@ import {
     HighlightStyle,
     indentOnInput
 } from '@codemirror/language';
-import {closeBrackets, closeBracketsKeymap} from '@codemirror/autocomplete';
+import {
+    closeBrackets,
+    closeBracketsKeymap,
+    autocompletion,
+    acceptCompletion
+} from '@codemirror/autocomplete';
 import VM from 'scratch-vm';
 import Variable from 'scratch-vm/src/engine/variable';
 
@@ -33,6 +38,7 @@ import CodeEditorComponent from '../components/code-editor/code-editor.jsx';
 import {themeMap, getColorsForTheme} from '../lib/themes';
 import toshTags from '../lib/code-editor/tags';
 import toshParser from '../lib/tosh/mode';
+import {inputSeek} from '../lib/tosh/app';
 import * as ToshEarley from '../lib/tosh/earley';
 import * as ToshLanguage from '../lib/tosh/language';
 
@@ -63,12 +69,20 @@ class CodeEditor extends React.Component {
                 crosshairCursor(),
                 closeBrackets(),
                 indentOnInput(),
+                autocompletion(),
                 keymap.of([
-                    ...closeBracketsKeymap,
-                    ...defaultKeymap,
+                    // Tab accepts the selected completion
+                    {key: 'Tab', run: acceptCompletion},
+                    // If no completions are available, it jumps to the next input
+                    {key: 'Tab', run: view => inputSeek(view, 1)},
+                    {key: 'Shift-Tab', run: view => inputSeek(view, -1)},
+                    // inputSeek fails if the selection is on an empty line or contains multiple lines
+                    // Tab can be used for indentation in those cases
                     indentWithTab,
+                    ...closeBracketsKeymap,
                     ...historyKeymap,
-                    ...searchKeymap
+                    ...searchKeymap,
+                    ...defaultKeymap
                 ]),
                 EditorView.updateListener.of(this.handleViewUpdate),
                 this.themeOptions.of([
@@ -101,7 +115,7 @@ class CodeEditor extends React.Component {
     updateTheme () {
         this.view.dispatch({
             effects: this.themeOptions.reconfigure([
-                EditorView.darkTheme.of(themeMap[this.props.theme].dark),
+                this.getEditorTheme(),
                 syntaxHighlighting(this.getHighlightStyle())
             ])
         });
@@ -154,6 +168,25 @@ class CodeEditor extends React.Component {
                 }))
             ])
         });
+    }
+    getEditorTheme () {
+        const colors = getColorsForTheme(this.props.theme);
+        const completion = category => `.cm-completionIcon-${category} + .cm-completionLabel`;
+        return EditorView.theme({
+            [completion('motion')]: {color: colors.motion.code},
+            [completion('looks')]: {color: colors.looks.code},
+            [completion('sound')]: {color: colors.sounds.code},
+            [completion('events')]: {color: colors.event.code},
+            [completion('control')]: {color: colors.control.code},
+            [completion('sensing')]: {color: colors.sensing.code},
+            [completion('pen')]: {color: colors.pen.code},
+            [completion('operators')]: {color: colors.operators.code},
+            [completion('variable')]: {color: colors.data.code},
+            [completion('list')]: {color: colors.data_lists.code},
+            [completion('custom')]: {color: colors.more.code},
+            [completion('extension')]: {color: colors.pen.code},
+            [completion('parameter')]: {color: colors.customBlockParameter}
+        }, {dark: themeMap[this.props.theme].dark});
     }
     getHighlightStyle () {
         const colors = getColorsForTheme(this.props.theme);

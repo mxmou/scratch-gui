@@ -1241,7 +1241,7 @@ var blockGrammar = new Grammar([
 /* for parseLines */
 
 function isDefinitionLine(line) {
-  return /^define(-atomic)? /.test(line);
+  return /^[ \t]*define(-atomic)? /.test(line);
 }
 
 function modeGrammar(modeCfg) {

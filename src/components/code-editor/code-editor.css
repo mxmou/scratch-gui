@@ -66,3 +66,14 @@
 .code-editor :global(.cm-cursor) {
     border-left-color: $text-primary;
 }
+
+.code-editor :global(.cm-completionIcon) {
+    /* Icons are enabled in the config but hidden with CSS.
+       This allows labels to be styled based on the icon type. */
+    display: none;
+}
+
+.code-editor :global(.cm-tooltip-autocomplete) ul li[aria-selected] {
+    background-color: $selection;
+    color: $text-primary;
+}

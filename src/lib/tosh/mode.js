@@ -2,6 +2,7 @@ import assert from './assert';
 import * as Earley from './earley';
 import * as Language from './language';
 import toshTags from '../code-editor/tags';
+import autocomplete from '../code-editor/autocomplete';
 
 export default function(modeCfg) {
 
@@ -173,8 +174,9 @@ export default function(modeCfg) {
 
     languageData: {
       commentTokens: {line: '//'},
-      indentOnInput: /^\s*(else|end)$/,
+      indentOnInput: /^[ \t]*(else|end)$/,
       closeBrackets: {brackets: ['(', '[', "'", '"']},
+      autocomplete: autocomplete(modeCfg),
     },
   };
 }
