@@ -102,6 +102,7 @@
     width: 1rem;
     height: 1rem;
     pointer-events: none;
+    user-select: none;
 }
 
 [dir="ltr"] .checked-icon {
@@ -145,4 +146,5 @@
     width: 1rem;
     height: 1rem;
     opacity: 0.75;
+    user-select: none;
 }
