@@ -10,6 +10,7 @@ describe('SpriteSelectorItemComponent', () => {
     let onClick;
     let onDeleteButtonClick;
     let selected;
+    let theme;
     let number;
     let details;
 
@@ -23,6 +24,7 @@ describe('SpriteSelectorItemComponent', () => {
                 name={name}
                 number={number}
                 selected={selected}
+                theme={theme}
                 onClick={onClick}
                 onDeleteButtonClick={onDeleteButtonClick}
             />
@@ -36,6 +38,7 @@ describe('SpriteSelectorItemComponent', () => {
         onClick = jest.fn();
         onDeleteButtonClick = jest.fn();
         selected = true;
+        theme = 'default';
         // Reset to undefined since they are optional props
         number = undefined; // eslint-disable-line no-undefined
         details = undefined; // eslint-disable-line no-undefined

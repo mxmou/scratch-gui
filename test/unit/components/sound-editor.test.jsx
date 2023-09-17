@@ -11,6 +11,7 @@ describe('Sound Editor Component', () => {
             chunkLevels: [1, 2, 3],
             name: 'sound name',
             playhead: 0.5,
+            theme: 'default',
             trimStart: 0.2,
             trimEnd: 0.8,
             onChangeName: jest.fn(),

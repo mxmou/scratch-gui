@@ -2,8 +2,7 @@ import {
     DARK_THEME,
     defaultColors,
     DEFAULT_THEME,
-    getColorsForTheme,
-    HIGH_CONTRAST_THEME
+    getColorsForTheme
 } from '../../../src/lib/themes';
 import {injectExtensionBlockTheme, injectExtensionCategoryTheme} from '../../../src/lib/themes/blockHelpers';
 import {detectTheme, persistTheme} from '../../../src/lib/themes/themePersistance';
@@ -131,11 +130,11 @@ describe('themes', () => {
 
     describe('theme persistance', () => {
         test('returns the theme stored in a cookie', () => {
-            window.document.cookie = `scratchtheme=${HIGH_CONTRAST_THEME}`;
+            window.document.cookie = `scratchtheme=${DARK_THEME}`;
 
             const theme = detectTheme();
 
-            expect(theme).toEqual(HIGH_CONTRAST_THEME);
+            expect(theme).toEqual(DARK_THEME);
         });
 
         test('returns the system theme when no cookie', () => {
@@ -149,13 +148,13 @@ describe('themes', () => {
         test('persists theme to cookie', () => {
             window.document.cookie = 'scratchtheme=';
 
-            persistTheme(HIGH_CONTRAST_THEME);
+            persistTheme(DARK_THEME);
 
-            expect(window.document.cookie).toEqual(`scratchtheme=${HIGH_CONTRAST_THEME}`);
+            expect(window.document.cookie).toEqual(`scratchtheme=${DARK_THEME}`);
         });
 
         test('clears theme when matching system preferences', () => {
-            window.document.cookie = `scratchtheme=${HIGH_CONTRAST_THEME}`;
+            window.document.cookie = `scratchtheme=${DARK_THEME}`;
 
             persistTheme(DEFAULT_THEME);
 

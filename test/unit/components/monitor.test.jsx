@@ -28,7 +28,7 @@ describe('Monitor Component', () => {
         const defaultMonitor = wrapper.find(DefaultMonitor);
 
         // selects colors from mock value in src/lib/themes/__mocks__/default-colors.js
-        expect(defaultMonitor.props().categoryColor).toEqual({background: '#111111', text: '#444444'});
+        expect(defaultMonitor.props().categoryColor).toEqual('#666666');
     });
 
     test('it selects the correct colors based on dark mode theme', () => {
@@ -51,6 +51,6 @@ describe('Monitor Component', () => {
         const defaultMonitor = wrapper.find(DefaultMonitor);
 
         // selects colors from mock value in src/lib/themes/__mocks__/dark-mode.js
-        expect(defaultMonitor.props().categoryColor).toEqual({background: '#AAAAAA', text: '#BBBBBB'});
+        expect(defaultMonitor.props().categoryColor).toEqual('#CCCCCC');
     });
 });
