@@ -15,7 +15,6 @@ export function inputSeek(view, dir) {
   );
   if (!l) return false;
   if (l.selection.indexOf('\n') > -1) return false;
-  if (!l.tokens.length) return false; // do nothing if the line is blank
 
   var index = l.cursor + dir;
   if (dir > 0 && l.tokens[l.cursor] && l.tokens[l.cursor].text === '-') index += 1;

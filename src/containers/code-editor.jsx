@@ -12,18 +12,14 @@ import {
     crosshairCursor
 } from '@codemirror/view';
 import {EditorState, Compartment} from '@codemirror/state';
-import {
-    defaultKeymap,
-    indentWithTab,
-    history,
-    historyKeymap
-} from '@codemirror/commands';
+import {defaultKeymap, history, historyKeymap} from '@codemirror/commands';
 import {searchKeymap} from '@codemirror/search';
 import {
     syntaxHighlighting,
     StreamLanguage,
     HighlightStyle,
-    indentOnInput
+    indentOnInput,
+    indentRange
 } from '@codemirror/language';
 import {
     closeBrackets,
@@ -47,7 +43,8 @@ class CodeEditor extends React.Component {
         bindAll(this, [
             'setElement',
             'updateParserOptions',
-            'handleViewUpdate'
+            'handleViewUpdate',
+            'indentSelection'
         ]);
         this.element = null;
         this.view = null;
@@ -76,8 +73,8 @@ class CodeEditor extends React.Component {
                     {key: 'Tab', run: view => inputSeek(view, 1)},
                     {key: 'Shift-Tab', run: view => inputSeek(view, -1)},
                     // inputSeek fails if the selection is on an empty line or contains multiple lines
-                    // Tab can be used for indentation in those cases
-                    indentWithTab,
+                    // Tab can be used to auto-indent in those cases
+                    {key: 'Tab', run: this.indentSelection},
                     ...closeBracketsKeymap,
                     ...historyKeymap,
                     ...searchKeymap,
@@ -231,6 +228,14 @@ class CodeEditor extends React.Component {
                 }
             }
         }
+    }
+    indentSelection (view) {
+        view.dispatch(view.state.changeByRange(range => {
+            const changes = indentRange(view.state, range.from, range.to);
+            const newRange = range.map(changes.desc);
+            return {changes, range: newRange};
+        }));
+        return true;
     }
     render () {
         /* eslint-disable no-unused-vars */

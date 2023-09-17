@@ -174,7 +174,7 @@ export default function(modeCfg) {
 
     languageData: {
       commentTokens: {line: '//'},
-      indentOnInput: /^[ \t]*(else|end)$/,
+      indentOnInput: /^[ \t]*( |else|end)$/,
       closeBrackets: {brackets: ['(', '[', "'", '"']},
       autocomplete: autocomplete(modeCfg),
     },
