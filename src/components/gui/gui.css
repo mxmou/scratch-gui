@@ -292,3 +292,8 @@
 :global(.ReactModal__Body--open) {
     overflow: hidden;
 }
+
+/* Popups should always be on top of other elements */
+:global(.Popover) {
+    z-index: $z-index-context-menu;
+}

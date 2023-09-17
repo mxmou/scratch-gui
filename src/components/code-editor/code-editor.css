@@ -1,5 +1,6 @@
 @import "../../css/colors.css";
 @import "../../css/units.css";
+@import "../../css/z-index.css";
 
 .code-editor-outer {
     /* For vertical scrolling */
@@ -53,6 +54,7 @@
 }
 
 .code-editor :global(.cm-tooltip) {
+    z-index: $z-index-context-menu;
     overflow: hidden; /* prevent scrollbar and selected item from covering rounded corner */
     background-color: $ui-white-bg;
     border: 1px solid $ui-black-transparent;
