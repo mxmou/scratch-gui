@@ -70,6 +70,8 @@ class CodeEditor extends React.Component {
                 indentOnInput(),
                 autocompletion({
                     defaultKeymap: false,
+                    icons: false,
+                    optionClass: ({type}) => (type ? `tb3-category-${type}` : ''),
                     addToOptions: [
                         {
                             render: () => Object.assign(document.createElement('span'), {
@@ -183,7 +185,7 @@ class CodeEditor extends React.Component {
     }
     getEditorTheme () {
         const colors = getColorsForTheme(this.props.theme);
-        const completion = category => `.cm-completionIcon-${category} + .cm-completionLabel`;
+        const completion = category => `.tb3-category-${category} .cm-completionLabel`;
         return EditorView.theme({
             [completion('motion')]: {color: colors.motion.code},
             [completion('looks')]: {color: colors.looks.code},
