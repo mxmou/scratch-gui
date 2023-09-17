@@ -17,8 +17,6 @@ export default function autocomplete (modeCfg) {
     return context => {
         let grammar = startGrammar;
         let completer = startCompleter;
-        let suggestEnd = false;
-        let suggestElse = false;
         const currentLineNumber = context.state.doc.lineAt(context.pos).number;
         let firstLineOfScript = 1;
 
@@ -46,6 +44,7 @@ export default function autocomplete (modeCfg) {
             }
         }
 
+        const shapeStack = [];
         for (let lineNumber = firstLineOfScript; lineNumber < currentLineNumber; ++lineNumber) {
             const text = context.state.doc.line(lineNumber).text;
             const tokens = Language.tokenize(text);
@@ -57,26 +56,22 @@ export default function autocomplete (modeCfg) {
             }
             const result = results[0].process();
             if (!result) continue;
-            switch (result.info.shape) {
-            case 'c-block':
-            case 'c-block cap':
-                suggestEnd = true;
-                suggestElse = false;
-                break;
-            case 'if-block':
-                suggestEnd = true;
-                suggestElse = true;
-                break;
+            const shape = result.info.shape;
+            switch (shape) {
             case 'end':
-                suggestEnd = false;
-                suggestElse = false;
+                shapeStack.pop();
                 break;
             case 'else':
-                suggestElse = false;
+                shapeStack[shapeStack.length - 1] = 'else';
                 break;
+            default:
+                shapeStack.push(shape);
             }
         }
 
-        return computeHint(context, completer, grammar, {suggestEnd, suggestElse});
+        return computeHint(context, completer, grammar, {
+            suggestEnd: shapeStack.length,
+            suggestElse: shapeStack[shapeStack.length - 1] === 'if-block'
+        });
     };
 }
