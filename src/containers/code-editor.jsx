@@ -25,6 +25,7 @@ import {
     closeBrackets,
     closeBracketsKeymap,
     autocompletion,
+    completionKeymap,
     acceptCompletion
 } from '@codemirror/autocomplete';
 import VM from 'scratch-vm';
@@ -36,6 +37,8 @@ import toshParser from '../lib/tosh/mode';
 import {inputSeek} from '../lib/tosh/app';
 import * as ToshEarley from '../lib/tosh/earley';
 import * as ToshLanguage from '../lib/tosh/language';
+
+import styles from '../components/code-editor/code-editor.css';
 
 class CodeEditor extends React.Component {
     constructor (props) {
@@ -65,7 +68,18 @@ class CodeEditor extends React.Component {
                 crosshairCursor(),
                 closeBrackets(),
                 indentOnInput(),
-                autocompletion(),
+                autocompletion({
+                    defaultKeymap: false,
+                    addToOptions: [
+                        {
+                            render: () => Object.assign(document.createElement('span'), {
+                                className: styles.tabHint,
+                                textContent: 'Tab ⇥'
+                            }),
+                            position: 90
+                        }
+                    ]
+                }),
                 keymap.of([
                     // Tab accepts the selected completion
                     {key: 'Tab', run: acceptCompletion},
@@ -75,6 +89,8 @@ class CodeEditor extends React.Component {
                     // inputSeek fails if the selection is on an empty line or contains multiple lines
                     // Tab can be used to auto-indent in those cases
                     {key: 'Tab', run: this.indentSelection},
+                    // Only complete on Tab, not Enter
+                    ...completionKeymap.filter(cmd => cmd.key !== 'Enter'),
                     ...closeBracketsKeymap,
                     ...historyKeymap,
                     ...searchKeymap,

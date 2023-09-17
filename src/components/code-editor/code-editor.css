@@ -60,6 +60,20 @@
     box-shadow: 0 0 0.5rem 1px $ui-black-transparent;
 }
 
+.code-editor :global(.cm-tooltip-autocomplete) ul li {
+    position: relative;
+}
+
+.code-editor .tab-hint {
+    position: absolute;
+    display: none;
+    top: 0;
+    right: 0;
+    padding: 1px 3px;
+    background-color: $motion-accent;
+    color: $text-on-accent;
+}
+
 .code-editor :global(.cm-completionIcon) {
     /* Icons are enabled in the config but hidden with CSS.
        This allows labels to be styled based on the icon type. */
@@ -69,6 +83,10 @@
 .code-editor :global(.cm-tooltip-autocomplete) ul li[aria-selected] {
     background-color: $selection;
     color: $text-primary;
+}
+
+.code-editor :global(.cm-tooltip-autocomplete) ul li[aria-selected] .tab-hint {
+    display: block;
 }
 
 .code-editor :global(.cm-panels) {
