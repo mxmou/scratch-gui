@@ -77,6 +77,14 @@
     border-bottom: 0 !important;
 }
 
+[dir="ltr"] .tab-list {
+    margin-left: -1px !important;
+}
+
+[dir="rtl"] .tab-list {
+    margin-right: -1px !important;
+}
+
 .tab {
     flex-grow: 1;
     height: calc(80% - 1px);
@@ -213,10 +221,12 @@
 }
 
 [dir="ltr"] .code-wrapper {
+    border-left: none;
     border-top-right-radius: $space;
 }
 
 [dir="rtl"] .code-wrapper {
+    border-right: none;
     border-top-left-radius: $space;
 }
 
