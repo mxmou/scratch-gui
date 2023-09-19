@@ -35,7 +35,7 @@
 }
 
 .code-editor :global(.cm-gutters) {
-    background-color: transparent;
+    background-color: $ui-white-bg;
     border-right: 1px solid $ui-black-transparent;
     color: $text-primary-transparent;
     user-select: none;
