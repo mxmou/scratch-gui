@@ -6,6 +6,7 @@
 .page-wrapper {
     height: 100%;
     color: $text-primary;
+    accent-color: $motion-accent;
 }
 
 .page-wrapper::selection,

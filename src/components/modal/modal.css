@@ -26,6 +26,7 @@
 
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     color: $text-primary;
+    accent-color: $motion-accent;
     overflow: hidden;
 }
 
