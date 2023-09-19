@@ -80,8 +80,9 @@ class CodeEditor extends React.Component {
         if (this.repaintTimeout) clearTimeout(this.repaintTimeout);
         this.view.destroy();
     }
-    newState () {
+    newState (code) {
         return EditorState.create({
+            doc: code,
             extensions: [
                 history(),
                 lineNumbers(),
@@ -206,7 +207,7 @@ class CodeEditor extends React.Component {
         if (Object.prototype.hasOwnProperty.call(this.props.targetStates, this.props.editingTarget)) {
             this.view.setState(this.props.targetStates[this.props.editingTarget]);
         } else {
-            this.view.setState(this.newState());
+            this.view.setState(this.newState(this.props.vm.editingTarget.code));
             this.props.setTargetState(this.props.editingTarget, this.view.state);
         }
         if (Object.prototype.hasOwnProperty.call(this.props.targetScrollPos, this.props.editingTarget)) {
@@ -274,6 +275,9 @@ class CodeEditor extends React.Component {
     handleViewUpdate (update) {
         if (update.docChanged) {
             const doc = update.state.doc;
+            if (this.props.vm.editingTarget) {
+                this.props.vm.editingTarget.code = doc.toString();
+            }
             const changedLines = new Set();
             update.changes.iterChanges((fromA, toA, fromB, toB) => {
                 const firstLine = doc.lineAt(fromB).number;
