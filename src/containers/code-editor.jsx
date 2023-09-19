@@ -37,6 +37,7 @@ import toshParser from '../lib/tosh/mode';
 import {inputSeek} from '../lib/tosh/app';
 import * as ToshEarley from '../lib/tosh/earley';
 import * as ToshLanguage from '../lib/tosh/language';
+import {setTargetState, setTargetScrollPos} from '../reducers/code-editor';
 
 import styles from '../components/code-editor/code-editor.css';
 
@@ -56,8 +57,31 @@ class CodeEditor extends React.Component {
         this.repaintTimeout = null;
     }
     componentDidMount () {
-        this.view = new EditorView({
-            parent: this.element,
+        this.view = new EditorView({parent: this.element});
+        if (this.props.editingTarget) this.loadTargetState();
+    }
+    componentDidUpdate (prevProps) {
+        if (this.props.theme !== prevProps.theme) {
+            this.updateTheme();
+        }
+        if (this.props.editingTarget && this.props.editingTarget !== prevProps.editingTarget) {
+            this.saveTargetState(prevProps.editingTarget);
+            this.loadTargetState();
+        }
+        if (!this.repaintTimeout && (
+            this.props.sprites !== prevProps.sprites ||
+            this.props.stage !== prevProps.stage
+        )) {
+            this.repaintTimeout = setTimeout(this.updateParserOptions, 1000);
+        }
+    }
+    componentWillUnmount () {
+        this.saveTargetState(this.props.editingTarget);
+        if (this.repaintTimeout) clearTimeout(this.repaintTimeout);
+        this.view.destroy();
+    }
+    newState () {
+        return EditorState.create({
             extensions: [
                 history(),
                 lineNumbers(),
@@ -106,11 +130,6 @@ class CodeEditor extends React.Component {
                 this.parserOptions.of([])
             ]
         });
-        this.updateParserOptions();
-    }
-    componentDidUpdate () {
-        this.updateTheme();
-        if (!this.repaintTimeout) this.repaintTimeout = setTimeout(this.updateParserOptions, 1000);
     }
     getVariableNamesOfType (variables, type) {
         return Object.values(variables)
@@ -183,6 +202,32 @@ class CodeEditor extends React.Component {
             ])
         });
     }
+    loadTargetState () {
+        if (Object.prototype.hasOwnProperty.call(this.props.targetStates, this.props.editingTarget)) {
+            this.view.setState(this.props.targetStates[this.props.editingTarget]);
+        } else {
+            this.view.setState(this.newState());
+            this.props.setTargetState(this.props.editingTarget, this.view.state);
+        }
+        if (Object.prototype.hasOwnProperty.call(this.props.targetScrollPos, this.props.editingTarget)) {
+            const scrollPos = this.props.targetScrollPos[this.props.editingTarget];
+            const scroller = this.element.querySelector('.cm-scroller');
+            setTimeout(() => {
+                scroller.scrollTop = scrollPos.top;
+                scroller.scrollLeft = scrollPos.left;
+            }, 0);
+        }
+        // Timeout prevents error:
+        // Calls to EditorView.update are not allowed while an update is in progress
+        setTimeout(this.updateParserOptions, 0);
+    }
+    saveTargetState (target) {
+        if (target) {
+            this.props.setTargetState(target, this.view.state);
+            const scroller = this.element.querySelector('.cm-scroller');
+            this.props.setTargetScrollPos(target, scroller.scrollTop, scroller.scrollLeft);
+        }
+    }
     getEditorTheme () {
         const colors = getColorsForTheme(this.props.theme);
         const completion = category => `.tb3-category-${category} .cm-completionLabel`;
@@ -228,7 +273,7 @@ class CodeEditor extends React.Component {
     }
     handleViewUpdate (update) {
         if (update.docChanged) {
-            const doc = this.view.state.doc;
+            const doc = update.state.doc;
             const changedLines = new Set();
             update.changes.iterChanges((fromA, toA, fromB, toB) => {
                 const firstLine = doc.lineAt(fromB).number;
@@ -289,8 +334,15 @@ const targetShape = PropTypes.shape({
 CodeEditor.propTypes = {
     editingTarget: PropTypes.string,
     theme: PropTypes.string,
+    setTargetScrollPos: PropTypes.func.isRequired,
+    setTargetState: PropTypes.func.isRequired,
     sprites: PropTypes.objectOf(targetShape),
     stage: targetShape,
+    targetScrollPos: PropTypes.objectOf(PropTypes.shape({
+        top: PropTypes.number,
+        left: PropTypes.number
+    })).isRequired,
+    targetStates: PropTypes.objectOf(PropTypes.instanceOf(EditorState)).isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
@@ -298,7 +350,18 @@ const mapStateToProps = state => ({
     editingTarget: state.scratchGui.targets.editingTarget,
     sprites: state.scratchGui.targets.sprites,
     stage: state.scratchGui.targets.stage,
+    targetScrollPos: state.scratchGui.codeEditor.targetScrollPos,
+    targetStates: state.scratchGui.codeEditor.targetStates,
     theme: state.scratchGui.theme.theme
 });
 
-export default connect(mapStateToProps)(CodeEditor);
+const mapDispatchToProps = dispatch => ({
+    setTargetState: (target, editorState) => {
+        dispatch(setTargetState(target, editorState));
+    },
+    setTargetScrollPos: (target, top, left) => {
+        dispatch(setTargetScrollPos(target, top, left));
+    }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(CodeEditor);

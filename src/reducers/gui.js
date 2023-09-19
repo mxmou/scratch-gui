@@ -2,6 +2,7 @@ import {applyMiddleware, compose, combineReducers} from 'redux';
 import alertsReducer, {alertsInitialState} from './alerts';
 import assetDragReducer, {assetDragInitialState} from './asset-drag';
 import cardsReducer, {cardsInitialState} from './cards';
+import codeEditorReducer, {codeEditorInitialState} from './code-editor';
 import colorPickerReducer, {colorPickerInitialState} from './color-picker';
 import connectionModalReducer, {connectionModalInitialState} from './connection-modal';
 import blockDragReducer, {blockDragInitialState} from './block-drag';
@@ -36,6 +37,7 @@ const guiInitialState = {
     assetDrag: assetDragInitialState,
     blockDrag: blockDragInitialState,
     cards: cardsInitialState,
+    codeEditor: codeEditorInitialState,
     colorPicker: colorPickerInitialState,
     connectionModal: connectionModalInitialState,
     editorTab: editorTabInitialState,
@@ -134,6 +136,7 @@ const guiReducer = combineReducers({
     assetDrag: assetDragReducer,
     blockDrag: blockDragReducer,
     cards: cardsReducer,
+    codeEditor: codeEditorReducer,
     colorPicker: colorPickerReducer,
     connectionModal: connectionModalReducer,
     editorTab: editorTabReducer,
