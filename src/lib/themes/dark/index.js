@@ -146,7 +146,7 @@ const blockColors = {
     menuHover: 'rgba(255, 255, 255, 0.3)',
     codeTransparentText: 'rgba(255, 255, 255, 0.75)',
     customBlockParameter: '#FF99AA',
-    error: '#FF6666'
+    error: '#FF9999'
 };
 
 const extensions = {};
