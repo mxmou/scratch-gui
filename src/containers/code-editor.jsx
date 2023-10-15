@@ -125,7 +125,7 @@ class CodeEditor extends React.Component {
                 ]),
                 EditorView.updateListener.of(this.handleViewUpdate),
                 this.themeOptions.of([
-                    EditorView.darkTheme.of(themeMap[this.props.theme].dark),
+                    this.getEditorTheme(),
                     syntaxHighlighting(this.getHighlightStyle())
                 ]),
                 this.parserOptions.of([])
