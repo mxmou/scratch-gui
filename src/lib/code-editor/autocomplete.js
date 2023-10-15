@@ -64,7 +64,9 @@ export default function autocomplete (modeCfg) {
             case 'else':
                 shapeStack[shapeStack.length - 1] = 'else';
                 break;
-            default:
+            case 'c-block':
+            case 'c-block cap':
+            case 'if-block':
                 shapeStack.push(shape);
             }
         }
