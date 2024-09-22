@@ -7,6 +7,7 @@ import {connect} from 'react-redux';
 import ControlsComponent from '../components/controls/controls.jsx';
 import getParserOptions from '../lib/code-editor/parser-options';
 import * as ToshCompiler from '../lib/tosh/compile';
+import {setTargetError} from '../reducers/code-editor';
 
 class Controls extends React.Component {
     constructor (props) {
@@ -32,9 +33,17 @@ class Controls extends React.Component {
 
                     try {
                         ToshCompiler.compile(target, stream);
+                        this.props.setTargetError(target.id, null);
                     } catch (err) {
                         target.blocks.deleteAllBlocks();
-                        console.warn(err);
+                        let lineNumber = lines.length - (stream.length - 1); // -1 because EOF
+                        lineNumber = Math.min(lineNumber, lines.length - 1);
+                        lineNumber += 1; // CodeMirror expects 1-based line numbers
+                        this.props.setTargetError(target.id, {
+                            lineNumber,
+                            message: err.message || err,
+                            rendered: false
+                        });
                     }
                 }
             }
@@ -52,6 +61,7 @@ class Controls extends React.Component {
         const {
             vm, // eslint-disable-line no-unused-vars
             isStarted, // eslint-disable-line no-unused-vars
+            setTargetError: dispatchSetTargetError, // eslint-disable-line no-unused-vars
             projectRunning,
             turbo,
             ...props
@@ -71,6 +81,7 @@ class Controls extends React.Component {
 Controls.propTypes = {
     isStarted: PropTypes.bool.isRequired,
     projectRunning: PropTypes.bool.isRequired,
+    setTargetError: PropTypes.func.isRequired,
     turbo: PropTypes.bool.isRequired,
     vm: PropTypes.instanceOf(VM)
 };
@@ -80,7 +91,10 @@ const mapStateToProps = state => ({
     projectRunning: state.scratchGui.vmStatus.running,
     turbo: state.scratchGui.vmStatus.turbo
 });
-// no-op function to prevent dispatch prop being passed to component
-const mapDispatchToProps = () => ({});
+const mapDispatchToProps = dispatch => ({
+    setTargetError: (target, error) => {
+        dispatch(setTargetError(target, error));
+    }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Controls);

@@ -4,6 +4,8 @@ import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 import {
     EditorView,
+    Decoration,
+    WidgetType,
     keymap,
     lineNumbers,
     drawSelection,
@@ -11,7 +13,7 @@ import {
     rectangularSelection,
     crosshairCursor
 } from '@codemirror/view';
-import {EditorState, Compartment} from '@codemirror/state';
+import {EditorState, Compartment, StateField, StateEffect} from '@codemirror/state';
 import {defaultKeymap, history, historyKeymap} from '@codemirror/commands';
 import {searchKeymap} from '@codemirror/search';
 import {
@@ -38,9 +40,27 @@ import toshParser from '../lib/tosh/mode';
 import {inputSeek} from '../lib/tosh/app';
 import * as ToshLanguage from '../lib/tosh/language';
 import * as ToshCompiler from '../lib/tosh/compile';
-import {setTargetState, setTargetScrollPos} from '../reducers/code-editor';
+import {setTargetState, setTargetScrollPos, setTargetError} from '../reducers/code-editor';
 
 import styles from '../components/code-editor/code-editor.css';
+
+class ErrorWidget extends WidgetType {
+    constructor (message) {
+        super();
+        this.message = message;
+    }
+
+    eq (other) {
+        return this.message === other.message;
+    }
+
+    toDOM () {
+        return Object.assign(document.createElement('div'), {
+            className: styles.errorWidget,
+            textContent: this.message
+        });
+    }
+}
 
 class CodeEditor extends React.Component {
     constructor (props) {
@@ -55,6 +75,29 @@ class CodeEditor extends React.Component {
         this.view = null;
         this.themeOptions = new Compartment();
         this.parserOptions = new Compartment();
+        this.setErrorWidget = StateEffect.define();
+        this.errorWidget = StateField.define({
+            create: () => Decoration.none,
+            update: (value, transaction) => {
+                value = value.map(transaction.changes);
+                for (const effect of transaction.effects) {
+                    if (effect.is(this.setErrorWidget)) {
+                        if (effect.value) {
+                            const line = transaction.state.doc.line(effect.value.lineNumber);
+                            value = Decoration.set(Decoration.widget({
+                                widget: new ErrorWidget(effect.value.message),
+                                block: true,
+                                side: 1
+                            }).range(line.to));
+                        } else {
+                            value = Decoration.none;
+                        }
+                    }
+                }
+                return value;
+            },
+            provide: field => EditorView.decorations.from(field)
+        });
         this.repaintTimeout = null;
     }
     componentDidMount () {
@@ -68,6 +111,9 @@ class CodeEditor extends React.Component {
         if (this.props.editingTarget && this.props.editingTarget !== prevProps.editingTarget) {
             this.saveTargetState(prevProps.editingTarget);
             this.loadTargetState();
+        } else if (this.props.targetErrors[this.props.editingTarget] !==
+                prevProps.targetErrors[this.props.editingTarget]) {
+            this.showErrorWidget();
         }
         if (!this.repaintTimeout && (
             this.props.sprites !== prevProps.sprites ||
@@ -129,7 +175,8 @@ class CodeEditor extends React.Component {
                     this.getEditorTheme(),
                     syntaxHighlighting(this.getHighlightStyle())
                 ]),
-                this.parserOptions.of([])
+                this.parserOptions.of([]),
+                this.errorWidget
             ]
         });
     }
@@ -184,7 +231,10 @@ class CodeEditor extends React.Component {
         }
         // Timeout prevents error:
         // Calls to EditorView.update are not allowed while an update is in progress
-        setTimeout(this.updateParserOptions, 0);
+        setTimeout(() => {
+            this.updateParserOptions();
+            this.showErrorWidget();
+        }, 0);
     }
     saveTargetState (target) {
         if (target) {
@@ -268,6 +318,17 @@ class CodeEditor extends React.Component {
         }));
         return true;
     }
+    showErrorWidget () {
+        const error = this.props.targetErrors[this.props.editingTarget];
+        if (error && error.rendered) return;
+        this.view.dispatch({
+            effects: this.setErrorWidget.of(error)
+        });
+        this.props.setTargetError(this.props.editingTarget, {
+            ...error,
+            rendered: true
+        });
+    }
     render () {
         /* eslint-disable no-unused-vars */
         const {
@@ -302,10 +363,16 @@ const targetShape = PropTypes.shape({
 CodeEditor.propTypes = {
     editingTarget: PropTypes.string,
     theme: PropTypes.string,
+    setTargetError: PropTypes.func.isRequired,
     setTargetScrollPos: PropTypes.func.isRequired,
     setTargetState: PropTypes.func.isRequired,
     sprites: PropTypes.objectOf(targetShape),
     stage: targetShape,
+    targetErrors: PropTypes.objectOf(PropTypes.shape({
+        lineNumber: PropTypes.number,
+        message: PropTypes.string,
+        rendered: PropTypes.bool
+    })).isRequired,
     targetScrollPos: PropTypes.objectOf(PropTypes.shape({
         top: PropTypes.number,
         left: PropTypes.number
@@ -318,12 +385,16 @@ const mapStateToProps = state => ({
     editingTarget: state.scratchGui.targets.editingTarget,
     sprites: state.scratchGui.targets.sprites,
     stage: state.scratchGui.targets.stage,
+    targetErrors: state.scratchGui.codeEditor.targetErrors,
     targetScrollPos: state.scratchGui.codeEditor.targetScrollPos,
     targetStates: state.scratchGui.codeEditor.targetStates,
     theme: state.scratchGui.theme.theme
 });
 
 const mapDispatchToProps = dispatch => ({
+    setTargetError: (target, error) => {
+        dispatch(setTargetError(target, error));
+    },
     setTargetState: (target, editorState) => {
         dispatch(setTargetState(target, editorState));
     },

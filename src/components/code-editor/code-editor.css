@@ -86,6 +86,13 @@
     display: block;
 }
 
+.code-editor .error-widget {
+    padding: 0 6px;
+    background-color: $error-accent;
+    color: $text-on-accent;
+    user-select: none;
+}
+
 .code-editor :global(.cm-panels) {
     background-color: $ui-white-bg;
     color: $text-primary;

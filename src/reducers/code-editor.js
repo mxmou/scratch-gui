@@ -1,9 +1,11 @@
 const SET_TARGET_STATE = 'scratch-gui/code-editor/SET_TARGET_STATE';
 const SET_TARGET_SCROLL_POS = 'scratch-gui/code-editor/SET_TARGET_SCROLL_POS';
+const SET_TARGET_ERROR = 'scratch-gui/code-editor/SET_TARGET_ERROR';
 
 const initialState = {
     targetStates: {},
-    targetScrollPos: {}
+    targetScrollPos: {},
+    targetErrors: {}
 };
 
 const reducer = (state = initialState, action) => {
@@ -27,6 +29,14 @@ const reducer = (state = initialState, action) => {
                 }
             }
         };
+    case SET_TARGET_ERROR:
+        return {
+            ...state,
+            targetErrors: {
+                ...state.targetErrors,
+                [action.target]: action.error
+            }
+        };
     default:
         return state;
     }
@@ -45,9 +55,16 @@ const setTargetScrollPos = (target, top, left) => ({
     left
 });
 
+const setTargetError = (target, error) => ({
+    type: SET_TARGET_ERROR,
+    target,
+    error
+});
+
 export {
     reducer as default,
     initialState as codeEditorInitialState,
     setTargetState,
-    setTargetScrollPos
+    setTargetScrollPos,
+    setTargetError
 };
