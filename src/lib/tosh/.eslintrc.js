@@ -14,6 +14,8 @@ module.exports = {
         'eqeqeq': 'off',
         'no-else-return': 'off',
         'no-multi-spaces': 'off',
+        'no-throw-literal': 'off',
+        'radix': 'off',
 
         // Variables
         'no-shadow': 'off',
@@ -35,7 +37,8 @@ module.exports = {
                 'ForStatement > .update',
                 'ConditionalExpression',
                 'CallExpression',
-                'ArrayExpression'
+                'ArrayExpression',
+                'MemberExpression'
             ],
             ignoreComments: true,
             SwitchCase: 1
@@ -47,6 +50,7 @@ module.exports = {
         }],
         'newline-per-chained-call': 'off',
         'no-lonely-if': 'off',
+        'no-mixed-operators': 'off',
         'no-multiple-empty-lines': 'off',
         'no-negated-condition': 'off',
         'one-var': 'off',

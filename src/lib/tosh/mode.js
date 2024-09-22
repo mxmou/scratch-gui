@@ -59,7 +59,7 @@ export default function(modeCfg) {
     var result = results[0];
     result = result.process();
 
-    switch (result ? result.info.shape : null) {
+    switch (result && result.info ? result.info.shape : null) {
       case 'c-block':
       case 'c-block cap':
         this.indent.push('c');
@@ -76,7 +76,7 @@ export default function(modeCfg) {
     }
 
     // if definition, add parameters to scope
-    if (result && result.info.selector === 'procDef') {
+    if (result && result.info && result.info.selector === 'procedures_definition') {
       var scopeGrammar = this.startGrammar.copy();
       Language.addParameters(scopeGrammar, result);
       this.completer = new Earley.Completer(scopeGrammar);
@@ -91,9 +91,10 @@ export default function(modeCfg) {
   function paintBlocks(b) {
     if (!b) return;
     b.tokens.forEach(function(p) {
+      if (typeof p !== 'object') return;
       if (p.info) {
         paintBlocks(p);
-      } else if (typeof p === 'object') {
+      } else if (b.info) {
         p.category = b.info.category;
         // TODO paint variables
       }

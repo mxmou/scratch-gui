@@ -33,10 +33,11 @@ import VM from 'scratch-vm';
 import CodeEditorComponent from '../components/code-editor/code-editor.jsx';
 import {themeMap, getColorsForTheme} from '../lib/themes';
 import toshTags from '../lib/code-editor/tags';
+import getParserOptions from '../lib/code-editor/parser-options';
 import toshParser from '../lib/tosh/mode';
 import {inputSeek} from '../lib/tosh/app';
-import * as ToshEarley from '../lib/tosh/earley';
 import * as ToshLanguage from '../lib/tosh/language';
+import * as ToshCompiler from '../lib/tosh/compile';
 import {setTargetState, setTargetScrollPos} from '../reducers/code-editor';
 
 import styles from '../components/code-editor/code-editor.css';
@@ -132,13 +133,6 @@ class CodeEditor extends React.Component {
             ]
         });
     }
-    getVariableNamesOfType (variables, type) {
-        return Object.values(variables)
-            .filter(variable => variable.type === type)
-            .map(variable => ({
-                _name: () => variable.name
-            }));
-    }
     setElement (element) {
         this.element = element;
         if (element && this.view) {
@@ -156,50 +150,11 @@ class CodeEditor extends React.Component {
     }
     updateParserOptions () {
         this.repaintTimeout = null;
-
-        const target = this.props.vm.editingTarget;
-        if (!target) {
-            return;
-        }
-        let variables = this.getVariableNamesOfType(target.variables, VM.SCALAR_VARIABLE);
-        let lists = this.getVariableNamesOfType(target.variables, VM.LIST_VARIABLE);
-        if (!target.isStage) {
-            variables = [
-                ...variables,
-                ...this.getVariableNamesOfType(this.props.stage.variables, VM.SCALAR_VARIABLE)
-            ];
-            lists = [
-                ...lists,
-                ...this.getVariableNamesOfType(this.props.stage.variables, VM.LIST_VARIABLE)
-            ];
-        }
-
-        // Update definitions - based on ScriptsEditor.checkDefinitions from tosh
-        const definitions = [];
-        const defineParser = new ToshEarley.Parser(ToshLanguage.defineGrammar);
-        for (const line of this.view.state.doc.iterLines()) {
-            if (!ToshLanguage.isDefinitionLine(line)) continue;
-            const tokens = ToshLanguage.tokenize(line);
-            let results;
-            try {
-                results = defineParser.parse(tokens);
-            } catch {
-                continue;
-            }
-            if (results.length > 1) {
-                console.log(`ambiguous define. count: ${results.length}`); // eslint-disable-line no-console
-                continue;
-            }
-            definitions.push(results[0].process());
-        }
-
         this.view.dispatch({
             effects: this.parserOptions.reconfigure([
-                StreamLanguage.define(toshParser({
-                    variables,
-                    lists,
-                    definitions
-                }))
+                StreamLanguage.define(toshParser(
+                    getParserOptions(this.props.vm, this.props.editingTarget)
+                ))
             ])
         });
     }
@@ -207,15 +162,24 @@ class CodeEditor extends React.Component {
         if (Object.prototype.hasOwnProperty.call(this.props.targetStates, this.props.editingTarget)) {
             this.view.setState(this.props.targetStates[this.props.editingTarget]);
         } else {
-            this.view.setState(this.newState(this.props.vm.editingTarget.code));
+            const target = this.props.vm.editingTarget
+            if (target.code === null) {
+                target.code = ToshCompiler.generate(target.blocks);
+            }
+            this.view.setState(this.newState(target.code));
             this.props.setTargetState(this.props.editingTarget, this.view.state);
         }
+        const scroller = this.element.querySelector('.cm-scroller');
         if (Object.prototype.hasOwnProperty.call(this.props.targetScrollPos, this.props.editingTarget)) {
             const scrollPos = this.props.targetScrollPos[this.props.editingTarget];
-            const scroller = this.element.querySelector('.cm-scroller');
             setTimeout(() => {
                 scroller.scrollTop = scrollPos.top;
                 scroller.scrollLeft = scrollPos.left;
+            }, 0);
+        } else {
+            setTimeout(() => {
+                scroller.scrollTop = 0;
+                scroller.scrollLeft = 0;
             }, 0);
         }
         // Timeout prevents error:

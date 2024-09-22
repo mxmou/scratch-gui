@@ -6,6 +6,7 @@ import {OrderedMap} from 'immutable';
 import VM from 'scratch-vm';
 
 import DataPanelComponent from '../components/data-panel/data-panel.jsx';
+import uid from '../lib/uid';
 import * as ToshLanguage from '../lib/tosh/language';
 
 const CLOUD_PREFIX = '☁ ';
@@ -88,17 +89,6 @@ class DataPanel extends React.Component {
             name => name !== this.state.promptDefaultValue
         );
         return existingVariableNames;
-    }
-    generateVariableId () {
-        // Based on Blockly.utils.genUid
-        const soup = '!#$%()*+,-./:;=?@[]^_`{|}~' +
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        const length = 20;
-        const id = [];
-        for (let i = 0; i < length; i++) {
-            id[i] = soup.charAt(Math.random() * soup.length);
-        }
-        return id.join('');
     }
     createMonitorBlock (id, name, type) {
         const fieldName = {
@@ -194,7 +184,7 @@ class DataPanel extends React.Component {
                 stage.renameVariable(this.state.idToRename, name);
             }
         } else {
-            const id = this.generateVariableId();
+            const id = uid();
             if (isLocal) {
                 target.createVariable(id, name, type);
             } else {

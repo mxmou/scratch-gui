@@ -330,9 +330,8 @@ function param(a, b, c) {
   // warning: mutates arguments
   a.category = c.category = "parameter";
   switch (a.kind) {
-    case "lparen": return {arg: "n", name: b};
+    case "lparen": return {arg: "s", name: b};
     case "langle": return {arg: "b", name: b};
-    case "lsquare": return {arg: "s", name: b};
   }
 }
 
@@ -353,7 +352,6 @@ function definition(a, parts) {
     } else {
       inputNames.push(part.name);
       switch (part.arg) {
-        case 'n': defaults.push(0);     return '%n';
         case 'b': defaults.push(false); return '%b';
         case 's': defaults.push("");   return '%s';
         default: defaults.push(""); return '%' + part.arg;
@@ -365,7 +363,7 @@ function definition(a, parts) {
   var args = [spec, inputNames, defaults, isAtomic];
 
   var definition = {
-    info: {shape: 'hat', selector: 'procDef'},
+    info: {shape: 'hat', selector: 'procedures_definition'},
     args: args,
     _parts: parts,
   };
@@ -387,7 +385,6 @@ var defineGrammar = new Grammar([
 
     Rule("spec", [{kind: 'lparen'}, "arg-words", {kind: 'rparen'}], param),
     Rule("spec", [{kind: 'langle'}, "arg-words", {kind: 'rangle'}], param),
-    Rule("spec", [{kind: 'lsquare'}, "arg-words", {kind: 'rsquare'}], param),
     Rule("spec", [{kind: 'input'}, {kind: 'lsquare'}, "arg-words", {kind: 'rsquare'}], hackedParam),
 
     Rule("arg-words", ["word-seq"], paintList("parameter")),
@@ -447,7 +444,7 @@ function blockArgs(info) {
 
     // stop other scripts in sprite
     var outInfo = info;
-    if (info.selector === 'stopScripts') {
+    if (info.selector === 'control_stop') {
       var option = args[0];
       if (['all', 'this script'].indexOf(option) === -1) {
         outInfo = Scratch.stopOtherScripts;
@@ -520,7 +517,7 @@ function colorLiteral(a) {
 function hexColor(a) {
   var h = a.value;
   if (h.length === 3) h = h[0] + h[0] + h[1] + h[1] + h[2] + h[2];
-  return parseInt(h, 16);
+  return '#' + h;
 }
 
 function unaryMinus(a, b) {
@@ -606,7 +603,7 @@ var g = new Grammar([
   // The rest get defined here, because I like my sanity.
 
   Rule("join", [["join"], "jpart", "jpart"],
-                                          block("concatenate:with:", 1, 2)),
+                                          block("operator_join", 1, 2)),
 
   Rule("jpart", ["s0"], identity),
   Rule("jpart", [{kind: 'empty'}], constant("")),
@@ -617,9 +614,9 @@ var g = new Grammar([
   // "join" on the LHS of a comparison is *confusing*
 
   Rule("predicate", [["touching"], ["color"], "c", ["?"]],
-                                          block("touchingColor:", 2)),
+                                          block("sensing_touchingcolor", 2)),
   Rule("predicate", [["color"], "c", ["is"], ["touching"], "c", ["?"]],
-                                          block("color:sees:", 1, 4)),
+                                          block("sensing_coloristouchingcolor", 1, 4)),
 
   /* --------------------------------------------------------------------- */
 
@@ -628,21 +625,22 @@ var g = new Grammar([
   Rule("b8", ["b7"], identity),
 
   // require parentheses when nesting and/or
-  Rule("b-and", ["b-and", ["and"], "b7"], infix("&")),
-  Rule("b-and", ["b7", ["and"], "b7"], infix("&")),
+  Rule("b-and", ["b-and", ["and"], "b7"], infix("operator_and")),
+  Rule("b-and", ["b7", ["and"], "b7"], infix("operator_and")),
 
-  Rule("b-or", ["b-or", ["or"], "b7"], infix("|")),
-  Rule("b-or", ["b7", ["or"], "b7"], infix("|")),
+  Rule("b-or", ["b-or", ["or"], "b7"], infix("operator_or")),
+  Rule("b-or", ["b7", ["or"], "b7"], infix("operator_or")),
 
-  Rule("b7", [["not"], "b7"], block("not", 1)),
+  Rule("b7", [["not"], "b7"], block("operator_not", 1)),
   Rule("b7", ["b6"], identity),
 
   // nb.  "<" and ">" do not tokenize as normal symbols
   // also note comparison ops accept *booleans*!
-  Rule("b6", ["sb", {kind: 'langle'}, "sb"], infix("<")),
-  Rule("b6", ["sb", {kind: 'rangle'}, "sb"], infix(">")),
-  Rule("b6", ["sb", ["="], "sb"], infix("=")),
-  Rule("b6", ["m_list", ["contains"], "sb", ["?"]], infix("list:contains:")),
+  Rule("b6", ["sb", {kind: 'langle'}, "sb"], infix("operator_lt")),
+  Rule("b6", ["sb", {kind: 'rangle'}, "sb"], infix("operator_gt")),
+  Rule("b6", ["sb", ["="], "sb"], infix("operator_equals")),
+  Rule("b6", ["sb", ["contains"], "sb", ["?"]], infix("operator_contains")),
+  Rule("b6", ["m_listNonempty", ["contains"], "sb", ["?"]], infix("data_listcontainsitem")),
   Rule("b6", ["predicate"], identity),
   Rule("b6", ["b2"], identity),
 
@@ -651,26 +649,26 @@ var g = new Grammar([
 
   // ---
 
-  Rule("n4", ["n4", ["+"], "n3"], infix("+")),
-  Rule("n4", ["n4", ["-"], "n3"], infix("-")),
+  Rule("n4", ["n4", ["+"], "n3"], infix("operator_add")),
+  Rule("n4", ["n4", ["-"], "n3"], infix("operator_subtract")),
   Rule("n4", ["n3"], identity),
 
-  Rule("n3", ["n3", ["*"],   "n2"], infix("*")),
-  Rule("n3", ["n3", ["/"],   "n2"], infix("/")),
-  Rule("n3", ["n3", ["mod"], "n2"], infix("%")),
+  Rule("n3", ["n3", ["*"],   "n2"], infix("operator_multiply")),
+  Rule("n3", ["n3", ["/"],   "n2"], infix("operator_divide")),
+  Rule("n3", ["n3", ["mod"], "n2"], infix("operator_mod")),
   Rule("n3", ["n2"], identity),
 
-  Rule("n2", [["round"], "n2"],           block("rounded", 1)),
-  Rule("n2", ["m_mathOp", ["of"], "n2"],  infix("computeFunction:of:")),
+  Rule("n2", [["round"], "n2"],           block("operator_round", 1)),
+  Rule("n2", ["m_mathOp", ["of"], "n2"],  infix("operator_mathop")),
   Rule("n2", [["pick"], ["random"], "n4", ["to"], "n2"],
-                                          block("randomFrom:to:", 2, 4)),
-  Rule("n2", ["m_attribute", ["of"], "m_spriteOrStage"],
-                                          block("getAttribute:of:", 0, 2)),
-  Rule("n2", [["distance"], ["to"], "m_spriteOrMouse"],
-                                          block("distanceTo:", 2)),
-  Rule("n2", [["length"], ["of"], "s2"],  block("stringLength:", 2)),
+                                          block("operator_random", 2, 4)),
+  Rule("n2", ["m_attribute", ["of"], "m_sensing_of_object_menu"],
+                                          block("sensing_of", 0, 2)),
+  Rule("n2", [["distance"], ["to"], "m_sensing_distancetomenu"],
+                                          block("sensing_distanceto", 2)),
+  Rule("n2", [["length"], ["of"], "s2"],  block("operator_length", 2)),
   Rule("n2", [["letter"], "n", ["of"], "s2"],
-                                          block("letter:of:", 1, 3)),
+                                          block("operator_letter_of", 1, 3)),
   Rule("n2", ["n1"], identity),
 
   Rule("n1", ["simple-reporter"], identity),
@@ -722,89 +720,146 @@ Object.keys(colors).forEach(function(name) {
 
 /* Menu options */
 
-var menus = ['attribute', 'backdrop', 'broadcast', 'costume', 'effect',
-    'key', 'list', 'location', 'mathOp', 'rotationStyle', 'scene', 'sound',
-    'spriteOnly', 'spriteOrMouse', 'spriteOrStage', 'stageOrThis', 'stop',
-    'timeAndDate', 'touching', 'triggerSensor', 'var', 'varName',
-      'videoMotionType', 'videoState'];
+var menus = ['motion_goto_menu', 'motion_glideto_menu',
+    'motion_pointtowards_menu', 'looks_costume', 'looks_backdrops',
+    'sound_sounds_menu', 'event_broadcast_menu',
+    'control_create_clone_of_menu', 'sensing_touchingobjectmenu',
+    'sensing_distancetomenu', 'sensing_keyoptions', 'sensing_of_object_menu',
+    'pen_menu_colorParam', 'music_menu_DRUM', 'music_menu_INSTRUMENT',
+    'videoSensing_menu_ATTRIBUTE', 'videoSensing_menu_SUBJECT',
+    'videoSensing_menu_VIDEO_STATE',
 
-var numberMenus = ["direction", "drum", "instrument", "listDeleteItem",
-    "listItem", "note"];
+    'attribute', 'backdrop', 'broadcast', 'dragMode', 'effect',
+    'forwardBackward', 'frontBack', 'key', 'list', 'listNonempty', 'mathOp',
+    'numberName', 'rotationStyle', 'soundEffect', 'stop', 'timeAndDate',
+    'triggerSensor', 'var'];
 
-var menusThatAcceptReporters = ['broadcast', 'costume', 'backdrop',
-    'location', 'scene', 'sound', 'spriteOnly', 'spriteOrMouse',
-    'spriteOrStage', 'touching'];
+// These accept strings and reporters
+var menusThatAcceptReporters = ['motion_goto_menu', 'motion_glideto_menu',
+    'motion_pointtowards_menu', 'looks_costume', 'looks_backdrops',
+    'sound_sounds_menu', 'event_broadcast_menu',
+    'control_create_clone_of_menu', 'sensing_touchingobjectmenu',
+    'sensing_distancetomenu', 'sensing_keyoptions', 'sensing_of_object_menu',
+    'pen_menu_colorParam', 'music_menu_DRUM', 'music_menu_INSTRUMENT',
+    'videoSensing_menu_ATTRIBUTE', 'videoSensing_menu_SUBJECT',
+    'videoSensing_menu_VIDEO_STATE'];
+
+// These accept string literals but not reporters
+var menusThatAcceptStrings = ['attribute', 'backdrop', 'broadcast'];
+
+// Some menus can't be empty to make sure that empty inputs are unambiguous
+var menusThatMustNotBeEmpty = ['listNonempty', 'mathOp', 'soundEffect'];
 
 var menuOptions = {
+  motion_goto_menu: ['mouse-pointer', 'random position'],
+  motion_glideto_menu: ['mouse-pointer', 'random position'],
+  motion_pointtowards_menu: ['mouse-pointer'],
+  looks_costume: [],
+  looks_backdrops: ['next backdrop', 'previous backdrop', 'random backdrop'],
+  sound_sounds_menu: [],
+  event_broadcast_menu: [],
+  control_create_clone_of_menu: ['myself'],
+  sensing_touchingobjectmenu: ['mouse-pointer', 'edge'],
+  sensing_distancetomenu: ['mouse-pointer'],
+  sensing_keyoptions: [], // set later
+  sensing_of_object_menu: ['Stage'],
+  pen_menu_colorParam: ['hue', 'saturation', 'brightness', 'transparency'],
+  music_menu_DRUM: ['Snare Drum', 'Bass Drum', 'Side Stick', 'Crash Cymbal',
+    'Open Hi-Hat', 'Closed Hi-Hat', 'Tambourine', 'Hand Clap', 'Claves',
+    'Wood Block', 'Cowbell', 'Triangle', 'Bongo', 'Conga', 'Cabasa', 'Guiro',
+    'Vibraslap', 'Cuica'],
+  music_menu_INSTRUMENT: ['Piano', 'Electric Piano', 'Organ', 'Guitar',
+    'Electric Guitar', 'Bass', 'Pizzicato', 'Cello', 'Trombone', 'Clarinet',
+    'Saxophone', 'Flute', 'Wooden Flute', 'Bassoon', 'Choir', 'Vibraphone',
+    'Music Box', 'Steel Drum', 'Marimba', 'Synth Lead', 'Synth Pad'],
+  videoSensing_menu_ATTRIBUTE: ['motion', 'direction'],
+  videoSensing_menu_SUBJECT: ['sprite', 'stage'],
+  videoSensing_menu_VIDEO_STATE: ['off', 'on', 'on flipped'],
+
   'attribute': ['x position', 'y position', 'direction', 'costume #',
-    'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
+  'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
   'backdrop': [],
-  'booleanSensor': ['button pressed', 'A connected', 'B connected',
-  'C connected', 'D connected'],
   'broadcast': [],
-  'costume': [],
+  'dragMode': ['draggable', 'not draggable'],
   'effect': ['color', 'fisheye', 'whirl', 'pixelate', 'mosaic',
   'brightness', 'ghost'],
+  'forwardBackward': ['forward', 'backward'],
+  'frontBack': ['front', 'back'],
   'key': ['space', 'up arrow', 'down arrow', 'right arrow', 'left arrow',
     'any', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm',
     'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 0, 1, 2,
     3, 4, 5, 6, 7, 8, 9],
   'list': [],
-  'listDeleteItem': ['last', 'all'],
-  'listItem': ['last', 'random'],
-  'location': ['mouse-pointer', 'random position'],
+  'listNonempty': [],
   'mathOp': ['abs', 'floor', 'ceiling', 'sqrt', 'sin', 'cos', 'tan',
   'asin', 'acos', 'atan', 'ln', 'log', 'e ^', '10 ^'],
-  'motorDirection': ['this way', 'that way', 'reverse'],
+  'numberName': ['number', 'name'],
   'rotationStyle': ['left-right', "don't rotate", 'all around'],
-  'sensor': ['slider', 'light', 'sound', 'resistance-A', 'resistance-B',
-  'resistance-C', 'resistance-D'],
-  'sound': [],
-  'spriteOnly': ['myself'],
-  'spriteOrMouse': ['mouse-pointer'],
-  'spriteOrStage': ['Stage'],
-  'stageOrThis': ['Stage', 'this sprite'],
+  // The pan effect is called "pan left/right" in Scratch
+  // TB3 uses "pan" because "/" is a reserved symbol
+  'soundEffect': ['pitch', 'pan'],
   'stop': ['all', 'this script', 'other scripts in sprite'],
   'timeAndDate': ['year', 'month', 'date', 'day of week', 'hour',
   'minute', 'second'],
-  'touching': ['mouse-pointer', 'edge'],
-  'triggerSensor': ['loudness', 'timer', 'video motion'],
+  'triggerSensor': ['loudness', 'timer'],
   'var': [],
-  'videoMotionType': ['motion', 'direction'],
-  'videoState': ['off', 'on', 'on-flipped'],
 };
+menuOptions.sensing_keyoptions = menuOptions.key;
 
 // only generate number literals for some blocks
 var blocksWithNumberLiterals = [
-  'setVar:to:',
-  '<', '>', '=',
+  'data_setvariableto',
+  'operator_lt', 'operator_gt', 'operator_equals',
 ];
 // force string literals for:
-//  'concatenate:with:',
-//  'append:toList:',
-//  'insert:at:ofList:',
+//  operator_join
+//  data_addtolist
+//  data_insertatlist
 //  say
 //  think
 //  ask
-//  letter:of:
-//  stringLength:
-//  list:contains:
+//  operator_letter_of
+//  operator_length
+//  operator_contains
+//  data_listcontainsitem
 // ]
 
+// Maps label to value
 var menuValues = {
   'mouse-pointer': '_mouse_',
   'myself': '_myself_',
   'Stage': '_stage_',
   'edge': '_edge_',
   'random position': '_random_',
-  // 'stageOrThis' does not use this
+  'hue': 'color',
+  'sprite': 'this sprite',
+  'stage': 'Stage',
+  'on flipped': 'on-flipped',
 };
+
+['effect', 'soundEffect', 'timeAndDate', 'triggerSensor']
+  .forEach(function(menu) {
+    menuOptions[menu].forEach(function(label) {
+      menuValues[label] = label.toUpperCase().replace(/\s/g, '');
+    });
+  });
+['music_menu_DRUM', 'music_menu_INSTRUMENT'].forEach(function(menu) {
+  menuOptions[menu].forEach(function(label, index) {
+    menuValues[label] = index + 1;
+  });
+});
+
+// Maps value to label for each menu
+var menuLabels = {};
 
 menus.forEach(function(name) {
   if (menusThatAcceptReporters.indexOf(name) > -1) {
     g.addRule(Rule("m_" + name, ["jpart"], identity));
+  } else if (menusThatAcceptStrings.indexOf(name) > -1) {
+    g.addRule(Rule("m_" + name, ["s0"], identity));
   }
   var options = menuOptions[name];
+  menuLabels[name] = {};
   if (options && options.length) {
     options.forEach(function(option) {
       var symbols;
@@ -815,14 +870,23 @@ menus.forEach(function(name) {
       }
       process = embed;
       var value;
-      if (name !== 'stageOrThis') value = menuValues[option];
-      if (value) {
+      value = menuValues[option];
+      if (value &&
+          !(name === 'pen_menu_colorParam' && option === 'brightness')) {
         process = embedConstant(value);
+        menuLabels[name][value] = option;
       }
       g.addRule(Rule("m_" + name, symbols, process));
     });
   }
-  g.addRule(Rule("m_" + name, [{kind: 'empty'}], literal));
+  if (
+    // Some inputs intentionally can't be empty
+    menusThatMustNotBeEmpty.indexOf(name) === -1 &&
+    // The "jpart" rule already includes empty inputs
+    menusThatAcceptReporters.indexOf(name) === -1
+  ) {
+    g.addRule(Rule("m_" + name, [{kind: 'empty'}], literal));
+  }
   /*if (name === "broadcast") {
     g.addRule(Rule("m_" + name, [{kind: 'menu'}], literal));
   } else {
@@ -830,22 +894,9 @@ menus.forEach(function(name) {
   }*/
 });
 
-numberMenus.forEach(function(name) {
-  var options = menuOptions[name];
-  if (options && options.length) {
-    options.forEach(function(option) {
-      g.addRule(Rule("d_" + name, textSymbols(option), identity));
-    });
-  }
-  g.addRule(Rule("d_" + name, ["n"], identity));
-});
-
-// TODO:  "(last v)"
-
-g.addRule(Rule("m_attribute", ["jpart"], identity));
 g.addRule(Rule("m_var", ["VariableName"], identity));
-g.addRule(Rule("m_varName", ["VariableName"], identity));
 g.addRule(Rule("m_list", ["ListName"], identity));
+g.addRule(Rule("m_listNonempty", ["ListName"], identity));
 
 
 /* For Compiler.generate() */
@@ -854,12 +905,13 @@ var precedenceLevels = [
   // custom block args = -2
   // join = -1
   [], // zero
-  ['*', '/', '%'],
-  ['+', '-'],
-  ['=', '<', '>', 'list:contains:'],
-  ['not'],
-  ['&'],  // actually & and | have the same precedence!
-  ['|'],  // except they must be parenthesised when inside each other.
+  ['operator_multiply', 'operator_divide', 'operator_mod'],
+  ['operator_add', 'operator_subtract'],
+  ['operator_equals', 'operator_lt', 'operator_gt',
+    'operator_contains', 'data_listcontainsitem'],
+  ['operator_not'],
+  ['operator_and'],  // actually "and" and "or" have the same precedence!
+  ['operator_or'],  // except they must be parenthesised when inside each other.
   // [ stack blocks ]
 ];
 
@@ -871,32 +923,35 @@ precedenceLevels.forEach(function(list, index) {
 });
 
 // special-case "join"
-precedence['concatenate:with:'] = -1;
+precedence.operator_join = -1;
 
 
 /* Add rules for blocks */
 
 var alreadyDefined = [
-  'letter:of:', 'concatenate:with:',
+  'operator_letter_of', 'operator_join',
 
-  '&', '|', 'not',
-  '=', '<', '>', 'list:contains:',
+  'operator_and', 'operator_or', 'operator_not',
+  'operator_equals', 'operator_lt', 'operator_gt',
+  'operator_contains', 'data_listcontainsitem',
 
-  'randomFrom:to:', 'stringLength:', 'rounded', 'computeFunction:of:',
-  'getAttribute:of:', 'distanceTo:',
+  'operator_random', 'operator_length', 'operator_round', 'operator_mathop',
+  'sensing_of', 'sensing_distanceto',
 
-  '*', '/', '%',
-  '+', '-',
+  'operator_multiply', 'operator_divide', 'operator_mod',
+  'operator_add', 'operator_subtract',
 
-  'doIf', // doIf and doIfElse have the same grammar rule!
+  'control_if', // control_if and control_if_else have the same grammar rule!
 
-  'touchingColor:', 'color:sees:',
+  'sensing_touchingcolor', 'sensing_coloristouchingcolor',
 ];
 
 var doneSpecs = {};
 Scratch.blocks.forEach(function(block) {
   if (alreadyDefined.indexOf(block.selector) > -1) return;
-  if (doneSpecs[block.spec] && block.selector !== 'getParam') {
+  if (doneSpecs[block.spec] &&
+      block.selector !== 'argument_reporter_string_number' &&
+      block.selector !== 'argument_reporter_boolean') {
     return;
   }
   doneSpecs[block.spec] = true;
@@ -904,7 +959,7 @@ Scratch.blocks.forEach(function(block) {
   var symbols = [];
   var argIndexes = [];
 
-  block.parts.forEach(function(part) {
+  block.parts.forEach(function(part, index) {
     var m = Scratch.inputPat.exec(part);
     if (!m) {
       part.split(/(\?)|[ ]+/g).forEach(function(word) {
@@ -919,12 +974,13 @@ Scratch.blocks.forEach(function(block) {
       });
     } else {
       var input = m[1].slice(1).replace(".", "_");
-      if (!/^[mdc]/.test(input)) {
+      if ((index === 0 || index === block.parts.length - 1) &&
+          !/^[mdc]/.test(input)) {
         assert(!(block.shape === "reporter" || block.shape === "predicate"),
                 block.selector + " " + block.spec);
       }
-      // to make my brain not hurt, we define any reporters with non-menu
-      // inputs as part of the core grammar.
+      // Reporters with non-menu inputs at the beginning or end are defined
+      // in the core grammar.
 
       if (input === 's') input = 'sb'; // strings accept booleans!
 
@@ -936,13 +992,15 @@ Scratch.blocks.forEach(function(block) {
   var type = (block.shape === "reporter" ? "simple-reporter" :
               block.shape === "predicate" ? "simple-predicate" : "block");
 
-  if (block.selector === "readVariable") {
+  if (block.selector === "data_variable") {
     symbols = ["VariableName"];
-  } else if (block.selector === "contentsOfList:") {
+  } else if (block.selector === "data_listcontents") {
     symbols = ["ListName"];
     type = 'r-value';
-  } else if (block.selector === "getParam") {
-    symbols = [block.shape === 'reporter' ? "ReporterParam" : "BooleanParam"];
+  } else if (block.selector === "argument_reporter_string_number") {
+    symbols = ["ReporterParam"];
+  } else if (block.selector === "argument_reporter_boolean") {
+    symbols = ["BooleanParam"];
   }
 
   assert(symbols.length);
@@ -1045,7 +1103,10 @@ var reservedNames = [
   'y',
   'z', // so people don't hate me
   'pen color',
-  'pen shade',
+  'pen hue',
+  'pen saturation',
+  'pen brightness',
+  'pen transparency',
   'pen size',
   'video transparency',
   'instrument',
@@ -1056,18 +1117,22 @@ var reservedNames = [
   'brightness effect',
   'ghost effect',
   'fisheye effect',
+  'pitch effect',
+  'pan effect',
 
   // found in the attribute _ of _ block
-  'costume name',
+  'costume #',
+  'backdrop #',
 
   // simple reporters
   'x position',
   'y position',
   'direction',
-  'costume #',
+  'costume number',
+  'costume name',
   'size',
+  'backdrop number',
   'backdrop name',
-  'backdrop #',
   'volume',
   'tempo',
   'answer',
@@ -1102,6 +1167,8 @@ var reservedWords = [
   'of',
   'for',
   'with',
+  'mod',
+  'round',
 ];
 
 function cleanName(kind, name, seen, stageSeen) {
@@ -1247,11 +1314,11 @@ function isDefinitionLine(line) {
 function modeGrammar(modeCfg) {
   var grammar = g.copy();
   modeCfg.variables.forEach(function(variable) {
-    var name = variable._name();
+    var name = variable.name;
     addDefinition(grammar, {name: name});
   });
   modeCfg.lists.forEach(function(list) {
-    var name = list._name();
+    var name = list.name;
     addDefinition(grammar, {name: name, value: []});
   });
   modeCfg.definitions.forEach(function(result) {
@@ -1270,168 +1337,173 @@ var preferSelectors = [
   /* predicates */
 
   'BooleanParam',
-  'color:sees:',
-  'touching:',
-  'touchingColor:',
-  'mousePressed',
-  'keyPressed:',
-  'list:contains:',
-  'not',
+  'sensing_coloristouchingcolor',
+  'sensing_touchingobject',
+  'sensing_touchingcolor',
+  'sensing_mousedown',
+  'sensing_keypressed',
+  'data_listcontainsitem',
+  'operator_contains',
+  'operator_not',
 
   /* reporters */
   'ReporterParam',
   'VariableName',
 
-  '+',
-  '-',
-  '*',
-  '/',
+  'operator_add',
+  'operator_subtract',
+  'operator_multiply',
+  'operator_divide',
 
-  '%',
+  'operator_mod',
 
-  'stringLength:',
-  'letter:of:',
-  'lineCountOfList:',
-  'timer',
+  'operator_length',
+  'operator_letter_of',
+  'data_lengthoflist',
+  'sensing_timer',
 
-  'rounded',
-  'computeFunction:of:',
+  'operator_round',
+  'operator_mathop',
 
-  'heading',
-  'distanceTo:',
-  'costumeIndex',
-  'backgroundIndex',
-  'sceneName',
+  'motion_direction',
+  'sensing_distanceto',
+  'looks_costumenumbername',
+  'looks_backdropnumbername',
 
-  'randomFrom:to:',
+  'operator_random',
 
-  'timeAndDate',
+  'sensing_current',
 
-  'mouseX',
-  'mouseY',
-  'getUserName',
-  'tempo',
-  'volume',
-  'soundLevel',
+  'sensing_mousex',
+  'sensing_mousey',
+  'sensing_username',
+  'music_getTempo',
+  'sound_volume',
+  'sensing_loudness',
 
-  'getLine:ofList',
-  'getAttribute:of:',
+  'data_itemoflist',
+  'data_itemnumoflist',
+  'sensing_of',
 
-  'senseVideoMotion',
+  'videoSensing_videoOn',
 
   /* blocks */
 
-  // 'call', TODO sort calls first
+  // 'procedures_call', TODO sort calls first
 
-  'append:toList:',
-  'doAsk',
+  'data_addtolist',
+  'sensing_askandwait',
 
-  'broadcast:',
-  'doBroadcastAndWait',
+  'event_broadcast',
+  'event_broadcastandwait',
 
-  'changeXposBy:',
-  'changeYposBy:',
-  'changeGraphicEffect:by:',
-  'changeSizeBy:',
-  'changePenSizeBy:',
-  'changePenHueBy:',
-  'changePenShadeBy:',
-  'changeVolumeBy:',
-  'changeTempoBy:',
-  'changeVar:by:', // TODO sort vars first
+  'motion_changexby',
+  'motion_changeyby',
+  'looks_changesizeby',
+  'looks_changeeffectby',
+  'pen_changePenSizeBy',
+  'pen_changePenColorParamBy',
+  'sound_changevolumeby',
+  'sound_changeeffectby',
+  'music_changeTempo',
+  'data_changevariableby', // TODO sort vars first
 
-  'clearPenTrails',
-  'filterReset',
+  'looks_cleareffects',
+  'sound_cleareffects',
 
-  'createCloneOf',
+  'control_create_clone_of',
 
-  // 'procDef'
-  'deleteClone',
-  'deleteLine:ofList:',
+  // 'procedures_definition'
+  'control_delete_this_clone',
+  'data_deleteoflist',
+  'data_deletealloflist',
 
-  'doForever',
+  'pen_clear',
 
-  'gotoX:y:',
-  'gotoSpriteOrMouse:',
-  'comeToFront',
-  'goBackByLayers:',
-  'glideSecs:toX:y:elapsed:from:',
+  'control_forever',
 
-  'hide',
-  'hideVariable:',
-  'hideList:',
+  'motion_gotoxy',
+  'motion_goto',
+  'looks_gotofrontback',
+  'looks_goforwardbackwardlayers',
+  'motion_glidesecstoxy',
+  'motion_glideto',
 
-  'doIf',
-  'doIfElse', // filtered later anyway
-  'insert:at:ofList:',
-  'bounceOffEdge',
+  'looks_hide',
+  'data_hidevariable',
+  'data_hidelist',
 
-  'nextCostume',
-  'nextScene',
+  'control_if_else',
+  'data_insertatlist',
+  'motion_ifonedgebounce',
 
-  'heading:',
-  'pointTowards:',
-  'putPenDown',
-  'putPenUp',
-  'playSound:',
-  'doPlaySoundAndWait',
-  'noteOn:duration:elapsed:from:',
-  'playDrum',
+  'looks_nextcostume',
+  'looks_nextbackdrop',
 
-  'doRepeat',
-  'doUntil',
-  'setLine:ofList:to:',
-  'timerReset',
-  'rest:elapsed:from:',
+  'motion_pointindirection',
+  'motion_pointtowards',
+  'pen_penDown',
+  'pen_penUp',
+  'sound_playuntildone',
+  'music_playNoteForBeats',
+  'music_playDrumForBeats',
 
-  'say:',
-  'say:duration:elapsed:from:',
+  'control_repeat',
+  'control_repeat_until',
+  'data_replaceitemoflist',
+  'sensing_resettimer',
+  'music_restForBeats',
 
-  'setVar:to:',
-  'xpos:',
-  'ypos:',
-  'setGraphicEffect:to:',
-  'setSizeTo:',
-  'penSize:',
-  'penColor:',
-  'setPenHueTo:',
-  'setPenShadeTo:',
-  'setVolumeTo:',
-  'setRotationStyle',
-  'instrument:',
-  'setTempoTo:',
-  'setVideoTransparency',
+  'looks_say',
+  'looks_sayforsecs',
 
-  'show',
-  'showVariable:',
-  'showList:',
+  'data_setvariableto',
+  'motion_setxy',
+  'motion_sety',
+  'looks_setsizeto',
+  'looks_seteffectto',
+  'pen_setPenSizeTo',
+  'pen_setPenColorToColor',
+  'pen_setPenColorParamTo',
+  'sound_setvolumeto',
+  'sound_seteffectto',
+  'motion_setrotationstyle',
+  'sensing_setdragmode',
+  'music_setInstrument',
+  'music_setTempo',
+  'videoSensing_setVideoTransparency',
 
-  'stopScripts',
-  'stopAllSounds',
-  'stampCostume',
+  'looks_show',
+  'data_showvariable',
+  'data_showlist',
 
-  'lookLike:',
-  'startScene',
-  'startSceneAndWait',
+  'control_stop',
+  'sound_play',
+  'sound_stopallsounds',
+  'pen_stamp',
 
-  'turnRight:',
-  'turnLeft:',
-  'think:',
-  'think:duration:elapsed:from:',
-  'setVideoState',
+  'looks_switchcostumeto',
+  'looks_switchbackdropto',
+  'looks_switchbackdroptoandwait',
 
-  'whenGreenFlag',
+  'motion_turnright',
+  'motion_turnleft',
+  'looks_think',
+  'looks_thinkforsecs',
+  'videoSensing_videoToggle',
 
-  'wait:elapsed:from:',
-  'doWaitUntil',
+  'event_whenflagclicked',
 
-  'whenKeyPressed',
-  'whenCloned',
-  'whenIReceive',
-  'whenClicked',
-  'keyPressed:',
-  //'whenSensorGreaterThan', TODO completion for this
-  'whenSceneStarts',
+  'control_wait',
+  'control_wait_until',
+
+  'event_whenkeypressed',
+  'control_start_as_clone',
+  'event_whenbroadcastreceived',
+  'event_whenthisspriteclicked',
+  //'event_whengreaterthan', TODO completion for this
+  //'videoSensing_whenMotionGreaterThan',
+  'event_whenbackdropswitchesto',
 
   'end',
   'else',
@@ -1454,7 +1526,9 @@ export {
   // for Compiler
   precedence,
   menusThatAcceptReporters,
+  menusThatAcceptStrings,
   menuOptions,
+  menuLabels,
   blocksWithNumberLiterals,
 
   // for automatic variable renaming

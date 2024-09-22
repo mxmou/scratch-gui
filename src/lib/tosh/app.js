@@ -262,6 +262,8 @@ export function computeHint(context, completer, grammar, {suggestEnd, suggestEls
       if (aIndex !== bIndex) return aIndex - bIndex;
     } else if (aIndex > -1) {
       return +1;
+    } else if (bIndex > -1) {
+      return -1;
     }
 
     var aText = a.completion.join(" ");
