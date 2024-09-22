@@ -76,8 +76,7 @@ function compile(target, lines) {
     var topBlock = target.blocks.getBlock(blockId);
     var info = Scratch.blocksBySelector[topBlock.opcode];
     topBlock.x = gap;
-    if (topBlock.opcode === 'procedures_definition')
-      topBlock.y = y + defineHatHeight;
+    if (topBlock.opcode === 'procedures_definition') topBlock.y = y + defineHatHeight;
     else if (info && info.shape === 'hat') topBlock.y = y + hatHeight;
     else topBlock.y = y;
     var height = measureStack(target.blocks, topBlock);
@@ -179,6 +178,7 @@ function compileBlock(target, stream, parentId) {
   var block;
   var scratchBlock = makeBlock(parentId);
   var inputBlock;
+  var inputIds;
   switch (stream.peek().info.shape) {
     case 'c-block':
     case 'c-block cap':
@@ -190,7 +190,7 @@ function compileBlock(target, stream, parentId) {
       if (inputBlock) {
         scratchBlock.inputs.SUBSTACK = {
           name: 'SUBSTACK',
-          block: inputBlock.id
+          block: inputBlock.id,
         };
       }
       cAssert(stream.peek().info.shape === 'end', 'Expected "end"');
@@ -204,7 +204,7 @@ function compileBlock(target, stream, parentId) {
       if (inputBlock) {
         scratchBlock.inputs.SUBSTACK = {
           name: 'SUBSTACK',
-          block: inputBlock.id
+          block: inputBlock.id,
         };
       }
 
@@ -218,7 +218,7 @@ function compileBlock(target, stream, parentId) {
           if (inputBlock) {
             scratchBlock.inputs.SUBSTACK2 = {
               name: 'SUBSTACK2',
-              block: inputBlock.id
+              block: inputBlock.id,
             };
           }
 
@@ -236,7 +236,7 @@ function compileBlock(target, stream, parentId) {
       block = stream.shift();
       scratchBlock.opcode = block.info.selector;
       if (block.info.isCustom) {
-        var inputIds = block.info.inputs.map(
+        inputIds = block.info.inputs.map(
           (input, index) => index.toString()
         );
         block.info.inputNames = inputIds;
@@ -258,7 +258,7 @@ function compileBlock(target, stream, parentId) {
         scratchBlock.opcode = block.info.selector;
         if (block.info.selector === 'procedures_definition') {
           var [spec, inputNames, defaults, isAtomic] = block.args;
-          var inputIds = inputNames.map((name, index) => index.toString());
+          inputIds = inputNames.map((name, index) => index.toString());
           var prototype = makeBlock(scratchBlock.id);
           prototype.opcode = 'procedures_prototype';
           prototype.shadow = true;
@@ -272,7 +272,7 @@ function compileBlock(target, stream, parentId) {
           scratchBlock.inputs.custom_block = {
             name: 'custom_block',
             shadow: prototype.id,
-            block: prototype.id
+            block: prototype.id,
           };
         } else {
           compileInputs(target, scratchBlock, block.args, block.info);
@@ -332,21 +332,21 @@ function compileInputs(target, scratchBlock, args, info) {
         shadow.opcode = 'math_number';
         shadow.fields.NUM = {
           name: 'NUM',
-          value: argIsReporter ? '' : arg
+          value: argIsReporter ? '' : arg,
         };
         break;
       case 'string':
         shadow.opcode = 'text';
         shadow.fields.TEXT = {
           name: 'TEXT',
-          value: argIsReporter ? '' : arg
+          value: argIsReporter ? '' : arg,
         };
         break;
       case 'color':
         shadow.opcode = 'colour_picker';
         shadow.fields.COLOUR = {
           name: 'COLOUR',
-          value: argIsReporter ? '#3373cc' : arg
+          value: argIsReporter ? '#3373cc' : arg,
         };
         break;
       case 'readonly-menu':
@@ -355,7 +355,7 @@ function compileInputs(target, scratchBlock, args, info) {
           shadow.opcode = menuName;
           var fieldName = {
             event_broadcast_menu: 'BROADCAST_OPTION',
-            pen_menu_colorParam: 'colorParam'
+            pen_menu_colorParam: 'colorParam',
           }[menuName] || inputName;
           shadow.fields[fieldName] = {
             name: fieldName,
@@ -402,15 +402,15 @@ function makeBlock(parentId) {
     opcode: 'motion_movesteps',
     fields: {},
     inputs: {},
-    next: null
+    next: null,
   };
 }
 
 function makeMutation() {
   return {
     tagName: 'mutation',
-    children: []
-  }
+    children: [],
+  };
 }
 
 
@@ -493,7 +493,7 @@ function blockInfo(block) {
         inputNames: inputIds,
         shape: 'stack',
         category: 'custom',
-        selector: null
+        selector: null,
       };
       info.inputs = info.parts.filter(function(p) { return Scratch.inputPat.test(p); });
       return info;
@@ -600,7 +600,7 @@ function generate(blocks) {
     var opcode = blocks.getOpcode(topBlock);
 
     // standalone reporter?
-    var info = Scratch.blocksBySelector[opcode]
+    var info = Scratch.blocksBySelector[opcode];
     if (info && ['reporter', 'predicate'].includes(info.shape)) {
       // TODO preference to skip all standalone reporters
 
@@ -645,10 +645,11 @@ function generateBlock(blocks, block) {
       fields = blocks.getFields(block),
       info = Scratch.blocksBySelector[selector],
       spec,
-      result;
+      result,
+      mutation;
 
   if (selector === 'procedures_call') {
-    var mutation = blocks.getMutation(block);
+    mutation = blocks.getMutation(block);
     spec = selector = mutation.proccode;
     info = {
       spec: spec,
@@ -662,7 +663,7 @@ function generateBlock(blocks, block) {
     info.inputs = info.parts.filter(function(p) { return Scratch.inputPat.test(p); });
   } else if (selector === 'procedures_definition') {
     var prototype = blocks.getBlock(blocks.getInputs(block).custom_block.block);
-    var mutation = blocks.getMutation(prototype);
+    mutation = blocks.getMutation(prototype);
     spec = mutation.proccode;
     var names = JSON.parse(mutation.argumentnames),
         isAtomic = mutation.warp === 'true';

@@ -162,7 +162,7 @@ class CodeEditor extends React.Component {
         if (Object.prototype.hasOwnProperty.call(this.props.targetStates, this.props.editingTarget)) {
             this.view.setState(this.props.targetStates[this.props.editingTarget]);
         } else {
-            const target = this.props.vm.editingTarget
+            const target = this.props.vm.editingTarget;
             if (target.code === null) {
                 target.code = ToshCompiler.generate(target.blocks);
             }

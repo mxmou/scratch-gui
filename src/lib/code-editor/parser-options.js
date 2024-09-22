@@ -3,9 +3,8 @@ import VM from 'scratch-vm';
 import * as ToshEarley from '../tosh/earley';
 import * as ToshLanguage from '../tosh/language';
 
-function getVariableNamesOfType (variables, type) {
-    return Object.values(variables).filter(variable => variable.type === type);
-}
+const getVariableNamesOfType = (variables, type) =>
+    Object.values(variables).filter(variable => variable.type === type);
 
 /**
  * Returns a configuration object for the tosh mode.
