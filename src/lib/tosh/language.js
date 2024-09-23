@@ -87,6 +87,12 @@ var tokenize = function(input) {
       return tokens;
     }
 
+    if (kind === 'iden' &&
+        tokens.length &&
+        tokens[tokens.length - 1].kind === 'symbol') {
+      // 'iden' can immediately follow a 'symbol'
+      expectedWhitespace = false;
+    }
     if (expectedWhitespace && text.length > 1) {
       // Both us and the previous token expected to see whitespace between us.
       // If there wasn't any, error.
