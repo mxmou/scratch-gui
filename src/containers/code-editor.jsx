@@ -4,8 +4,6 @@ import bindAll from 'lodash.bindall';
 import {connect} from 'react-redux';
 import {
     EditorView,
-    Decoration,
-    WidgetType,
     keymap,
     lineNumbers,
     drawSelection,
@@ -13,7 +11,7 @@ import {
     rectangularSelection,
     crosshairCursor
 } from '@codemirror/view';
-import {EditorState, Compartment, StateField, StateEffect} from '@codemirror/state';
+import {EditorState, Compartment} from '@codemirror/state';
 import {defaultKeymap, history, historyKeymap} from '@codemirror/commands';
 import {searchKeymap} from '@codemirror/search';
 import {
@@ -36,6 +34,7 @@ import CodeEditorComponent from '../components/code-editor/code-editor.jsx';
 import {themeMap, getColorsForTheme} from '../lib/themes';
 import toshTags from '../lib/code-editor/tags';
 import getParserOptions from '../lib/code-editor/parser-options';
+import {errorWidget, setErrorWidget} from '../lib/code-editor/error-widget';
 import toshParser from '../lib/tosh/mode';
 import {inputSeek} from '../lib/tosh/app';
 import * as ToshLanguage from '../lib/tosh/language';
@@ -43,24 +42,6 @@ import * as ToshCompiler from '../lib/tosh/compile';
 import {setTargetState, setTargetScrollPos, setTargetError} from '../reducers/code-editor';
 
 import styles from '../components/code-editor/code-editor.css';
-
-class ErrorWidget extends WidgetType {
-    constructor (message) {
-        super();
-        this.message = message;
-    }
-
-    eq (other) {
-        return this.message === other.message;
-    }
-
-    toDOM () {
-        return Object.assign(document.createElement('div'), {
-            className: styles.errorWidget,
-            textContent: this.message
-        });
-    }
-}
 
 class CodeEditor extends React.Component {
     constructor (props) {
@@ -75,29 +56,6 @@ class CodeEditor extends React.Component {
         this.view = null;
         this.themeOptions = new Compartment();
         this.parserOptions = new Compartment();
-        this.setErrorWidget = StateEffect.define();
-        this.errorWidget = StateField.define({
-            create: () => Decoration.none,
-            update: (value, transaction) => {
-                value = value.map(transaction.changes);
-                for (const effect of transaction.effects) {
-                    if (effect.is(this.setErrorWidget)) {
-                        if (effect.value) {
-                            const line = transaction.state.doc.line(effect.value.lineNumber);
-                            value = Decoration.set(Decoration.widget({
-                                widget: new ErrorWidget(effect.value.message),
-                                block: true,
-                                side: 1
-                            }).range(line.to));
-                        } else {
-                            value = Decoration.none;
-                        }
-                    }
-                }
-                return value;
-            },
-            provide: field => EditorView.decorations.from(field)
-        });
         this.repaintTimeout = null;
     }
     componentDidMount () {
@@ -176,7 +134,7 @@ class CodeEditor extends React.Component {
                     syntaxHighlighting(this.getHighlightStyle())
                 ]),
                 this.parserOptions.of([]),
-                this.errorWidget
+                errorWidget
             ]
         });
     }
@@ -322,7 +280,7 @@ class CodeEditor extends React.Component {
         const error = this.props.targetErrors[this.props.editingTarget];
         if (error && error.rendered) return;
         this.view.dispatch({
-            effects: this.setErrorWidget.of(error)
+            effects: setErrorWidget.of(error)
         });
         this.props.setTargetError(this.props.editingTarget, {
             ...error,
