@@ -35,10 +35,10 @@ import {themeMap, getColorsForTheme} from '../lib/themes';
 import toshTags from '../lib/code-editor/tags';
 import getParserOptions from '../lib/code-editor/parser-options';
 import {errorWidget, setErrorWidget} from '../lib/code-editor/error-widget';
+import generateAllTargets from '../lib/code-editor/generate-all';
 import toshParser from '../lib/tosh/mode';
 import {inputSeek} from '../lib/tosh/app';
 import * as ToshLanguage from '../lib/tosh/language';
-import * as ToshCompiler from '../lib/tosh/compile';
 import {setTargetState, setTargetScrollPos, setTargetError} from '../reducers/code-editor';
 
 import styles from '../components/code-editor/code-editor.css';
@@ -169,7 +169,7 @@ class CodeEditor extends React.Component {
         } else {
             const target = this.props.vm.editingTarget;
             if (target.code === null) {
-                target.code = ToshCompiler.generate(target.blocks);
+                generateAllTargets(this.props.vm);
             }
             this.view.setState(this.newState(target.code));
             this.props.setTargetState(this.props.editingTarget, this.view.state);
