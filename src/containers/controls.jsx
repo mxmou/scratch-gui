@@ -5,8 +5,7 @@ import VM from 'scratch-vm';
 import {connect} from 'react-redux';
 
 import ControlsComponent from '../components/controls/controls.jsx';
-import getParserOptions from '../lib/code-editor/parser-options';
-import * as ToshCompiler from '../lib/tosh/compile';
+import compileAllTargets from '../lib/code-editor/compile-all';
 import {setTargetError} from '../reducers/code-editor';
 
 class Controls extends React.Component {
@@ -22,35 +21,13 @@ class Controls extends React.Component {
         if (e.shiftKey) {
             this.props.vm.setTurboMode(!this.props.turbo);
         } else {
-            for (const target of this.props.vm.runtime.targets) {
-                if (target.isOriginal && target.code !== null) {
-                    target.blocks.deleteAllBlocks();
-
-                    // Compile code - based on ScriptsEditor.compile from tosh
-                    const options = getParserOptions(this.props.vm, target.id);
-                    const lines = ToshCompiler.parseLines(target.code, options);
-                    const stream = lines.slice();
-
-                    try {
-                        ToshCompiler.compile(target, stream);
-                        this.props.setTargetError(target.id, null);
-                    } catch (err) {
-                        target.blocks.deleteAllBlocks();
-                        let lineNumber = lines.length - (stream.length - 1); // -1 because EOF
-                        lineNumber = Math.min(lineNumber, lines.length - 1);
-                        lineNumber += 1; // CodeMirror expects 1-based line numbers
-                        this.props.setTargetError(target.id, {
-                            lineNumber,
-                            message: err.message || err,
-                            rendered: false
-                        });
-                    }
+            const compiledSuccessfully = compileAllTargets(this.props.vm, this.props.setTargetError);
+            if (compiledSuccessfully) {
+                if (!this.props.isStarted) {
+                    this.props.vm.start();
                 }
+                this.props.vm.greenFlag();
             }
-            if (!this.props.isStarted) {
-                this.props.vm.start();
-            }
-            this.props.vm.greenFlag();
         }
     }
     handleStopAllClick (e) {
