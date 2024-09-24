@@ -2,8 +2,11 @@ import bindAll from 'lodash.bindall';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
+import VM from 'scratch-vm';
 import {projectTitleInitialState} from '../reducers/project-title';
+import {setTargetError} from '../reducers/code-editor';
 import downloadBlob from '../lib/download-blob';
+import compileAllTargets from '../lib/code-editor/compile-all';
 /**
  * Project saver component passes a downloadProject function to its child.
  * It expects this child to be a function with the signature
@@ -26,6 +29,8 @@ class SB3Downloader extends React.Component {
         ]);
     }
     downloadProject () {
+        const compiledSuccessfully = compileAllTargets(this.props.vm, this.props.setTargetError);
+        if (!compiledSuccessfully) return;
         this.props.saveProjectSb3().then(content => {
             if (this.props.onSaveFinished) {
                 this.props.onSaveFinished();
@@ -57,18 +62,27 @@ SB3Downloader.propTypes = {
     className: PropTypes.string,
     onSaveFinished: PropTypes.func,
     projectFilename: PropTypes.string,
-    saveProjectSb3: PropTypes.func
+    saveProjectSb3: PropTypes.func,
+    setTargetError: PropTypes.func.isRequired,
+    vm: PropTypes.instanceOf(VM).isRequired
 };
 SB3Downloader.defaultProps = {
     className: ''
 };
 
 const mapStateToProps = state => ({
+    vm: state.scratchGui.vm,
     saveProjectSb3: state.scratchGui.vm.saveProjectSb3.bind(state.scratchGui.vm),
     projectFilename: getProjectFilename(state.scratchGui.projectTitle, projectTitleInitialState)
 });
 
+const mapDispatchToProps = dispatch => ({
+    setTargetError: (target, error) => {
+        dispatch(setTargetError(target, error));
+    }
+});
+
 export default connect(
     mapStateToProps,
-    () => ({}) // omit dispatch prop
+    mapDispatchToProps
 )(SB3Downloader);
