@@ -176,17 +176,18 @@ class CodeEditor extends React.Component {
             this.view.setState(this.newState(target.code));
             this.props.setTargetState(this.props.editingTarget, this.view.state);
         }
-        const scroller = this.element.querySelector('.cm-scroller');
         if (Object.prototype.hasOwnProperty.call(this.props.targetScrollPos, this.props.editingTarget)) {
-            const scrollPos = this.props.targetScrollPos[this.props.editingTarget];
+            const scrollSnapshot = this.props.targetScrollPos[this.props.editingTarget];
             setTimeout(() => {
-                scroller.scrollTop = scrollPos.top;
-                scroller.scrollLeft = scrollPos.left;
+                this.view.dispatch({
+                    effects: scrollSnapshot
+                });
             }, 0);
         } else {
             setTimeout(() => {
-                scroller.scrollTop = 0;
-                scroller.scrollLeft = 0;
+                this.view.dispatch({
+                    effects: EditorView.scrollIntoView(0)
+                });
                 this.scrollErrorIntoView();
             }, 0);
         }
@@ -201,8 +202,7 @@ class CodeEditor extends React.Component {
     saveTargetState (target) {
         if (target) {
             this.props.setTargetState(target, this.view.state);
-            const scroller = this.element.querySelector('.cm-scroller');
-            this.props.setTargetScrollPos(target, scroller.scrollTop, scroller.scrollLeft);
+            this.props.setTargetScrollPos(target, this.view.scrollSnapshot());
         }
     }
     getEditorTheme () {

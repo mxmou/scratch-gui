@@ -26,10 +26,7 @@ const reducer = (state = initialState, action) => {
             ...state,
             targetScrollPos: {
                 ...state.targetScrollPos,
-                [action.target]: {
-                    top: action.top,
-                    left: action.left
-                }
+                [action.target]: action.snapshot
             }
         };
     case RESET_TARGET_SCROLL_POS:
@@ -56,11 +53,10 @@ const setTargetState = (target, editorState) => ({
     editorState
 });
 
-const setTargetScrollPos = (target, top, left) => ({
+const setTargetScrollPos = (target, snapshot) => ({
     type: SET_TARGET_SCROLL_POS,
     target,
-    top,
-    left
+    snapshot
 });
 
 const resetTargetScrollPos = target => ({
