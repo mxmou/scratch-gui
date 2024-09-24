@@ -164,6 +164,7 @@ class CodeEditor extends React.Component {
         });
     }
     loadTargetState () {
+        this.element.classList.add(styles.loading);
         if (Object.prototype.hasOwnProperty.call(this.props.targetStates, this.props.editingTarget)) {
             this.view.setState(this.props.targetStates[this.props.editingTarget]);
         } else {
@@ -192,6 +193,7 @@ class CodeEditor extends React.Component {
         setTimeout(() => {
             this.updateParserOptions();
             this.showErrorWidget();
+            this.element.classList.remove(styles.loading);
         }, 0);
     }
     saveTargetState (target) {

@@ -21,6 +21,10 @@
     color: $text-primary;
 }
 
+.code-editor.loading {
+    visibility: hidden;
+}
+
 .code-editor :global(.cm-editor) {
     /* For horizontal scrolling */
     width: 0;
