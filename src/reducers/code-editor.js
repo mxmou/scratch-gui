@@ -1,5 +1,8 @@
+import omit from 'lodash.omit';
+
 const SET_TARGET_STATE = 'scratch-gui/code-editor/SET_TARGET_STATE';
 const SET_TARGET_SCROLL_POS = 'scratch-gui/code-editor/SET_TARGET_SCROLL_POS';
+const RESET_TARGET_SCROLL_POS = 'scratch-gui/code-editor/RESET_TARGET_SCROLL_POS';
 const SET_TARGET_ERROR = 'scratch-gui/code-editor/SET_TARGET_ERROR';
 
 const initialState = {
@@ -29,6 +32,11 @@ const reducer = (state = initialState, action) => {
                 }
             }
         };
+    case RESET_TARGET_SCROLL_POS:
+        return {
+            ...state,
+            targetScrollPos: omit(state.targetScrollPos, action.target)
+        };
     case SET_TARGET_ERROR:
         return {
             ...state,
@@ -55,6 +63,11 @@ const setTargetScrollPos = (target, top, left) => ({
     left
 });
 
+const resetTargetScrollPos = target => ({
+    type: RESET_TARGET_SCROLL_POS,
+    target
+});
+
 const setTargetError = (target, error) => ({
     type: SET_TARGET_ERROR,
     target,
@@ -66,5 +79,6 @@ export {
     initialState as codeEditorInitialState,
     setTargetState,
     setTargetScrollPos,
+    resetTargetScrollPos,
     setTargetError
 };

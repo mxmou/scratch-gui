@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 
 import ControlsComponent from '../components/controls/controls.jsx';
 import compileAllTargets from '../lib/code-editor/compile-all';
-import {setTargetError} from '../reducers/code-editor';
 
 class Controls extends React.Component {
     constructor (props) {
@@ -21,7 +20,7 @@ class Controls extends React.Component {
         if (e.shiftKey) {
             this.props.vm.setTurboMode(!this.props.turbo);
         } else {
-            const compiledSuccessfully = compileAllTargets(this.props.vm, this.props.setTargetError);
+            const compiledSuccessfully = compileAllTargets(this.props.vm, this.props.dispatch);
             if (compiledSuccessfully) {
                 if (!this.props.isStarted) {
                     this.props.vm.start();
@@ -56,6 +55,7 @@ class Controls extends React.Component {
 }
 
 Controls.propTypes = {
+    dispatch: PropTypes.func.isRequired,
     isStarted: PropTypes.bool.isRequired,
     projectRunning: PropTypes.bool.isRequired,
     setTargetError: PropTypes.func.isRequired,
@@ -68,10 +68,5 @@ const mapStateToProps = state => ({
     projectRunning: state.scratchGui.vmStatus.running,
     turbo: state.scratchGui.vmStatus.turbo
 });
-const mapDispatchToProps = dispatch => ({
-    setTargetError: (target, error) => {
-        dispatch(setTargetError(target, error));
-    }
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Controls);
+export default connect(mapStateToProps)(Controls);

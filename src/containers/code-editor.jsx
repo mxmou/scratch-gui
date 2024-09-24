@@ -72,6 +72,7 @@ class CodeEditor extends React.Component {
         } else if (this.props.targetErrors[this.props.editingTarget] !==
                 prevProps.targetErrors[this.props.editingTarget]) {
             this.showErrorWidget();
+            this.scrollErrorIntoView();
         }
         if (!this.repaintTimeout && (
             this.props.sprites !== prevProps.sprites ||
@@ -186,6 +187,7 @@ class CodeEditor extends React.Component {
             setTimeout(() => {
                 scroller.scrollTop = 0;
                 scroller.scrollLeft = 0;
+                this.scrollErrorIntoView();
             }, 0);
         }
         // Timeout prevents error:
@@ -284,9 +286,21 @@ class CodeEditor extends React.Component {
         this.view.dispatch({
             effects: setErrorWidget.of(error)
         });
-        this.props.setTargetError(this.props.editingTarget, {
-            ...error,
-            rendered: true
+        if (error) {
+            this.props.setTargetError(this.props.editingTarget, {
+                ...error,
+                rendered: true
+            });
+        }
+    }
+    scrollErrorIntoView () {
+        const error = this.props.targetErrors[this.props.editingTarget];
+        if (!error) return;
+        this.view.dispatch({
+            effects: EditorView.scrollIntoView(
+                this.view.state.doc.line(error.lineNumber).from,
+                {yMargin: 20}
+            )
         });
     }
     render () {

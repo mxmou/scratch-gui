@@ -4,7 +4,6 @@ import React from 'react';
 import {connect} from 'react-redux';
 import VM from 'scratch-vm';
 import {projectTitleInitialState} from '../reducers/project-title';
-import {setTargetError} from '../reducers/code-editor';
 import downloadBlob from '../lib/download-blob';
 import compileAllTargets from '../lib/code-editor/compile-all';
 /**
@@ -29,7 +28,7 @@ class SB3Downloader extends React.Component {
         ]);
     }
     downloadProject () {
-        const compiledSuccessfully = compileAllTargets(this.props.vm, this.props.setTargetError);
+        const compiledSuccessfully = compileAllTargets(this.props.vm, this.props.dispatch);
         if (!compiledSuccessfully) return;
         this.props.saveProjectSb3().then(content => {
             if (this.props.onSaveFinished) {
@@ -60,10 +59,10 @@ const getProjectFilename = (curTitle, defaultTitle) => {
 SB3Downloader.propTypes = {
     children: PropTypes.func,
     className: PropTypes.string,
+    dispatch: PropTypes.func.isRequired,
     onSaveFinished: PropTypes.func,
     projectFilename: PropTypes.string,
     saveProjectSb3: PropTypes.func,
-    setTargetError: PropTypes.func.isRequired,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 SB3Downloader.defaultProps = {
@@ -76,13 +75,4 @@ const mapStateToProps = state => ({
     projectFilename: getProjectFilename(state.scratchGui.projectTitle, projectTitleInitialState)
 });
 
-const mapDispatchToProps = dispatch => ({
-    setTargetError: (target, error) => {
-        dispatch(setTargetError(target, error));
-    }
-});
-
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(SB3Downloader);
+export default connect(mapStateToProps)(SB3Downloader);
