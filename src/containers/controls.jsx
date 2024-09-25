@@ -35,9 +35,9 @@ class Controls extends React.Component {
     }
     render () {
         const {
+            dispatch, // eslint-disable-line no-unused-vars
             vm, // eslint-disable-line no-unused-vars
             isStarted, // eslint-disable-line no-unused-vars
-            setTargetError: dispatchSetTargetError, // eslint-disable-line no-unused-vars
             projectRunning,
             turbo,
             ...props
@@ -58,7 +58,6 @@ Controls.propTypes = {
     dispatch: PropTypes.func.isRequired,
     isStarted: PropTypes.bool.isRequired,
     projectRunning: PropTypes.bool.isRequired,
-    setTargetError: PropTypes.func.isRequired,
     turbo: PropTypes.bool.isRequired,
     vm: PropTypes.instanceOf(VM)
 };
