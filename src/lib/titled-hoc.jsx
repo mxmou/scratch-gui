@@ -1,21 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {connect} from 'react-redux';
-import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import {
     getIsAnyCreatingNewState,
     getIsShowingWithoutId
 } from '../reducers/project-state';
 import {setProjectTitle} from '../reducers/project-title';
-
-const messages = defineMessages({
-    defaultProjectTitle: {
-        id: 'gui.gui.defaultProjectTitle',
-        description: 'Default title for project',
-        defaultMessage: 'Scratch Project'
-    }
-});
 
 /* Higher Order Component to get and set the project title
  * @param {React.Component} WrappedComponent component to receive project title related props
@@ -46,7 +37,7 @@ const TitledHOC = function (WrappedComponent) {
         handleReceivedProjectTitle (requestedTitle) {
             let newTitle = requestedTitle;
             if (newTitle === null || typeof newTitle === 'undefined') {
-                newTitle = this.props.intl.formatMessage(messages.defaultProjectTitle);
+                newTitle = 'Project';
             }
             this.props.onChangedProjectTitle(newTitle);
             return newTitle;
@@ -54,7 +45,6 @@ const TitledHOC = function (WrappedComponent) {
         render () {
             const {
                 /* eslint-disable no-unused-vars */
-                intl,
                 isAnyCreatingNewState,
                 isShowingWithoutId,
                 onChangedProjectTitle,
@@ -76,7 +66,6 @@ const TitledHOC = function (WrappedComponent) {
     }
 
     TitledComponent.propTypes = {
-        intl: intlShape,
         isAnyCreatingNewState: PropTypes.bool,
         isShowingWithoutId: PropTypes.bool,
         onChangedProjectTitle: PropTypes.func,
@@ -102,10 +91,10 @@ const TitledHOC = function (WrappedComponent) {
         onChangedProjectTitle: title => dispatch(setProjectTitle(title))
     });
 
-    return injectIntl(connect(
+    return connect(
         mapStateToProps,
         mapDispatchToProps,
-    )(TitledComponent));
+    )(TitledComponent);
 };
 
 export {
