@@ -606,7 +606,7 @@ class MenuBar extends React.Component {
                         )}
                     </div>
                     {this.props.canEditTitle ? (
-                        <div className={classNames(styles.menuBarItem, styles.growable)}>
+                        <div className={classNames(styles.menuBarItem, styles.growable, styles.titleFieldItem)}>
                             <MenuBarItemTooltip
                                 enable
                                 id="title-field"
