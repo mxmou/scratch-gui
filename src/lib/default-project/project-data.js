@@ -2,11 +2,6 @@ import {defineMessages} from 'react-intl';
 import sharedMessages from '../shared-messages';
 
 let messages = defineMessages({
-    meow: {
-        defaultMessage: 'Meow',
-        description: 'Name for the meow sound',
-        id: 'gui.defaultProject.meow'
-    },
     variable: {
         defaultMessage: 'my variable',
         description: 'Name for the default variable',
@@ -74,33 +69,33 @@ const projectData = translateFunction => {
                 currentCostume: 0,
                 costumes: [
                     {
-                        assetId: 'bcf454acf82e4504149f7ffe07081dbc',
+                        assetId: 'c5f76b65e30075c12d49ea8a8f7d6bad',
                         name: translator(messages.costume, {index: 1}),
                         bitmapResolution: 1,
-                        md5ext: 'bcf454acf82e4504149f7ffe07081dbc.svg',
+                        md5ext: 'c5f76b65e30075c12d49ea8a8f7d6bad.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 48,
-                        rotationCenterY: 50
+                        rotationCenterX: 50,
+                        rotationCenterY: 27
                     },
                     {
-                        assetId: '0fb9be3e8397c983338cb71dc84d0b25',
+                        assetId: '8a7da35c473972f88896ca73b7df2188',
                         name: translator(messages.costume, {index: 2}),
                         bitmapResolution: 1,
-                        md5ext: '0fb9be3e8397c983338cb71dc84d0b25.svg',
+                        md5ext: '8a7da35c473972f88896ca73b7df2188.svg',
                         dataFormat: 'svg',
-                        rotationCenterX: 46,
-                        rotationCenterY: 53
+                        rotationCenterX: 65,
+                        rotationCenterY: 21
                     }
                 ],
                 sounds: [
                     {
-                        assetId: '83c36d806dc92327b9e7049a565c6bff',
-                        name: translator(messages.meow),
+                        assetId: '83a9787d4cb6f3b7632b4ddfebf74367',
+                        name: translator(messages.pop),
                         dataFormat: 'wav',
                         format: '',
-                        rate: 22050,
-                        sampleCount: 18688,
-                        md5ext: '83c36d806dc92327b9e7049a565c6bff.wav'
+                        rate: 11025,
+                        sampleCount: 258,
+                        md5ext: '83a9787d4cb6f3b7632b4ddfebf74367.wav'
                     }
                 ],
                 volume: 100,
