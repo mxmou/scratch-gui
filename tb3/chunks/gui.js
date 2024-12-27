@@ -143,7 +143,7 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 
 
 var onClickLogo = function onClickLogo() {
-  window.location = 'https://scratch.mit.edu';
+  window.location = 'https://scratch.mit.edu/discuss/topic/796834/';
 };
 
 var handleTelemetryModalCancel = function handleTelemetryModalCancel() {
