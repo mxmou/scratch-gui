@@ -4,7 +4,7 @@ import projectData from './project-data';
 import popWav from '!arraybuffer-loader!./83a9787d4cb6f3b7632b4ddfebf74367.wav';
 import backdrop from '!raw-loader!./cd21514d0531fdffb22204e0ec5ed84a.svg';
 import costume1 from '!raw-loader!./c5f76b65e30075c12d49ea8a8f7d6bad.svg';
-import costume2 from '!raw-loader!./8a7da35c473972f88896ca73b7df2188.svg';
+import costume2 from '!raw-loader!./e06745df1b6b1c8b66a5d4586cda5487.svg';
 /* eslint-enable import/no-unresolved */
 
 const defaultProject = translator => {
@@ -39,7 +39,7 @@ const defaultProject = translator => {
         dataFormat: 'SVG',
         data: encoder.encode(costume1)
     }, {
-        id: '8a7da35c473972f88896ca73b7df2188',
+        id: 'e06745df1b6b1c8b66a5d4586cda5487',
         assetType: 'ImageVector',
         dataFormat: 'SVG',
         data: encoder.encode(costume2)
