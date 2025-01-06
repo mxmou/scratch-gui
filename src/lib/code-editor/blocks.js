@@ -819,6 +819,50 @@ const blocks = [
         inputNames: ['TRANSPARENCY']
     },
 
+    // Text to Speech
+    {
+        selector: 'text2speech_speakAndWait',
+        spec: 'speak %s',
+        inputNames: ['WORDS']
+    },
+    {
+        selector: 'text2speech_setVoice',
+        spec: 'set voice to %m.tts_menu_voices',
+        inputNames: ['VOICE']
+    },
+    {
+        selector: 'text2speech_setLanguage',
+        spec: 'set language to %m.tts_menu_languages',
+        inputNames: ['LANGUAGE']
+    },
+
+    // Translate
+    {
+        selector: 'translate_getTranslate',
+        spec: 'translate %s to %m.translate_menu_languages',
+        inputNames: ['WORDS', 'LANGUAGE'],
+        shape: 'reporter'
+    },
+    {
+        selector: 'translate_getViewerLanguage',
+        spec: 'language',
+        shape: 'reporter'
+    },
+
+    // Makey Makey
+    {
+        selector: 'makeymakey_whenMakeyKeyPressed',
+        spec: 'makey makey: when %m.key key pressed',
+        inputNames: ['KEY'],
+        shape: 'hat'
+    },
+    {
+        selector: 'makeymakey_whenCodePressed',
+        spec: 'makey makey: when %s pressed in order',
+        inputNames: ['SEQUENCE'],
+        shape: 'hat'
+    },
+
     // Custom block parameters
     {
         selector: 'argument_reporter_string_number',
@@ -851,6 +895,9 @@ for (const block of blocks) {
             operator: 'operators',
             music: 'extension',
             videoSensing: 'extension',
+            text2speech: 'extension',
+            translate: 'extension',
+            makeymakey: 'extension',
             argument: 'parameter'
         }[opcodePrefix] || opcodePrefix;
     }

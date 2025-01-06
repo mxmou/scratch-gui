@@ -733,7 +733,8 @@ var menus = ['motion_goto_menu', 'motion_glideto_menu',
     'sensing_distancetomenu', 'sensing_keyoptions', 'sensing_of_object_menu',
     'pen_menu_colorParam', 'music_menu_DRUM', 'music_menu_INSTRUMENT',
     'videoSensing_menu_ATTRIBUTE', 'videoSensing_menu_SUBJECT',
-    'videoSensing_menu_VIDEO_STATE',
+    'videoSensing_menu_VIDEO_STATE', 'tts_menu_voices', 'tts_menu_languages',
+    'translate_menu_languages',
 
     'attribute', 'backdrop', 'broadcast', 'dragMode', 'effect',
     'forwardBackward', 'frontBack', 'key', 'list', 'listNonempty', 'mathOp',
@@ -748,7 +749,8 @@ var menusThatAcceptReporters = ['motion_goto_menu', 'motion_glideto_menu',
     'sensing_distancetomenu', 'sensing_keyoptions', 'sensing_of_object_menu',
     'pen_menu_colorParam', 'music_menu_DRUM', 'music_menu_INSTRUMENT',
     'videoSensing_menu_ATTRIBUTE', 'videoSensing_menu_SUBJECT',
-    'videoSensing_menu_VIDEO_STATE'];
+    'videoSensing_menu_VIDEO_STATE', 'tts_menu_voices', 'tts_menu_languages',
+    'translate_menu_languages'];
 
 // These accept string literals but not reporters
 var menusThatAcceptStrings = ['attribute', 'backdrop', 'broadcast'];
@@ -781,6 +783,22 @@ var menuOptions = {
   videoSensing_menu_ATTRIBUTE: ['motion', 'direction'],
   videoSensing_menu_SUBJECT: ['sprite', 'stage'],
   videoSensing_menu_VIDEO_STATE: ['off', 'on', 'on flipped'],
+  tts_menu_voices: ['alto', 'tenor', 'squeak', 'giant', 'kitten'],
+  // Language names that contain parentheses in Scratch have been changed
+  tts_menu_languages: ['Arabic', 'Brazilian Portuguese', 'Danish', 'Dutch',
+    'English', 'French', 'German', 'Hindi', 'Icelandic', 'Italian', 'Japanese',
+    'Korean', 'Latin American Spanish', 'Mandarin', 'Norwegian', 'Polish',
+    'Portuguese', 'Romanian', 'Russian', 'Spanish', 'Swedish', 'Turkish',
+    'Welsh'],
+  translate_menu_languages: ['Amharic', 'Arabic', 'Azerbaijani', 'Basque',
+    'Bulgarian', 'Catalan', 'Croatian', 'Czech', 'Danish', 'Dutch', 'English',
+    'Estonian', 'Finnish', 'French', 'Galician', 'German', 'Greek', 'Hebrew',
+    'Hungarian', 'Icelandic', 'Indonesian', 'Irish Gaelic', 'Italian',
+    'Japanese', 'Korean', 'Latvian', 'Lithuanian', 'Maori', 'Norwegian',
+    'Persian', 'Polish', 'Portuguese', 'Romanian', 'Russian', 'Scots Gaelic',
+    'Serbian', 'Simplified Chinese', 'Slovak', 'Slovenian', 'Sorani Kurdish',
+    'Spanish', 'Swedish', 'Thai', 'Traditional Chinese', 'Turkish',
+    'Ukrainian', 'Vietnamese', 'Welsh', 'Zulu'],
 
   'attribute': ['x position', 'y position', 'direction', 'costume #',
   'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
@@ -841,9 +859,62 @@ var menuValues = {
   'sprite': 'this sprite',
   'stage': 'Stage',
   'on flipped': 'on-flipped',
+  'Amharic': 'am',
+  'Arabic': 'ar',
+  'Azerbaijani': 'az',
+  'Basque': 'eu',
+  'Brazilian Portuguese': 'pt-br',
+  'Bulgarian': 'bg',
+  'Catalan': 'ca',
+  'Croatian': 'hr',
+  'Czech': 'cs',
+  'Danish': 'da',
+  'Dutch': 'nl',
+  'English': 'en',
+  'Estonian': 'et',
+  'Finnish': 'fi',
+  'French': 'fr',
+  'Galician': 'gl',
+  'German': 'de',
+  'Greek': 'el',
+  'Hebrew': 'he',
+  'Hindi': 'hi',
+  'Hungarian': 'hu',
+  'Icelandic': 'is',
+  'Indonesian': 'id',
+  'Irish Gaelic': 'ga',
+  'Italian': 'it',
+  'Japanese': 'ja',
+  'Korean': 'ko',
+  'Latin American Spanish': 'es-419',
+  'Latvian': 'lv',
+  'Lithuanian': 'lt',
+  'Mandarin': 'zh-cn',
+  'Maori': 'mi',
+  'Norwegian': 'nb',
+  'Persian': 'fa',
+  'Polish': 'pl',
+  'Portuguese': 'pt',
+  'Romanian': 'ro',
+  'Russian': 'ru',
+  'Scots Gaelic': 'gd',
+  'Serbian': 'sr',
+  'Simplified Chinese': 'zh-cn',
+  'Slovak': 'sk',
+  'Slovenian': 'sl',
+  'Sorani Kurdish': 'ckb',
+  'Spanish': 'es',
+  'Swedish': 'sv',
+  'Thai': 'th',
+  'Traditional Chinese': 'zh-tw',
+  'Turkish': 'tr',
+  'Ukrainian': 'uk',
+  'Vietnamese': 'vi',
+  'Welsh': 'cy',
+  'Zulu': 'zu'
 };
 
-['effect', 'soundEffect', 'timeAndDate', 'triggerSensor']
+['effect', 'soundEffect', 'timeAndDate', 'triggerSensor', 'tts_menu_voices']
   .forEach(function(menu) {
     menuOptions[menu].forEach(function(label) {
       menuValues[label] = label.toUpperCase().replace(/\s/g, '');
@@ -1125,6 +1196,8 @@ var reservedNames = [
   'fisheye effect',
   'pitch effect',
   'pan effect',
+  'voice',
+  'language',
 
   // found in the attribute _ of _ block
   'costume #',
@@ -1392,6 +1465,8 @@ var preferSelectors = [
   'sensing_of',
 
   'videoSensing_videoOn',
+  'translate_getTranslate',
+  'translate_getViewerLanguage',
 
   /* blocks */
 
@@ -1443,6 +1518,10 @@ var preferSelectors = [
   'data_insertatlist',
   'motion_ifonedgebounce',
 
+  'motion_movesteps',
+  'makeymakey_whenMakeyKeyPressed',
+  'makeymakey_whenCodePressed',
+
   'looks_nextcostume',
   'looks_nextbackdrop',
 
@@ -1478,6 +1557,8 @@ var preferSelectors = [
   'music_setInstrument',
   'music_setTempo',
   'videoSensing_setVideoTransparency',
+  'text2speech_setVoice',
+  'text2speech_setLanguage',
 
   'looks_show',
   'data_showvariable',
@@ -1487,6 +1568,7 @@ var preferSelectors = [
   'sound_play',
   'sound_stopallsounds',
   'pen_stamp',
+  'text2speech_speakAndWait',
 
   'looks_switchcostumeto',
   'looks_switchbackdropto',
