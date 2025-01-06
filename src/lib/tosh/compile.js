@@ -22,6 +22,10 @@ function parseLines(code, options) {
   var stream = [];
   code.split('\n').forEach(function(line) {
     var result = parseLine(line, parser);
+    if (result === undefined)  {
+      // comment-only line
+      return;
+    }
     stream.push(result);
 
     // if definition, add parameters to scope
