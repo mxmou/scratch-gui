@@ -87,7 +87,6 @@ const GUIComponent = props => {
         onCloseAccountNav,
         onLogOut,
         onOpenRegistration,
-        onToggleLoginOpen,
         onActivateCostumesTab,
         onActivateSoundsTab,
         onActivateTab,
@@ -234,7 +233,6 @@ const GUIComponent = props => {
                     onSeeCommunity={onSeeCommunity}
                     onShare={onShare}
                     onStartSelectingFileUpload={onStartSelectingFileUpload}
-                    onToggleLoginOpen={onToggleLoginOpen}
                 />
                 <Box className={styles.bodyWrapper}>
                     <Box className={styles.flexWrapper}>
@@ -417,7 +415,6 @@ GUIComponent.propTypes = {
     onTelemetryModalCancel: PropTypes.func,
     onTelemetryModalOptIn: PropTypes.func,
     onTelemetryModalOptOut: PropTypes.func,
-    onToggleLoginOpen: PropTypes.func,
     renderLogin: PropTypes.func,
     showComingSoon: PropTypes.bool,
     soundsTabVisible: PropTypes.bool,
