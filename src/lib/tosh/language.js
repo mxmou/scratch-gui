@@ -912,7 +912,7 @@ var menuValues = {
   'Ukrainian': 'uk',
   'Vietnamese': 'vi',
   'Welsh': 'cy',
-  'Zulu': 'zu'
+  'Zulu': 'zu',
 };
 
 ['effect', 'soundEffect', 'timeAndDate', 'triggerSensor', 'tts_menu_voices']
