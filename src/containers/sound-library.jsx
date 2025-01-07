@@ -8,10 +8,13 @@ import AudioEngine from 'scratch-audio';
 import LibraryComponent from '../components/library/library.jsx';
 
 import soundIcon from '../components/library-item/lib-icon--sound.svg';
+import soundIconWhite from '../components/library-item/lib-icon--sound-white.svg';
 import soundIconRtl from '../components/library-item/lib-icon--sound-rtl.svg';
+import soundIconRtlWhite from '../components/library-item/lib-icon--sound-rtl-white.svg';
 
 import soundLibraryContent from '../lib/libraries/sounds.json';
 import soundTags from '../lib/libraries/sound-tags';
+import {themeMap} from '../lib/themes';
 
 import {connect} from 'react-redux';
 
@@ -158,7 +161,9 @@ class SoundLibrary extends React.PureComponent {
             } = sound;
             return {
                 _md5: md5ext,
-                rawURL: this.props.isRtl ? soundIconRtl : soundIcon,
+                rawURL: this.props.isRtl ?
+                    (themeMap[this.props.theme].dark ? soundIconRtlWhite : soundIconRtl) :
+                    (themeMap[this.props.theme].dark ? soundIconWhite : soundIcon),
                 ...otherData
             };
         });
