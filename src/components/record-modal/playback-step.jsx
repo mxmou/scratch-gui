@@ -7,9 +7,8 @@ import AudioTrimmer from '../../containers/audio-trimmer.jsx';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
 
 import styles from './record-modal.css';
-import backIcon from './icon--back.svg';
-import stopIcon from './icon--stop-playback.svg';
-import playIcon from './icon--play.svg';
+
+import {getIconsForTheme} from '../../lib/themes';
 
 const messages = defineMessages({
     stopMsg: {
@@ -73,7 +72,7 @@ const PlaybackStep = props => (
             >
                 <img
                     draggable={false}
-                    src={props.playing ? stopIcon : playIcon}
+                    src={getIconsForTheme(props.theme)[props.playing ? 'stop' : 'play'].accent}
                 />
                 <div className={styles.helpText}>
                     <span className={styles.playingText}>
@@ -92,7 +91,7 @@ const PlaybackStep = props => (
             >
                 <img
                     draggable={false}
-                    src={backIcon}
+                    src={getIconsForTheme(props.theme).rerecord.accent}
                 />
                 {props.intl.formatMessage(messages.reRecordMsg)}
             </button>
@@ -122,6 +121,7 @@ PlaybackStep.propTypes = {
     onSubmit: PropTypes.func.isRequired,
     playhead: PropTypes.number,
     playing: PropTypes.bool.isRequired,
+    theme: PropTypes.string,
     trimEnd: PropTypes.number.isRequired,
     trimStart: PropTypes.number.isRequired
 };

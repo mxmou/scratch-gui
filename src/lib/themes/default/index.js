@@ -27,17 +27,21 @@ import hideIconAccent from '../../../components/sprite-info/icon--hide.svg';
 import largeStageIconAccent from '../../../components/stage-header/icon--large-stage.svg';
 import paintIconAccent from '../../../components/gui/icon--costumes.svg';
 import pasteIcon from '../../../components/sound-editor/icon--paste.svg';
+import playIconAccent from '../../../components/record-modal/icon--play.svg';
 import redoIcon from '../../../components/sound-editor/icon--redo.svg';
+import rerecordIcon from '../../../components/record-modal/icon--back.svg';
 import rotateAllAroundIconAccent from '../../../components/direction-picker/icon--all-around.svg';
 import rotateLeftRightIconAccent from '../../../components/direction-picker/icon--left-right.svg';
 import selectionHandleAccent from '../../../components/audio-trimmer/icon--handle.svg';
 import showIconAccent from '../../../components/sprite-info/icon--show.svg';
 import smallStageIconAccent from '../../../components/stage-header/icon--small-stage.svg';
 import soundIconAccent from '../../../components/gui/icon--sounds.svg';
+import stopIconAccent from '../../../components/record-modal/icon--stop-playback.svg';
 import trimIcon from '../../../components/sound-editor/icon--delete.svg';
 import undoIcon from '../../../components/sound-editor/icon--undo.svg';
 
 import selectionHandleRed from '../../../components/audio-trimmer/icon--handle-red.svg';
+import stopIconRed from '../../../components/record-modal/icon--stop-recording.svg';
 
 import checkIcon from '../../../components/data-panel/icon--check.svg';
 import deleteIconOnAccent from '../../../components/delete-button/icon--delete.svg';
@@ -45,10 +49,10 @@ import newBackdropIcon from '../../../components/action-menu/icon--backdrop.svg'
 import newSoundIcon from '../../../components/asset-panel/icon--add-sound-lib.svg';
 import newSpriteIcon from '../../../components/action-menu/icon--sprite.svg';
 import paintIconOnAccent from '../../../components/action-menu/icon--paint.svg';
-import playIcon from '../../../components/sound-editor/icon--play.svg';
+import playIconOnAccent from '../../../components/sound-editor/icon--play.svg';
 import recordIcon from '../../../components/asset-panel/icon--add-sound-record.svg';
 import searchIcon from '../../../components/action-menu/icon--search.svg';
-import stopIcon from '../../../components/sound-editor/icon--stop.svg';
+import stopIconOnAccent from '../../../components/sound-editor/icon--stop.svg';
 import surpriseIcon from '../../../components/action-menu/icon--surprise.svg';
 import uploadIcon from '../../../components/action-menu/icon--file-upload.svg';
 
@@ -247,13 +251,17 @@ const icons = {
         accent: pasteIcon
     },
     play: {
-        onAccent: playIcon
+        accent: playIconAccent,
+        onAccent: playIconOnAccent
     },
     record: {
         onAccent: recordIcon
     },
     redo: {
         accent: redoIcon
+    },
+    rerecord: {
+        accent: rerecordIcon
     },
     rotateAllAround: {
         default: rotateAllAroundIconDefault,
@@ -283,7 +291,9 @@ const icons = {
         accent: soundIconAccent
     },
     stop: {
-        onAccent: stopIcon
+        accent: stopIconAccent,
+        red: stopIconRed,
+        onAccent: stopIconOnAccent
     },
     surprise: {
         onAccent: surpriseIcon

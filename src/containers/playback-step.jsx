@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import bindAll from 'lodash.bindall';
+import {connect} from 'react-redux';
 import PlaybackStepComponent from '../components/record-modal/playback-step.jsx';
 import AudioBufferPlayer from '../lib/audio/audio-buffer-player.js';
 
@@ -52,7 +53,12 @@ class PlaybackStep extends React.Component {
 PlaybackStep.propTypes = {
     sampleRate: PropTypes.number.isRequired,
     samples: PropTypes.instanceOf(Float32Array).isRequired,
+    theme: PropTypes.string,
     ...PlaybackStepComponent.propTypes
 };
 
-export default PlaybackStep;
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default connect(mapStateToProps)(PlaybackStep);

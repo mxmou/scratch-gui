@@ -4,6 +4,7 @@ import bindAll from 'lodash.bindall';
 import RecordingStepComponent from '../components/record-modal/recording-step.jsx';
 import AudioRecorder from '../lib/audio/audio-recorder.js';
 import {defineMessages, injectIntl, intlShape} from 'react-intl';
+import {connect} from 'react-redux';
 
 const messages = defineMessages({
     alertMsg: {
@@ -80,7 +81,12 @@ RecordingStep.propTypes = {
     intl: intlShape.isRequired,
     onRecord: PropTypes.func.isRequired,
     onStopRecording: PropTypes.func.isRequired,
-    recording: PropTypes.bool
+    recording: PropTypes.bool,
+    theme: PropTypes.string
 };
 
-export default injectIntl(RecordingStep);
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default injectIntl(connect(mapStateToProps)(RecordingStep));

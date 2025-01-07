@@ -6,7 +6,8 @@ import Meter from '../meter/meter.jsx';
 import Waveform from '../waveform/waveform.jsx';
 
 import styles from './record-modal.css';
-import stopIcon from './icon--stop-recording.svg';
+
+import {getIconsForTheme} from '../../lib/themes';
 
 const messages = defineMessages({
     beginRecord: {
@@ -69,7 +70,7 @@ const RecordingStep = props => (
                 {props.recording ? (
                     <img
                         draggable={false}
-                        src={stopIcon}
+                        src={getIconsForTheme(props.theme).stop.red}
                     />
                 ) : (
                     <svg
@@ -113,7 +114,8 @@ RecordingStep.propTypes = {
     listening: PropTypes.bool,
     onRecord: PropTypes.func.isRequired,
     onStopRecording: PropTypes.func.isRequired,
-    recording: PropTypes.bool
+    recording: PropTypes.bool,
+    theme: PropTypes.string
 };
 
 export default injectIntl(RecordingStep);
