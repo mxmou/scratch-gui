@@ -19,6 +19,8 @@ import clearIcon from '../../../components/filter/icon--x.svg';
 import codeIconAccent from '../../../components/gui/icon--code.svg';
 import copyIcon from '../../../components/sound-editor/icon--copy.svg';
 import copyToNewIcon from '../../../components/sound-editor/icon--copy-to-new.svg';
+import dialFace from '../../../components/direction-picker/icon--dial.svg';
+import dialHandle from '../../../components/direction-picker/icon--handle.svg';
 import dontRotateIconAccent from '../../../components/direction-picker/icon--dont-rotate.svg';
 import filterIcon from '../../../components/filter/icon--filter.svg';
 import hideIconAccent from '../../../components/sprite-info/icon--hide.svg';
@@ -193,6 +195,12 @@ const icons = {
     delete: {
         default: deleteIconDefault,
         onAccent: deleteIconOnAccent
+    },
+    dial: {
+        accent: dialFace
+    },
+    dialHandle: {
+        accent: dialHandle
     },
     dontRotate: {
         default: dontRotateIconDefault,

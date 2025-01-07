@@ -57,6 +57,7 @@ const DirectionPicker = props => (
                 <div>
                     <Dial
                         direction={props.direction}
+                        theme={props.theme}
                         onChange={props.onChangeDirection}
                     />
                     <ToggleButtons

@@ -5,8 +5,7 @@ import {getEventXY} from '../../lib/touch-utils';
 
 import styles from './dial.css';
 
-import dialFace from './icon--dial.svg';
-import dialHandle from './icon--handle.svg';
+import {getIconsForTheme} from '../../lib/themes';
 
 class Dial extends React.Component {
     constructor (props) {
@@ -99,7 +98,7 @@ class Dial extends React.Component {
     }
 
     render () {
-        const {direction, radius} = this.props;
+        const {direction, radius, theme} = this.props;
         return (
             <div className={styles.container}>
                 <div
@@ -113,7 +112,7 @@ class Dial extends React.Component {
                     <img
                         className={styles.dialFace}
                         draggable={false}
-                        src={dialFace}
+                        src={getIconsForTheme(theme).dial.accent}
                     />
                     <svg
                         className={styles.gauge}
@@ -129,7 +128,7 @@ class Dial extends React.Component {
                         className={styles.dialHandle}
                         draggable={false}
                         ref={this.handleRef}
-                        src={dialHandle}
+                        src={getIconsForTheme(theme).dialHandle.accent}
                         style={{
                             top: `${radius - (radius * Math.cos(direction * (Math.PI / 180)))}px`,
                             left: `${radius + (radius * Math.sin(direction * (Math.PI / 180)))}px`,
@@ -145,7 +144,8 @@ class Dial extends React.Component {
 Dial.propTypes = {
     direction: PropTypes.number,
     onChange: PropTypes.func.isRequired,
-    radius: PropTypes.number
+    radius: PropTypes.number,
+    theme: PropTypes.string
 };
 
 Dial.defaultProps = {

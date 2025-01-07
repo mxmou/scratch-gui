@@ -19,6 +19,8 @@ import clearIcon from '../../../components/filter/icon--x-dark-mode.svg';
 import codeIconAccent from '../../../components/gui/icon--code-dark-mode.svg';
 import copyIcon from '../../../components/sound-editor/icon--copy-dark-mode.svg';
 import copyToNewIcon from '../../../components/sound-editor/icon--copy-to-new-dark-mode.svg';
+import dialFace from '../../../components/direction-picker/icon--dial-dark-mode.svg';
+import dialHandle from '../../../components/direction-picker/icon--handle-dark-mode.svg';
 import dontRotateIconAccent from '../../../components/direction-picker/icon--dont-rotate-dark-mode.svg';
 import filterIcon from '../../../components/filter/icon--filter-dark-mode.svg';
 import hideIconAccent from '../../../components/sprite-info/icon--hide-dark-mode.svg';
@@ -171,6 +173,12 @@ const icons = {
     delete: {
         default: deleteIconDefault,
         onAccent: deleteIconOnAccent
+    },
+    dial: {
+        accent: dialFace
+    },
+    dialHandle: {
+        accent: dialHandle
     },
     dontRotate: {
         default: dontRotateIconDefault,
