@@ -3,7 +3,6 @@ import React from 'react';
 import classNames from 'classnames';
 import Box from '../box/box.jsx';
 import styles from './audio-trimmer.css';
-import handleIcon from './icon--handle.svg';
 
 const SelectionHandle = props => (
     <Box
@@ -13,13 +12,13 @@ const SelectionHandle = props => (
     >
         <Box className={classNames(styles.trimHandle, styles.topTrimHandle)}>
             <img
-                src={handleIcon}
+                src={props.iconURL}
                 draggable={false}
             />
         </Box>
         <Box className={classNames(styles.trimHandle, styles.bottomTrimHandle)}>
             <img
-                src={handleIcon}
+                src={props.iconURL}
                 draggable={false}
             />
         </Box>
@@ -28,6 +27,7 @@ const SelectionHandle = props => (
 
 SelectionHandle.propTypes = {
     handleStyle: PropTypes.string,
+    iconURL: PropTypes.string,
     onMouseDown: PropTypes.func
 };
 

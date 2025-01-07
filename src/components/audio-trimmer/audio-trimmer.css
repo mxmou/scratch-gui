@@ -64,7 +64,7 @@ $hover-scale: 1.25;
 }
 
 .selector .trim-line {
-    border: 1px solid $motion-accent;
+    border: 1px solid $motion-dark;
 }
 
 .playhead-container {
@@ -115,10 +115,6 @@ $hover-scale: 1.25;
     height: $trim-handle-height;
     right: 0;
     user-select: none;
-}
-
-.trimmer .trim-handle {
-    filter: hue-rotate(-240deg) brightness(1.35);
 }
 
 .trim-handle img {

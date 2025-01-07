@@ -6,6 +6,8 @@ import styles from './audio-trimmer.css';
 import SelectionHandle from './selection-handle.jsx';
 import Playhead from './playhead.jsx';
 
+import {getIconsForTheme} from '../../lib/themes';
+
 const AudioSelector = props => (
     <div
         className={classNames(styles.absolute, styles.selector)}
@@ -24,10 +26,12 @@ const AudioSelector = props => (
                 <Box className={classNames(styles.absolute, styles.selectionBackground)} />
                 <SelectionHandle
                     handleStyle={styles.leftHandle}
+                    iconURL={getIconsForTheme(props.theme).selectionHandle.accent}
                     onMouseDown={props.onTrimStartMouseDown}
                 />
                 <SelectionHandle
                     handleStyle={styles.rightHandle}
+                    iconURL={getIconsForTheme(props.theme).selectionHandle.accent}
                     onMouseDown={props.onTrimEndMouseDown}
                 />
             </Box>
@@ -46,6 +50,7 @@ AudioSelector.propTypes = {
     onTrimEndMouseDown: PropTypes.func.isRequired,
     onTrimStartMouseDown: PropTypes.func.isRequired,
     playhead: PropTypes.number,
+    theme: PropTypes.string,
     trimEnd: PropTypes.number,
     trimStart: PropTypes.number
 };

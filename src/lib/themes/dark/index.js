@@ -30,6 +30,7 @@ import pasteIcon from '../../../components/sound-editor/icon--paste-dark-mode.sv
 import redoIcon from '../../../components/sound-editor/icon--redo-dark-mode.svg';
 import rotateAllAroundIconAccent from '../../../components/direction-picker/icon--all-around-dark-mode.svg';
 import rotateLeftRightIconAccent from '../../../components/direction-picker/icon--left-right-dark-mode.svg';
+import selectionHandle from '../../../components/audio-trimmer/icon--handle-dark-mode.svg';
 import showIconAccent from '../../../components/sprite-info/icon--show-dark-mode.svg';
 import smallStageIconAccent from '../../../components/stage-header/icon--small-stage-dark-mode.svg';
 import soundIconAccent from '../../../components/gui/icon--sounds-dark-mode.svg';
@@ -240,6 +241,9 @@ const icons = {
     },
     search: {
         onAccent: searchIcon
+    },
+    selectionHandle: {
+        accent: selectionHandle
     },
     show: {
         default: showIconDefault,

@@ -30,6 +30,7 @@ import pasteIcon from '../../../components/sound-editor/icon--paste.svg';
 import redoIcon from '../../../components/sound-editor/icon--redo.svg';
 import rotateAllAroundIconAccent from '../../../components/direction-picker/icon--all-around.svg';
 import rotateLeftRightIconAccent from '../../../components/direction-picker/icon--left-right.svg';
+import selectionHandle from '../../../components/audio-trimmer/icon--handle.svg';
 import showIconAccent from '../../../components/sprite-info/icon--show.svg';
 import smallStageIconAccent from '../../../components/stage-header/icon--small-stage.svg';
 import soundIconAccent from '../../../components/gui/icon--sounds.svg';
@@ -262,6 +263,9 @@ const icons = {
     },
     search: {
         onAccent: searchIcon
+    },
+    selectionHandle: {
+        accent: selectionHandle
     },
     show: {
         default: showIconDefault,

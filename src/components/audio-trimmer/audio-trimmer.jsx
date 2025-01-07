@@ -5,6 +5,7 @@ import Box from '../box/box.jsx';
 import styles from './audio-trimmer.css';
 import SelectionHandle from './selection-handle.jsx';
 import Playhead from './playhead.jsx';
+import handleIcon from './icon--handle-red.svg';
 
 const AudioTrimmer = props => (
     <div
@@ -23,6 +24,7 @@ const AudioTrimmer = props => (
                 <Box className={classNames(styles.absolute, styles.trimBackgroundMask)} />
                 <SelectionHandle
                     handleStyle={styles.leftHandle}
+                    iconURL={handleIcon}
                 />
             </Box>
         )}
@@ -44,6 +46,7 @@ const AudioTrimmer = props => (
                 <Box className={classNames(styles.absolute, styles.trimBackgroundMask)} />
                 <SelectionHandle
                     handleStyle={styles.rightHandle}
+                    iconURL={handleIcon}
                 />
             </Box>
         )}

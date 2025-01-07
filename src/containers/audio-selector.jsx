@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import bindAll from 'lodash.bindall';
+import {connect} from 'react-redux';
 import AudioSelectorComponent from '../components/audio-trimmer/audio-selector.jsx';
 import {getEventXY} from '../lib/touch-utils';
 import DragRecognizer from '../lib/drag-recognizer';
@@ -136,6 +137,7 @@ class AudioSelector extends React.Component {
             <AudioSelectorComponent
                 containerRef={this.storeRef}
                 playhead={this.props.playhead}
+                theme={this.props.theme}
                 trimEnd={this.state.trimEnd}
                 trimStart={this.state.trimStart}
                 onNewSelectionMouseDown={this.handleNewSelectionMouseDown}
@@ -149,8 +151,13 @@ class AudioSelector extends React.Component {
 AudioSelector.propTypes = {
     onSetTrim: PropTypes.func,
     playhead: PropTypes.number,
+    theme: PropTypes.string,
     trimEnd: PropTypes.number,
     trimStart: PropTypes.number
 };
 
-export default AudioSelector;
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default connect(mapStateToProps)(AudioSelector);
