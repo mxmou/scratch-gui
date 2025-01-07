@@ -28,15 +28,15 @@ $hover-scale: 1.25;
 }
 
 .trim-background-mask {
-    border: 1px solid $red-tertiary;
+    border: 1px solid $list-dark;
     opacity: 0.5;
 
     background: repeating-linear-gradient(
         45deg,
-        $red-primary,
-        $red-primary $stripe-size,
-        $red-tertiary $stripe-size,
-        $red-tertiary calc(2 * $stripe-size)
+        $list-accent,
+        $list-accent $stripe-size,
+        $list-dark $stripe-size,
+        $list-dark calc(2 * $stripe-size)
     );
 }
 
@@ -60,7 +60,7 @@ $hover-scale: 1.25;
     top: 0;
     width: 0px;
     height: 100%;
-    border: 1px solid $red-tertiary;
+    border: 1px solid $list-dark;
 }
 
 .selector .trim-line {

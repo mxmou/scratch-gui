@@ -30,6 +30,7 @@
     --data-accent: hsla(30, 100%, 65%, 1); /* #FFA54C */
     --variable-accent: hsla(30, 100%, 65%, 1); /* #FFA54C */
     --list-accent: hsla(20, 100%, 70%, 1); /* #FF9966 */
+    --list-dark: hsla(20, 100%, 60%, 1); /* #FF7733 */
     --error-accent: hsla(30, 100%, 65%, 1); /* #FFA54C */
     --extensions-accent: hsla(163, 85%, 50%, 1); /* #13ECAF */
 

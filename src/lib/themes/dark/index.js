@@ -30,12 +30,14 @@ import pasteIcon from '../../../components/sound-editor/icon--paste-dark-mode.sv
 import redoIcon from '../../../components/sound-editor/icon--redo-dark-mode.svg';
 import rotateAllAroundIconAccent from '../../../components/direction-picker/icon--all-around-dark-mode.svg';
 import rotateLeftRightIconAccent from '../../../components/direction-picker/icon--left-right-dark-mode.svg';
-import selectionHandle from '../../../components/audio-trimmer/icon--handle-dark-mode.svg';
+import selectionHandleAccent from '../../../components/audio-trimmer/icon--handle-dark-mode.svg';
 import showIconAccent from '../../../components/sprite-info/icon--show-dark-mode.svg';
 import smallStageIconAccent from '../../../components/stage-header/icon--small-stage-dark-mode.svg';
 import soundIconAccent from '../../../components/gui/icon--sounds-dark-mode.svg';
 import trimIcon from '../../../components/sound-editor/icon--delete-dark-mode.svg';
 import undoIcon from '../../../components/sound-editor/icon--undo-dark-mode.svg';
+
+import selectionHandleRed from '../../../components/audio-trimmer/icon--handle-red-dark-mode.svg';
 
 import checkIcon from '../../../components/data-panel/icon--check-black.svg';
 import deleteIconOnAccent from '../../../components/delete-button/icon--delete-black.svg';
@@ -243,7 +245,8 @@ const icons = {
         onAccent: searchIcon
     },
     selectionHandle: {
-        accent: selectionHandle
+        accent: selectionHandleAccent,
+        red: selectionHandleRed
     },
     show: {
         default: showIconDefault,

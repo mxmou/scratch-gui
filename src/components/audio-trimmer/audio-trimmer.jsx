@@ -5,7 +5,8 @@ import Box from '../box/box.jsx';
 import styles from './audio-trimmer.css';
 import SelectionHandle from './selection-handle.jsx';
 import Playhead from './playhead.jsx';
-import handleIcon from './icon--handle-red.svg';
+
+import {getIconsForTheme} from '../../lib/themes';
 
 const AudioTrimmer = props => (
     <div
@@ -24,7 +25,7 @@ const AudioTrimmer = props => (
                 <Box className={classNames(styles.absolute, styles.trimBackgroundMask)} />
                 <SelectionHandle
                     handleStyle={styles.leftHandle}
-                    iconURL={handleIcon}
+                    iconURL={getIconsForTheme(props.theme).selectionHandle.red}
                 />
             </Box>
         )}
@@ -46,7 +47,7 @@ const AudioTrimmer = props => (
                 <Box className={classNames(styles.absolute, styles.trimBackgroundMask)} />
                 <SelectionHandle
                     handleStyle={styles.rightHandle}
-                    iconURL={handleIcon}
+                    iconURL={getIconsForTheme(props.theme).selectionHandle.red}
                 />
             </Box>
         )}
@@ -58,6 +59,7 @@ AudioTrimmer.propTypes = {
     onTrimEndMouseDown: PropTypes.func.isRequired,
     onTrimStartMouseDown: PropTypes.func.isRequired,
     playhead: PropTypes.number,
+    theme: PropTypes.string,
     trimEnd: PropTypes.number,
     trimStart: PropTypes.number
 };

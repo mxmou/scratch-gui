@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import bindAll from 'lodash.bindall';
+import {connect} from 'react-redux';
 import AudioTrimmerComponent from '../components/audio-trimmer/audio-trimmer.jsx';
 import DragRecognizer from '../lib/drag-recognizer';
 
@@ -56,6 +57,7 @@ class AudioTrimmer extends React.Component {
             <AudioTrimmerComponent
                 containerRef={this.storeRef}
                 playhead={this.props.playhead}
+                theme={this.props.theme}
                 trimEnd={this.props.trimEnd}
                 trimStart={this.props.trimStart}
                 onTrimEndMouseDown={this.handleTrimEndMouseDown}
@@ -69,8 +71,13 @@ AudioTrimmer.propTypes = {
     onSetTrimEnd: PropTypes.func,
     onSetTrimStart: PropTypes.func,
     playhead: PropTypes.number,
+    theme: PropTypes.string,
     trimEnd: PropTypes.number,
     trimStart: PropTypes.number
 };
 
-export default AudioTrimmer;
+const mapStateToProps = state => ({
+    theme: state.scratchGui.theme.theme
+});
+
+export default connect(mapStateToProps)(AudioTrimmer);

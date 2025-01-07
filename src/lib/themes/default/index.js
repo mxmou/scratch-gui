@@ -30,12 +30,14 @@ import pasteIcon from '../../../components/sound-editor/icon--paste.svg';
 import redoIcon from '../../../components/sound-editor/icon--redo.svg';
 import rotateAllAroundIconAccent from '../../../components/direction-picker/icon--all-around.svg';
 import rotateLeftRightIconAccent from '../../../components/direction-picker/icon--left-right.svg';
-import selectionHandle from '../../../components/audio-trimmer/icon--handle.svg';
+import selectionHandleAccent from '../../../components/audio-trimmer/icon--handle.svg';
 import showIconAccent from '../../../components/sprite-info/icon--show.svg';
 import smallStageIconAccent from '../../../components/stage-header/icon--small-stage.svg';
 import soundIconAccent from '../../../components/gui/icon--sounds.svg';
 import trimIcon from '../../../components/sound-editor/icon--delete.svg';
 import undoIcon from '../../../components/sound-editor/icon--undo.svg';
+
+import selectionHandleRed from '../../../components/audio-trimmer/icon--handle-red.svg';
 
 import checkIcon from '../../../components/data-panel/icon--check.svg';
 import deleteIconOnAccent from '../../../components/delete-button/icon--delete.svg';
@@ -265,7 +267,8 @@ const icons = {
         onAccent: searchIcon
     },
     selectionHandle: {
-        accent: selectionHandle
+        accent: selectionHandleAccent,
+        red: selectionHandleRed
     },
     show: {
         default: showIconDefault,

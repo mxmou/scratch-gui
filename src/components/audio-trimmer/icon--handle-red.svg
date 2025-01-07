@@ -8,9 +8,9 @@
     </defs>
     <g id="Bottom-Left-Handle" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Bottom-Left" transform="translate(17.000000, 17.000000) scale(1, -1) translate(-17.000000, -17.000000) ">
-            <use stroke="#FF661A33" stroke-width="8" xlink:href="#path-1"></use>
+            <use stroke="#E64D0033" stroke-width="8" xlink:href="#path-1"></use>
             <use fill="black" fill-opacity="1" filter="url(#filter-2)" xlink:href="#path-1"></use>
-            <use stroke="#E64D00" stroke-width="1" fill="#FF661A" fill-rule="evenodd" xlink:href="#path-1"></use>
+            <use stroke="#CC4400" stroke-width="1" fill="#E64D00" fill-rule="evenodd" xlink:href="#path-1"></use>
         </g>
     </g>
 </svg>
