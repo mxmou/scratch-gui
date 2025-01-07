@@ -228,6 +228,7 @@ class CodeEditor extends React.Component {
         const colors = getColorsForTheme(this.props.theme);
         return HighlightStyle.define([
             {tag: toshTags['s-escape'], color: colors.codeTransparentText},
+            {tag: toshTags['s-comment'], color: colors.codeTransparentText},
 
             {tag: toshTags['s-motion'], color: colors.motion.code},
             {tag: toshTags['s-looks'], color: colors.looks.code},
