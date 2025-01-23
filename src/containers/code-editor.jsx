@@ -194,6 +194,7 @@ class CodeEditor extends React.Component {
         // Timeout prevents error:
         // Calls to EditorView.update are not allowed while an update is in progress
         setTimeout(() => {
+            this.updateTheme();
             this.updateParserOptions();
             this.showErrorWidget();
             this.element.classList.remove(styles.loading);

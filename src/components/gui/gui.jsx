@@ -313,18 +313,16 @@ const GUIComponent = props => {
                                     </Tab>
                                 </TabList>
                                 <TabPanel className={tabClassNames.tabPanel}>
-                                    {codeTabVisible ? (
-                                        <div className={styles.codeWrapper}>
-                                            <DataPanel
-                                                vm={vm}
-                                                canUseCloud={canUseCloud}
-                                            />
-                                            <CodeEditor
-                                                className={styles.codeEditor}
-                                                vm={vm}
-                                            />
-                                        </div>
-                                    ) : null}
+                                    <div className={styles.codeWrapper}>
+                                        <DataPanel
+                                            vm={vm}
+                                            canUseCloud={canUseCloud}
+                                        />
+                                        <CodeEditor
+                                            className={styles.codeEditor}
+                                            vm={vm}
+                                        />
+                                    </div>
                                 </TabPanel>
                                 <TabPanel className={tabClassNames.tabPanel}>
                                     {costumesTabVisible ? <CostumeTab vm={vm} /> : null}
