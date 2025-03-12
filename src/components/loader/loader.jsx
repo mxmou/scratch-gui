@@ -9,13 +9,19 @@ import middleBlock from './middle-block.svg';
 import bottomBlock from './bottom-block.svg';
 const messages = [
     {
-        message: (
-            <FormattedMessage
-                defaultMessage="Creating blocks …"
-                description="One of the loading messages"
-                id="gui.loader.message1"
-            />
-        ),
+        message: 'Generating grammar …',
+        weight: 50
+    },
+    {
+        message: 'Processing tokens …',
+        weight: 50
+    },
+    {
+        message: 'Validating identifiers …',
+        weight: 50
+    },
+    {
+        message: 'Configuring editor …',
         weight: 50
     },
     {
@@ -26,7 +32,7 @@ const messages = [
                 id="gui.loader.message2"
             />
         ),
-        weight: 50
+        weight: 30
     },
     {
         message: (
@@ -36,66 +42,26 @@ const messages = [
                 id="gui.loader.message3"
             />
         ),
-        weight: 50
+        weight: 30
     },
     {
-        message: (
-            <FormattedMessage
-                defaultMessage="Loading extensions …"
-                description="One of the loading messages"
-                id="gui.loader.message4"
-            />
-        ),
-        weight: 50
-    },
-    {
-        message: (
-            <FormattedMessage
-                defaultMessage="Creating blocks …"
-                description="One of the loading messages"
-                id="gui.loader.message1"
-            />
-        ),
+        message: 'Loading costumes …',
         weight: 20
     },
     {
-        message: (
-            <FormattedMessage
-                defaultMessage="Herding cats …"
-                description="One of the loading messages"
-                id="gui.loader.message5"
-            />
-        ),
-        weight: 1
+        message: 'Loading backdrops …',
+        weight: 20
     },
     {
-        message: (
-            <FormattedMessage
-                defaultMessage="Transmitting nanos …"
-                description="One of the loading messages"
-                id="gui.loader.message6"
-            />
-        ),
-        weight: 1
+        message: 'Ignoring comments …',
+        weight: 5
     },
     {
-        message: (
-            <FormattedMessage
-                defaultMessage="Inflating gobos …"
-                description="One of the loading messages"
-                id="gui.loader.message7"
-            />
-        ),
-        weight: 1
+        message: 'Measuring blocks …',
+        weight: 5
     },
     {
-        message: (
-            <FormattedMessage
-                defaultMessage="Preparing emojis …"
-                description="One of the loading messages"
-                id="gui.loader.message8"
-            />
-        ),
+        message: 'Feeding mice …',
         weight: 1
     }
 ];
