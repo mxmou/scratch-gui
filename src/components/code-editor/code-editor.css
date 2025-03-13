@@ -163,3 +163,20 @@
     outline: 1px solid $motion-accent;
     outline-offset: 1px;
 }
+
+.status-bar {
+    height: 1.75rem;
+    display: flex;
+    align-items: center;
+    border-top: 1px solid $ui-black-transparent;
+    font-size: 0.75rem;
+}
+
+.status-bar-item {
+    padding: 0 0.5rem;
+    user-select: none;
+}
+
+.status-bar-space {
+    flex-grow: 1;
+}

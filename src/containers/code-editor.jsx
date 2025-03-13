@@ -57,6 +57,12 @@ class CodeEditor extends React.Component {
         this.themeOptions = new Compartment();
         this.parserOptions = new Compartment();
         this.repaintTimeout = null;
+        this.state = {
+            currentLine: 1,
+            currentColumn: 1,
+            selectedRanges: 1,
+            selectedChars: 0
+        };
     }
     componentDidMount () {
         this.view = new EditorView({parent: this.element});
@@ -251,6 +257,17 @@ class CodeEditor extends React.Component {
         ]);
     }
     handleViewUpdate (update) {
+        const selection = update.state.selection;
+        const cursorPos = selection.main.head;
+        const cursorLine = update.state.doc.lineAt(cursorPos);
+        this.setState({
+            currentLine: cursorLine.number,
+            currentColumn: cursorPos - cursorLine.from + 1,
+            selectedRanges: selection.ranges.length,
+            selectedChars: selection.ranges
+                .map(range => range.to - range.from)
+                .reduce((sum, current) => sum + current)
+        });
         if (update.docChanged) {
             const doc = update.state.doc;
             if (this.props.vm.editingTarget) {
@@ -322,6 +339,10 @@ class CodeEditor extends React.Component {
         return (
             <CodeEditorComponent
                 containerRef={this.setElement}
+                currentLine={this.state.currentLine}
+                currentColumn={this.state.currentColumn}
+                selectedRanges={this.state.selectedRanges}
+                selectedChars={this.state.selectedChars}
                 {...componentProps}
             />
         );

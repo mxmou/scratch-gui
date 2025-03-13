@@ -6,7 +6,11 @@ import styles from './code-editor.css';
 
 const CodeEditorComponent = ({
     className,
-    containerRef
+    containerRef,
+    currentLine,
+    currentColumn,
+    selectedRanges,
+    selectedChars
 }) => (
     <div className={classNames(styles.codeEditorOuter, className)}>
         <div
@@ -14,12 +18,24 @@ const CodeEditorComponent = ({
             dir="ltr"
             ref={containerRef}
         />
+        <div className={styles.statusBar}>
+            <div className={styles.statusBarSpace} />
+            {selectedRanges > 1 || selectedChars > 0 ? <div className={styles.statusBarItem}>
+                {selectedRanges === 1 ? '1 selection' : `${selectedRanges} selections`}
+                {selectedChars > 0 ? ` (${selectedChars} ch)` : null}
+            </div> : null}
+            <div className={styles.statusBarItem}>{`Ln ${currentLine}, Col ${currentColumn}`}</div>
+        </div>
     </div>
 );
 
 CodeEditorComponent.propTypes = {
     className: PropTypes.string,
-    containerRef: PropTypes.func
+    containerRef: PropTypes.func,
+    currentLine: PropTypes.number,
+    currentColumn: PropTypes.number,
+    selectedRanges: PropTypes.number,
+    selectedChars: PropTypes.number
 };
 
 export default CodeEditorComponent;
