@@ -1117,6 +1117,60 @@ const blocks = [
         shape: 'reporter'
     },
 
+    // Force and Acceleration
+    {
+        selector: 'gdxfor_whenGesture',
+        spec: 'force: when %m.gdxfor_menu_gestureOptions',
+        inputNames: ['GESTURE'],
+        shape: 'hat'
+    },
+    {
+        selector: 'gdxfor_whenForcePushedOrPulled',
+        spec: 'force: when force sensor %m.gdxfor_menu_pushPullOptions',
+        inputNames: ['PUSH_PULL'],
+        shape: 'hat'
+    },
+    {
+        selector: 'gdxfor_getForce',
+        spec: 'force',
+        shape: 'reporter'
+    },
+    {
+        selector: 'gdxfor_whenTilted',
+        spec: 'force: when tilted %m.gdxfor_menu_tiltAnyOptions',
+        inputNames: ['TILT'],
+        shape: 'hat'
+    },
+    {
+        selector: 'gdxfor_isTilted',
+        spec: 'force: is tilted %m.gdxfor_menu_tiltAnyOptions?',
+        inputNames: ['TILT'],
+        shape: 'predicate'
+    },
+    {
+        selector: 'gdxfor_getTilt',
+        spec: 'force: tilt angle %m.gdxfor_menu_tiltOptions',
+        inputNames: ['TILT'],
+        shape: 'reporter'
+    },
+    {
+        selector: 'gdxfor_isFreeFalling',
+        spec: 'force: falling?',
+        shape: 'predicate'
+    },
+    {
+        selector: 'gdxfor_getSpinSpeed',
+        spec: 'force: spin speed %m.gdxfor_menu_axisOptions',
+        inputNames: ['DIRECTION'],
+        shape: 'reporter'
+    },
+    {
+        selector: 'gdxfor_getAcceleration',
+        spec: 'force: acceleration %m.gdxfor_menu_axisOptions',
+        inputNames: ['DIRECTION'],
+        shape: 'reporter'
+    },
+
     // Custom block parameters
     {
         selector: 'argument_reporter_string_number',
@@ -1156,6 +1210,7 @@ for (const block of blocks) {
             ev3: 'extension',
             boost: 'extension',
             wedo2: 'extension',
+            gdxfor: 'extension',
             argument: 'parameter'
         }[opcodePrefix] || opcodePrefix;
     }

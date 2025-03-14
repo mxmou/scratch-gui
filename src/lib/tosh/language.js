@@ -744,6 +744,9 @@ var menus = ['motion_goto_menu', 'motion_glideto_menu',
     'boost_menu_TILT_DIRECTION', 'boost_menu_TILT_DIRECTION_ANY',
     'wedo2_menu_MOTOR_ID', 'wedo2_menu_MOTOR_DIRECTION', 'wedo2_menu_OP',
     'wedo2_menu_TILT_DIRECTION', 'wedo2_menu_TILT_DIRECTION_ANY',
+    'gdxfor_menu_gestureOptions', 'gdxfor_menu_pushPullOptions',
+    'gdxfor_menu_tiltOptions', 'gdxfor_menu_tiltAnyOptions',
+    'gdxfor_menu_axisOptions',
 
     'attribute', 'backdrop', 'broadcast', 'dragMode', 'effect',
     'forwardBackward', 'frontBack', 'key', 'list', 'listNonempty', 'mathOp',
@@ -767,7 +770,10 @@ var menusThatAcceptReporters = ['motion_goto_menu', 'motion_glideto_menu',
     'boost_menu_MOTOR_DIRECTION', 'boost_menu_COLOR',
     'boost_menu_TILT_DIRECTION', 'boost_menu_TILT_DIRECTION_ANY',
     'wedo2_menu_MOTOR_ID', 'wedo2_menu_MOTOR_DIRECTION', 'wedo2_menu_OP',
-    'wedo2_menu_TILT_DIRECTION', 'wedo2_menu_TILT_DIRECTION_ANY'];
+    'wedo2_menu_TILT_DIRECTION', 'wedo2_menu_TILT_DIRECTION_ANY',
+    'gdxfor_menu_gestureOptions', 'gdxfor_menu_pushPullOptions',
+    'gdxfor_menu_tiltOptions', 'gdxfor_menu_tiltAnyOptions',
+    'gdxfor_menu_axisOptions'];
 
 // These accept string literals but not reporters
 var menusThatAcceptStrings = ['attribute', 'backdrop', 'broadcast'];
@@ -835,6 +841,12 @@ var menuOptions = {
   wedo2_menu_OP: ['<', '>'],
   wedo2_menu_TILT_DIRECTION: [], // set later
   wedo2_menu_TILT_DIRECTION_ANY: [], // set later
+  gdxfor_menu_gestureOptions: ['shaken', 'started falling', 'turned face up',
+    'turned face down'],
+  gdxfor_menu_pushPullOptions: ['pushed', 'pulled'],
+  gdxfor_menu_tiltOptions: [], // set later
+  gdxfor_menu_tiltAnyOptions: [], // set later
+  gdxfor_menu_axisOptions: ['x', 'y', 'z'],
 
   'attribute': ['x position', 'y position', 'direction', 'costume #',
   'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
@@ -868,6 +880,8 @@ menuOptions.sensing_keyoptions = menuOptions.key;
 menuOptions.wedo2_menu_MOTOR_DIRECTION = menuOptions.boost_menu_MOTOR_DIRECTION;
 menuOptions.wedo2_menu_TILT_DIRECTION = menuOptions.boost_menu_TILT_DIRECTION;
 menuOptions.wedo2_menu_TILT_DIRECTION_ANY = menuOptions.boost_menu_TILT_DIRECTION_ANY;
+menuOptions.gdxfor_menu_tiltOptions = menuOptions.microbit_menu_tiltDirection;
+menuOptions.gdxfor_menu_tiltAnyOptions = menuOptions.microbit_menu_tiltDirectionAny;
 
 // only generate number literals for some blocks
 var blocksWithNumberLiterals = [
@@ -1469,6 +1483,8 @@ var preferSelectors = [
   'ev3_buttonPressed',
   'boost_seeingColor',
   'wedo2_isTilted',
+  'gdxfor_isTilted',
+  'gdxfor_isFreeFalling',
 
   /* reporters */
   'ReporterParam',
@@ -1520,6 +1536,10 @@ var preferSelectors = [
   'boost_getTiltAngle',
   'wedo2_getDistance',
   'wedo2_getTiltAngle',
+  'gdxfor_getForce',
+  'gdxfor_getTilt',
+  'gdxfor_getSpinSpeed',
+  'gdxfor_getAcceleration',
 
   /* blocks */
 
@@ -1571,6 +1591,9 @@ var preferSelectors = [
   'ev3_whenBrightnessLessThan',
 
   'control_forever',
+  'gdxfor_whenGesture',
+  'gdxfor_whenForcePushedOrPulled',
+  'gdxfor_whenTilted',
 
   'motion_gotoxy',
   'motion_goto',
