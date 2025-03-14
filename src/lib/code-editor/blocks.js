@@ -1050,6 +1050,73 @@ const blocks = [
         inputNames: ['HUE']
     },
 
+    // WeDo
+    {
+        selector: 'wedo2_motorOnFor',
+        spec: 'wedo: turn %m.wedo2_menu_MOTOR_ID on for %n seconds',
+        inputNames: ['MOTOR_ID', 'DURATION']
+    },
+    {
+        selector: 'wedo2_motorOn',
+        spec: 'wedo: turn %m.wedo2_menu_MOTOR_ID on',
+        inputNames: ['MOTOR_ID']
+    },
+    {
+        selector: 'wedo2_motorOff',
+        spec: 'wedo: turn %m.wedo2_menu_MOTOR_ID off',
+        inputNames: ['MOTOR_ID']
+    },
+    {
+        selector: 'wedo2_startMotorPower',
+        spec: 'wedo: set %m.wedo2_menu_MOTOR_ID power to %n',
+        inputNames: ['MOTOR_ID', 'POWER']
+    },
+    {
+        selector: 'wedo2_setMotorDirection',
+        spec: 'wedo: set %m.wedo2_menu_MOTOR_ID direction to %m.wedo2_menu_MOTOR_DIRECTION',
+        inputNames: ['MOTOR_ID', 'MOTOR_DIRECTION']
+    },
+    {
+        selector: 'wedo2_setLightHue',
+        spec: 'wedo: set light color to %n',
+        inputNames: ['HUE']
+    },
+    {
+        // This block exists in Scratch but isn't visible in the palette
+        selector: 'wedo2_playNoteFor',
+        spec: 'wedo: play note %n for %n seconds',
+        inputNames: ['NOTE', 'DURATION']
+    },
+    {
+        selector: 'wedo2_whenDistance',
+        spec: 'wedo: when distance %m.wedo2_menu_OP %n',
+        inputNames: ['OP', 'REFERENCE'],
+        shape: 'hat'
+    },
+    {
+        selector: 'wedo2_whenTilted',
+        spec: 'wedo: when tilted %m.wedo2_menu_TILT_DIRECTION_ANY',
+        inputNames: ['TILT_DIRECTION_ANY'],
+        shape: 'hat'
+    },
+    {
+        selector: 'wedo2_getDistance',
+        spec: 'wedo: distance',
+        shape: 'reporter'
+    },
+    {
+        selector: 'wedo2_isTilted',
+        spec: 'wedo: tilted %m.wedo2_menu_TILT_DIRECTION_ANY?',
+        inputNames: ['TILT_DIRECTION_ANY'],
+        shape: 'predicate'
+    },
+    {
+        selector: 'wedo2_getTiltAngle',
+        spec: 'wedo: tilt angle %m.wedo2_menu_TILT_DIRECTION',
+        inputNames: ['TILT_DIRECTION'],
+        shape: 'reporter'
+    },
+
     // Custom block parameters
     {
         selector: 'argument_reporter_string_number',
@@ -1088,6 +1155,7 @@ for (const block of blocks) {
             microbit: 'extension',
             ev3: 'extension',
             boost: 'extension',
+            wedo2: 'extension',
             argument: 'parameter'
         }[opcodePrefix] || opcodePrefix;
     }

@@ -742,6 +742,8 @@ var menus = ['motion_goto_menu', 'motion_glideto_menu',
     'boost_menu_MOTOR_ID', 'boost_menu_MOTOR_REPORTER_ID',
     'boost_menu_MOTOR_DIRECTION', 'boost_menu_COLOR',
     'boost_menu_TILT_DIRECTION', 'boost_menu_TILT_DIRECTION_ANY',
+    'wedo2_menu_MOTOR_ID', 'wedo2_menu_MOTOR_DIRECTION', 'wedo2_menu_OP',
+    'wedo2_menu_TILT_DIRECTION', 'wedo2_menu_TILT_DIRECTION_ANY',
 
     'attribute', 'backdrop', 'broadcast', 'dragMode', 'effect',
     'forwardBackward', 'frontBack', 'key', 'list', 'listNonempty', 'mathOp',
@@ -763,7 +765,9 @@ var menusThatAcceptReporters = ['motion_goto_menu', 'motion_glideto_menu',
     'microbit_menu_touchPins', 'ev3_menu_motorPorts', 'ev3_menu_sensorPorts',
     'boost_menu_MOTOR_ID', 'boost_menu_MOTOR_REPORTER_ID',
     'boost_menu_MOTOR_DIRECTION', 'boost_menu_COLOR',
-    'boost_menu_TILT_DIRECTION', 'boost_menu_TILT_DIRECTION_ANY'];
+    'boost_menu_TILT_DIRECTION', 'boost_menu_TILT_DIRECTION_ANY',
+    'wedo2_menu_MOTOR_ID', 'wedo2_menu_MOTOR_DIRECTION', 'wedo2_menu_OP',
+    'wedo2_menu_TILT_DIRECTION', 'wedo2_menu_TILT_DIRECTION_ANY'];
 
 // These accept string literals but not reporters
 var menusThatAcceptStrings = ['attribute', 'backdrop', 'broadcast'];
@@ -826,6 +830,11 @@ var menuOptions = {
     'any'],
   boost_menu_TILT_DIRECTION: ['up', 'down', 'left', 'right'],
   boost_menu_TILT_DIRECTION_ANY: ['up', 'down', 'left', 'right', 'any'],
+  wedo2_menu_MOTOR_ID: ['motor', 'motor A', 'motor B', 'all motors'],
+  wedo2_menu_MOTOR_DIRECTION: [], // set later
+  wedo2_menu_OP: ['<', '>'],
+  wedo2_menu_TILT_DIRECTION: [], // set later
+  wedo2_menu_TILT_DIRECTION_ANY: [], // set later
 
   'attribute': ['x position', 'y position', 'direction', 'costume #',
   'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
@@ -856,6 +865,9 @@ var menuOptions = {
   'var': [],
 };
 menuOptions.sensing_keyoptions = menuOptions.key;
+menuOptions.wedo2_menu_MOTOR_DIRECTION = menuOptions.boost_menu_MOTOR_DIRECTION;
+menuOptions.wedo2_menu_TILT_DIRECTION = menuOptions.boost_menu_TILT_DIRECTION;
+menuOptions.wedo2_menu_TILT_DIRECTION_ANY = menuOptions.boost_menu_TILT_DIRECTION_ANY;
 
 // only generate number literals for some blocks
 var blocksWithNumberLiterals = [
@@ -1456,6 +1468,7 @@ var preferSelectors = [
   'microbit_isTilted',
   'ev3_buttonPressed',
   'boost_seeingColor',
+  'wedo2_isTilted',
 
   /* reporters */
   'ReporterParam',
@@ -1505,6 +1518,8 @@ var preferSelectors = [
   'ev3_getBrightness',
   'boost_getMotorPosition',
   'boost_getTiltAngle',
+  'wedo2_getDistance',
+  'wedo2_getTiltAngle',
 
   /* blocks */
 
@@ -1653,6 +1668,15 @@ var preferSelectors = [
   'event_whengreaterthan',
   'videoSensing_whenMotionGreaterThan',
   'event_whenbackdropswitchesto',
+  'wedo2_motorOn',
+  'wedo2_motorOff',
+  'wedo2_motorOnFor',
+  'wedo2_startMotorPower',
+  'wedo2_setMotorDirection',
+  'wedo2_setLightHue',
+  'wedo2_whenDistance',
+  'wedo2_whenTilted',
+  'wedo2_playNoteFor',
 
   'end',
   'else',
