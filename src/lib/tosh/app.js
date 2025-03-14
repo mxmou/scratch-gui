@@ -326,7 +326,8 @@ export function computeHint(context, completer, grammar, {suggestEnd, suggestEls
           }
           */
         }
-      } else if (part && part.kind === "symbol") {
+      } else if (part && ["symbol", "number", "langle", "rangle"]
+          .includes(part.kind)) {
         part = part.value;
       } else {
         return;

@@ -1591,8 +1591,8 @@ var preferSelectors = [
   'control_start_as_clone',
   'event_whenbroadcastreceived',
   'event_whenthisspriteclicked',
-  //'event_whengreaterthan', TODO completion for this
-  //'videoSensing_whenMotionGreaterThan',
+  'event_whengreaterthan',
+  'videoSensing_whenMotionGreaterThan',
   'event_whenbackdropswitchesto',
 
   'end',
