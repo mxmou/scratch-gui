@@ -240,7 +240,9 @@ export function computeHint(context, completer, grammar, {suggestEnd, suggestEls
     // don't complete keys!
     expansions = expansions.filter(function(x) {
       var first = x.completion[0];
-      return !(first.kind === 'symbol' && /^[a-z0-9]$/.test(first.value));
+      return !(['symbol', 'number'].includes(first.kind) &&
+        /^[a-z0-9]$/.test(first.value) &&
+        ['m_key', 'm_sensing_keyoptions'].includes(x.via.completion[0]));
     });
 
     if (cursor === tokens.length) {
@@ -326,7 +328,7 @@ export function computeHint(context, completer, grammar, {suggestEnd, suggestEls
           }
           */
         }
-      } else if (part && part.kind === "symbol") {
+      } else if (part && ["symbol", "number"].includes(part.kind)) {
         part = part.value;
       } else {
         return;

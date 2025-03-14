@@ -863,6 +863,64 @@ const blocks = [
         shape: 'hat'
     },
 
+    // micro:bit
+    {
+        selector: 'microbit_whenButtonPressed',
+        spec: 'microbit: when %m.microbit_menu_buttons button pressed',
+        inputNames: ['BTN'],
+        shape: 'hat'
+    },
+    {
+        selector: 'microbit_isButtonPressed',
+        spec: 'microbit: %m.microbit_menu_buttons button pressed?',
+        inputNames: ['BTN'],
+        shape: 'predicate'
+    },
+    {
+        selector: 'microbit_whenGesture',
+        spec: 'microbit: when %m.microbit_menu_gestures',
+        inputNames: ['GESTURE'],
+        shape: 'hat'
+    },
+    {
+        selector: 'microbit_displaySymbol',
+        spec: 'microbit: display %s',
+        inputNames: ['MATRIX']
+    },
+    {
+        selector: 'microbit_displayText',
+        spec: 'microbit: display text %s',
+        inputNames: ['TEXT']
+    },
+    {
+        selector: 'microbit_displayClear',
+        spec: 'microbit: clear display'
+    },
+    {
+        selector: 'microbit_whenTilted',
+        spec: 'microbit: when tilted %m.microbit_menu_tiltDirectionAny',
+        inputNames: ['DIRECTION'],
+        shape: 'hat'
+    },
+    {
+        selector: 'microbit_isTilted',
+        spec: 'microbit: tilted %m.microbit_menu_tiltDirectionAny?',
+        inputNames: ['DIRECTION'],
+        shape: 'predicate'
+    },
+    {
+        selector: 'microbit_getTiltAngle',
+        spec: 'microbit: tilt angle %m.microbit_menu_tiltDirection',
+        inputNames: ['DIRECTION'],
+        shape: 'reporter'
+    },
+    {
+        selector: 'microbit_whenPinConnected',
+        spec: 'microbit: when pin %m.microbit_menu_touchPins connected',
+        inputNames: ['PIN'],
+        shape: 'hat'
+    },
+
     // Custom block parameters
     {
         selector: 'argument_reporter_string_number',
@@ -898,6 +956,7 @@ for (const block of blocks) {
             text2speech: 'extension',
             translate: 'extension',
             makeymakey: 'extension',
+            microbit: 'extension',
             argument: 'parameter'
         }[opcodePrefix] || opcodePrefix;
     }

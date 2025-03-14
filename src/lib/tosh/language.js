@@ -736,6 +736,9 @@ var menus = ['motion_goto_menu', 'motion_glideto_menu',
     'videoSensing_menu_ATTRIBUTE', 'videoSensing_menu_SUBJECT',
     'videoSensing_menu_VIDEO_STATE', 'text2speech_menu_voices',
     'text2speech_menu_languages', 'translate_menu_languages',
+    'microbit_menu_buttons', 'microbit_menu_gestures',
+    'microbit_menu_tiltDirection', 'microbit_menu_tiltDirectionAny',
+    'microbit_menu_touchPins',
 
     'attribute', 'backdrop', 'broadcast', 'dragMode', 'effect',
     'forwardBackward', 'frontBack', 'key', 'list', 'listNonempty', 'mathOp',
@@ -751,7 +754,10 @@ var menusThatAcceptReporters = ['motion_goto_menu', 'motion_glideto_menu',
     'pen_menu_colorParam', 'music_menu_DRUM', 'music_menu_INSTRUMENT',
     'videoSensing_menu_ATTRIBUTE', 'videoSensing_menu_SUBJECT',
     'videoSensing_menu_VIDEO_STATE', 'text2speech_menu_voices',
-    'text2speech_menu_languages', 'translate_menu_languages'];
+    'text2speech_menu_languages', 'translate_menu_languages',
+    'microbit_menu_buttons', 'microbit_menu_gestures',
+    'microbit_menu_tiltDirection', 'microbit_menu_tiltDirectionAny',
+    'microbit_menu_touchPins'];
 
 // These accept string literals but not reporters
 var menusThatAcceptStrings = ['attribute', 'backdrop', 'broadcast'];
@@ -800,6 +806,11 @@ var menuOptions = {
     'Serbian', 'Simplified Chinese', 'Slovak', 'Slovenian', 'Sorani Kurdish',
     'Spanish', 'Swedish', 'Thai', 'Traditional Chinese', 'Turkish',
     'Ukrainian', 'Vietnamese', 'Welsh', 'Zulu'],
+  microbit_menu_buttons: ['A', 'B', 'any'],
+  microbit_menu_gestures: ['moved', 'shaken', 'jumped'],
+  microbit_menu_tiltDirection: ['front', 'back', 'left', 'right'],
+  microbit_menu_tiltDirectionAny: ['front', 'back', 'left', 'right', 'any'],
+  microbit_menu_touchPins: ['0', '1', '2'],
 
   'attribute': ['x position', 'y position', 'direction', 'costume #',
   'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
@@ -1426,6 +1437,8 @@ var preferSelectors = [
   'data_listcontainsitem',
   'operator_contains',
   'operator_not',
+  'microbit_isButtonPressed',
+  'microbit_isTilted',
 
   /* reporters */
   'ReporterParam',
@@ -1469,6 +1482,7 @@ var preferSelectors = [
   'videoSensing_videoOn',
   'translate_getTranslate',
   'translate_getViewerLanguage',
+  'microbit_getTiltAngle',
 
   /* blocks */
 
@@ -1523,6 +1537,13 @@ var preferSelectors = [
   'motion_movesteps',
   'makeymakey_whenMakeyKeyPressed',
   'makeymakey_whenCodePressed',
+  'microbit_displaySymbol',
+  'microbit_displayText',
+  'microbit_displayClear',
+  'microbit_whenButtonPressed',
+  'microbit_whenGesture',
+  'microbit_whenTilted',
+  'microbit_whenPinConnected',
 
   'looks_nextcostume',
   'looks_nextbackdrop',
