@@ -3,7 +3,7 @@ import blocks from '../code-editor/blocks';
 
 var blocksBySelector = {};
 
-var inputPat = /(%[a-zA-Z](?:\.[a-zA-Z_]+)?)/g;
+var inputPat = /(%[a-zA-Z](?:\.[a-zA-Z0-9_]+)?)/g;
 
 blocks.forEach(function(block) {
   block.parts = block.spec.split(inputPat);

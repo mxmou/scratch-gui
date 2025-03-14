@@ -827,12 +827,12 @@ const blocks = [
     },
     {
         selector: 'text2speech_setVoice',
-        spec: 'set voice to %m.tts_menu_voices',
+        spec: 'set voice to %m.text2speech_menu_voices',
         inputNames: ['VOICE']
     },
     {
         selector: 'text2speech_setLanguage',
-        spec: 'set language to %m.tts_menu_languages',
+        spec: 'set language to %m.text2speech_menu_languages',
         inputNames: ['LANGUAGE']
     },
 

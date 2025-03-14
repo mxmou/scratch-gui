@@ -734,8 +734,8 @@ var menus = ['motion_goto_menu', 'motion_glideto_menu',
     'sensing_distancetomenu', 'sensing_keyoptions', 'sensing_of_object_menu',
     'pen_menu_colorParam', 'music_menu_DRUM', 'music_menu_INSTRUMENT',
     'videoSensing_menu_ATTRIBUTE', 'videoSensing_menu_SUBJECT',
-    'videoSensing_menu_VIDEO_STATE', 'tts_menu_voices', 'tts_menu_languages',
-    'translate_menu_languages',
+    'videoSensing_menu_VIDEO_STATE', 'text2speech_menu_voices',
+    'text2speech_menu_languages', 'translate_menu_languages',
 
     'attribute', 'backdrop', 'broadcast', 'dragMode', 'effect',
     'forwardBackward', 'frontBack', 'key', 'list', 'listNonempty', 'mathOp',
@@ -750,8 +750,8 @@ var menusThatAcceptReporters = ['motion_goto_menu', 'motion_glideto_menu',
     'sensing_distancetomenu', 'sensing_keyoptions', 'sensing_of_object_menu',
     'pen_menu_colorParam', 'music_menu_DRUM', 'music_menu_INSTRUMENT',
     'videoSensing_menu_ATTRIBUTE', 'videoSensing_menu_SUBJECT',
-    'videoSensing_menu_VIDEO_STATE', 'tts_menu_voices', 'tts_menu_languages',
-    'translate_menu_languages'];
+    'videoSensing_menu_VIDEO_STATE', 'text2speech_menu_voices',
+    'text2speech_menu_languages', 'translate_menu_languages'];
 
 // These accept string literals but not reporters
 var menusThatAcceptStrings = ['attribute', 'backdrop', 'broadcast'];
@@ -784,13 +784,13 @@ var menuOptions = {
   videoSensing_menu_ATTRIBUTE: ['motion', 'direction'],
   videoSensing_menu_SUBJECT: ['sprite', 'stage'],
   videoSensing_menu_VIDEO_STATE: ['off', 'on', 'on flipped'],
-  tts_menu_voices: ['alto', 'tenor', 'squeak', 'giant', 'kitten'],
+  text2speech_menu_voices: ['alto', 'tenor', 'squeak', 'giant', 'kitten'],
   // Language names that contain parentheses in Scratch have been changed
-  tts_menu_languages: ['Arabic', 'Brazilian Portuguese', 'Danish', 'Dutch',
-    'English', 'French', 'German', 'Hindi', 'Icelandic', 'Italian', 'Japanese',
-    'Korean', 'Latin American Spanish', 'Mandarin', 'Norwegian', 'Polish',
-    'Portuguese', 'Romanian', 'Russian', 'Spanish', 'Swedish', 'Turkish',
-    'Welsh'],
+  text2speech_menu_languages: ['Arabic', 'Brazilian Portuguese', 'Danish',
+    'Dutch', 'English', 'French', 'German', 'Hindi', 'Icelandic', 'Italian',
+    'Japanese', 'Korean', 'Latin American Spanish', 'Mandarin', 'Norwegian',
+    'Polish', 'Portuguese', 'Romanian', 'Russian', 'Spanish', 'Swedish',
+    'Turkish', 'Welsh'],
   translate_menu_languages: ['Amharic', 'Arabic', 'Azerbaijani', 'Basque',
     'Bulgarian', 'Catalan', 'Croatian', 'Czech', 'Danish', 'Dutch', 'English',
     'Estonian', 'Finnish', 'French', 'Galician', 'German', 'Greek', 'Hebrew',
@@ -915,7 +915,8 @@ var menuValues = {
   'Zulu': 'zu',
 };
 
-['effect', 'soundEffect', 'timeAndDate', 'triggerSensor', 'tts_menu_voices']
+['effect', 'soundEffect', 'timeAndDate', 'triggerSensor',
+  'text2speech_menu_voices']
   .forEach(function(menu) {
     menuOptions[menu].forEach(function(label) {
       menuValues[label] = label.toUpperCase().replace(/\s/g, '');

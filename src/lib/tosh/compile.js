@@ -357,10 +357,11 @@ function compileInputs(target, scratchBlock, args, info) {
         var menuName = info.inputs[index].slice(3);
         if (Language.menusThatAcceptReporters.indexOf(menuName) > -1) {
           shadow.opcode = menuName;
+          // For most menus, the field name is the same as the input name.
+          // For extension menus, it's the part of the opcode after _menu_.
           var fieldName = {
             event_broadcast_menu: 'BROADCAST_OPTION',
-            pen_menu_colorParam: 'colorParam',
-          }[menuName] || inputName;
+          }[menuName] || menuName.split("_menu_")[1] || inputName;
           shadow.fields[fieldName] = {
             name: fieldName,
             value: argIsReporter ? '' : arg,
