@@ -983,6 +983,73 @@ const blocks = [
         inputNames: ['NOTE', 'TIME']
     },
 
+    // Boost
+    {
+        selector: 'boost_motorOnFor',
+        spec: 'boost: turn motor %m.boost_menu_MOTOR_ID for %n seconds',
+        inputNames: ['MOTOR_ID', 'DURATION']
+    },
+    {
+        selector: 'boost_motorOnForRotations',
+        spec: 'boost: turn motor %m.boost_menu_MOTOR_ID for %n rotations',
+        inputNames: ['MOTOR_ID', 'ROTATION']
+    },
+    {
+        selector: 'boost_motorOn',
+        spec: 'boost: turn motor %m.boost_menu_MOTOR_ID on',
+        inputNames: ['MOTOR_ID']
+    },
+    {
+        selector: 'boost_motorOff',
+        spec: 'boost: turn motor %m.boost_menu_MOTOR_ID off',
+        inputNames: ['MOTOR_ID']
+    },
+    {
+        selector: 'boost_setMotorPower',
+        spec: 'boost: set motor %m.boost_menu_MOTOR_ID speed to %n%',
+        inputNames: ['MOTOR_ID', 'POWER']
+    },
+    {
+        selector: 'boost_setMotorDirection',
+        spec: 'boost: set motor %m.boost_menu_MOTOR_ID direction to %m.boost_menu_MOTOR_DIRECTION',
+        inputNames: ['MOTOR_ID', 'MOTOR_DIRECTION']
+    },
+    {
+        selector: 'boost_getMotorPosition',
+        spec: 'boost: motor %m.boost_menu_MOTOR_REPORTER_ID position',
+        inputNames: ['MOTOR_REPORTER_ID'],
+        shape: 'reporter'
+    },
+    {
+        selector: 'boost_whenColor',
+        spec: 'boost: when %m.boost_menu_COLOR brick seen',
+        inputNames: ['COLOR'],
+        shape: 'hat'
+    },
+    {
+        selector: 'boost_seeingColor',
+        spec: 'boost: seeing %m.boost_menu_COLOR brick?',
+        inputNames: ['COLOR'],
+        shape: 'predicate'
+    },
+    {
+        selector: 'boost_whenTilted',
+        spec: 'boost: when tilted %m.boost_menu_TILT_DIRECTION_ANY',
+        inputNames: ['TILT_DIRECTION_ANY'],
+        shape: 'hat'
+    },
+    {
+        selector: 'boost_getTiltAngle',
+        spec: 'boost: tilt angle %m.boost_menu_TILT_DIRECTION',
+        inputNames: ['TILT_DIRECTION'],
+        shape: 'reporter'
+    },
+    {
+        selector: 'boost_setLightHue',
+        spec: 'boost: set light color to %n',
+        inputNames: ['HUE']
+    },
+
     // Custom block parameters
     {
         selector: 'argument_reporter_string_number',
@@ -1020,6 +1087,7 @@ for (const block of blocks) {
             makeymakey: 'extension',
             microbit: 'extension',
             ev3: 'extension',
+            boost: 'extension',
             argument: 'parameter'
         }[opcodePrefix] || opcodePrefix;
     }

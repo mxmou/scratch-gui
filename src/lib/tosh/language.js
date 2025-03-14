@@ -739,6 +739,9 @@ var menus = ['motion_goto_menu', 'motion_glideto_menu',
     'microbit_menu_buttons', 'microbit_menu_gestures',
     'microbit_menu_tiltDirection', 'microbit_menu_tiltDirectionAny',
     'microbit_menu_touchPins', 'ev3_menu_motorPorts', 'ev3_menu_sensorPorts',
+    'boost_menu_MOTOR_ID', 'boost_menu_MOTOR_REPORTER_ID',
+    'boost_menu_MOTOR_DIRECTION', 'boost_menu_COLOR',
+    'boost_menu_TILT_DIRECTION', 'boost_menu_TILT_DIRECTION_ANY',
 
     'attribute', 'backdrop', 'broadcast', 'dragMode', 'effect',
     'forwardBackward', 'frontBack', 'key', 'list', 'listNonempty', 'mathOp',
@@ -757,7 +760,10 @@ var menusThatAcceptReporters = ['motion_goto_menu', 'motion_glideto_menu',
     'text2speech_menu_languages', 'translate_menu_languages',
     'microbit_menu_buttons', 'microbit_menu_gestures',
     'microbit_menu_tiltDirection', 'microbit_menu_tiltDirectionAny',
-    'microbit_menu_touchPins', 'ev3_menu_motorPorts', 'ev3_menu_sensorPorts'];
+    'microbit_menu_touchPins', 'ev3_menu_motorPorts', 'ev3_menu_sensorPorts',
+    'boost_menu_MOTOR_ID', 'boost_menu_MOTOR_REPORTER_ID',
+    'boost_menu_MOTOR_DIRECTION', 'boost_menu_COLOR',
+    'boost_menu_TILT_DIRECTION', 'boost_menu_TILT_DIRECTION_ANY'];
 
 // These accept string literals but not reporters
 var menusThatAcceptStrings = ['attribute', 'backdrop', 'broadcast'];
@@ -813,6 +819,13 @@ var menuOptions = {
   microbit_menu_touchPins: ['0', '1', '2'],
   ev3_menu_motorPorts: ['A', 'B', 'C', 'D'],
   ev3_menu_sensorPorts: ['1', '2', '3', '4'],
+  boost_menu_MOTOR_ID: ['A', 'B', 'C', 'D', 'AB', 'ABCD'],
+  boost_menu_MOTOR_REPORTER_ID: ['A', 'B', 'C', 'D'],
+  boost_menu_MOTOR_DIRECTION: ['this way', 'that way', 'reverse'],
+  boost_menu_COLOR: ['red', 'blue', 'green', 'yellow', 'white', 'black',
+    'any'],
+  boost_menu_TILT_DIRECTION: ['up', 'down', 'left', 'right'],
+  boost_menu_TILT_DIRECTION_ANY: ['up', 'down', 'left', 'right', 'any'],
 
   'attribute': ['x position', 'y position', 'direction', 'costume #',
   'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
@@ -1442,6 +1455,7 @@ var preferSelectors = [
   'microbit_isButtonPressed',
   'microbit_isTilted',
   'ev3_buttonPressed',
+  'boost_seeingColor',
 
   /* reporters */
   'ReporterParam',
@@ -1489,6 +1503,8 @@ var preferSelectors = [
   'ev3_getMotorPosition',
   'ev3_getDistance',
   'ev3_getBrightness',
+  'boost_getMotorPosition',
+  'boost_getTiltAngle',
 
   /* blocks */
 
@@ -1499,6 +1515,15 @@ var preferSelectors = [
 
   'event_broadcast',
   'event_broadcastandwait',
+  'boost_motorOn',
+  'boost_motorOff',
+  'boost_motorOnFor',
+  'boost_motorOnForRotations',
+  'boost_setMotorPower',
+  'boost_setMotorDirection',
+  'boost_setLightHue',
+  'boost_whenColor',
+  'boost_whenTilted',
 
   'motion_changexby',
   'motion_changeyby',
