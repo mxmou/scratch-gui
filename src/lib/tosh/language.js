@@ -738,7 +738,7 @@ var menus = ['motion_goto_menu', 'motion_glideto_menu',
     'text2speech_menu_languages', 'translate_menu_languages',
     'microbit_menu_buttons', 'microbit_menu_gestures',
     'microbit_menu_tiltDirection', 'microbit_menu_tiltDirectionAny',
-    'microbit_menu_touchPins',
+    'microbit_menu_touchPins', 'ev3_menu_motorPorts', 'ev3_menu_sensorPorts',
 
     'attribute', 'backdrop', 'broadcast', 'dragMode', 'effect',
     'forwardBackward', 'frontBack', 'key', 'list', 'listNonempty', 'mathOp',
@@ -757,7 +757,7 @@ var menusThatAcceptReporters = ['motion_goto_menu', 'motion_glideto_menu',
     'text2speech_menu_languages', 'translate_menu_languages',
     'microbit_menu_buttons', 'microbit_menu_gestures',
     'microbit_menu_tiltDirection', 'microbit_menu_tiltDirectionAny',
-    'microbit_menu_touchPins'];
+    'microbit_menu_touchPins', 'ev3_menu_motorPorts', 'ev3_menu_sensorPorts'];
 
 // These accept string literals but not reporters
 var menusThatAcceptStrings = ['attribute', 'backdrop', 'broadcast'];
@@ -811,6 +811,8 @@ var menuOptions = {
   microbit_menu_tiltDirection: ['front', 'back', 'left', 'right'],
   microbit_menu_tiltDirectionAny: ['front', 'back', 'left', 'right', 'any'],
   microbit_menu_touchPins: ['0', '1', '2'],
+  ev3_menu_motorPorts: ['A', 'B', 'C', 'D'],
+  ev3_menu_sensorPorts: ['1', '2', '3', '4'],
 
   'attribute': ['x position', 'y position', 'direction', 'costume #',
   'costume name', 'backdrop #', 'backdrop name', 'size', 'volume'],
@@ -1439,6 +1441,7 @@ var preferSelectors = [
   'operator_not',
   'microbit_isButtonPressed',
   'microbit_isTilted',
+  'ev3_buttonPressed',
 
   /* reporters */
   'ReporterParam',
@@ -1483,6 +1486,9 @@ var preferSelectors = [
   'translate_getTranslate',
   'translate_getViewerLanguage',
   'microbit_getTiltAngle',
+  'ev3_getMotorPosition',
+  'ev3_getDistance',
+  'ev3_getBrightness',
 
   /* blocks */
 
@@ -1516,6 +1522,13 @@ var preferSelectors = [
   'data_deletealloflist',
 
   'pen_clear',
+  'ev3_motorTurnClockwise',
+  'ev3_motorTurnCounterClockwise',
+  'ev3_motorSetPower',
+  'ev3_beep',
+  'ev3_whenButtonPressed',
+  'ev3_whenDistanceLessThan',
+  'ev3_whenBrightnessLessThan',
 
   'control_forever',
 

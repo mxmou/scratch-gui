@@ -921,6 +921,68 @@ const blocks = [
         shape: 'hat'
     },
 
+    // EV3
+    {
+        selector: 'ev3_motorTurnClockwise',
+        spec: 'ev3: motor %m.ev3_menu_motorPorts turn this way for %n seconds',
+        inputNames: ['PORT', 'TIME']
+    },
+    {
+        selector: 'ev3_motorTurnCounterClockwise',
+        spec: 'ev3: motor %m.ev3_menu_motorPorts turn that way for %n seconds',
+        inputNames: ['PORT', 'TIME']
+    },
+    {
+        selector: 'ev3_motorSetPower',
+        spec: 'ev3: motor %m.ev3_menu_motorPorts set power %n%',
+        inputNames: ['PORT', 'POWER']
+    },
+    {
+        selector: 'ev3_getMotorPosition',
+        spec: 'ev3: motor %m.ev3_menu_motorPorts position',
+        inputNames: ['PORT'],
+        shape: 'reporter'
+    },
+    {
+        selector: 'ev3_whenButtonPressed',
+        spec: 'ev3: when button %m.ev3_menu_sensorPorts pressed',
+        inputNames: ['PORT'],
+        shape: 'hat'
+    },
+    {
+        selector: 'ev3_whenDistanceLessThan',
+        spec: 'ev3: when distance < %n',
+        inputNames: ['DISTANCE'],
+        shape: 'hat'
+    },
+    {
+        selector: 'ev3_whenBrightnessLessThan',
+        spec: 'ev3: when brightness < %n',
+        inputNames: ['DISTANCE'],
+        shape: 'hat'
+    },
+    {
+        selector: 'ev3_buttonPressed',
+        spec: 'ev3: button %m.ev3_menu_sensorPorts pressed?',
+        inputNames: ['PORT'],
+        shape: 'predicate'
+    },
+    {
+        selector: 'ev3_getDistance',
+        spec: 'ev3: distance',
+        shape: 'reporter'
+    },
+    {
+        selector: 'ev3_getBrightness',
+        spec: 'ev3: brightness',
+        shape: 'reporter'
+    },
+    {
+        selector: 'ev3_beep',
+        spec: 'ev3: beep note %n for %n secs',
+        inputNames: ['NOTE', 'TIME']
+    },
+
     // Custom block parameters
     {
         selector: 'argument_reporter_string_number',
@@ -957,6 +1019,7 @@ for (const block of blocks) {
             translate: 'extension',
             makeymakey: 'extension',
             microbit: 'extension',
+            ev3: 'extension',
             argument: 'parameter'
         }[opcodePrefix] || opcodePrefix;
     }
