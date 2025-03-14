@@ -744,6 +744,14 @@ function generateReporter(blocks, block, inputShape, outerLevel, outerSelector, 
 
   var result = generateParts(blocks, info, inputs, fields, level, selector);
 
+  if (inputShape === 'boolean' && info.shape === 'reporter') {
+    // Scratch incorrectly allows some reporters to be put into Boolean inputs.
+    // Replace those with an equivalent expression.
+    result = `not <<${result} = ""> or <${result} = 0> or <${result} = "true">>`;
+    selector = 'operator_not';
+    level = Language.precedence.operator_not;
+  }
+
   var needsParens = (level > outerLevel
                   || (selector === 'operator_or' &&
                       outerLevel === Language.precedence.operator_and)
