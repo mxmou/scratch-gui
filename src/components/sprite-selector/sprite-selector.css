@@ -6,7 +6,6 @@
     flex-grow: 1;
     position: relative;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    margin-right: calc($space / 2);
     background-color: $ui-secondary;
     background-clip: padding-box;
     border-top-right-radius: $space;
@@ -15,6 +14,14 @@
     border-width: 1px;
     border-style: solid;
     border-bottom: 0;
+}
+
+[dir="ltr"] .sprite-selector {
+    margin-right: calc($space / 2);
+}
+
+[dir="rtl"] .sprite-selector {
+    margin-left: calc($space / 2);
 }
 
 .sprite-wrapper {
