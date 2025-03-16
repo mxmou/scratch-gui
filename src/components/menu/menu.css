@@ -56,6 +56,7 @@
     height: max-content;
     overflow: hidden;
     border-radius: 8px;
+    box-shadow: 0 8px 8px 0 $ui-black-transparent;
 }
 
 .submenu.right {
@@ -72,6 +73,7 @@
     overflow-x: hidden;
     scrollbar-color: $ui-white $menu-bar;
     border-radius: 8px;
+    box-shadow: none;
 }
 
 .menu-item.expanded > .submenu {
