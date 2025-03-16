@@ -33,6 +33,10 @@
     position: relative;
 }
 
+.menu-item:last-child {
+    border-radius: 0 0 7px 7px;
+}
+
 .menu-item.active,
 .menu-item:hover,
 .menu-item.expanded {
