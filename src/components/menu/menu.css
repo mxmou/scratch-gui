@@ -47,6 +47,10 @@
     border-top: 1px solid $ui-black-transparent;
 }
 
+.menu-section:first-child {
+    border-top: none;
+}
+
 .submenu {
     display: none;
     position: absolute;
