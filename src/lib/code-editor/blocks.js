@@ -882,6 +882,7 @@ const blocks = [
         inputNames: ['GESTURE'],
         shape: 'hat'
     },
+
     {
         selector: 'microbit_displaySymbol',
         spec: 'microbit: display %s',
@@ -896,6 +897,7 @@ const blocks = [
         selector: 'microbit_displayClear',
         spec: 'microbit: clear display'
     },
+
     {
         selector: 'microbit_whenTilted',
         spec: 'microbit: when tilted %m.microbit_menu_tiltDirectionAny',
@@ -914,6 +916,7 @@ const blocks = [
         inputNames: ['DIRECTION'],
         shape: 'reporter'
     },
+
     {
         selector: 'microbit_whenPinConnected',
         spec: 'microbit: when pin %m.microbit_menu_touchPins connected',
@@ -943,6 +946,7 @@ const blocks = [
         inputNames: ['PORT'],
         shape: 'reporter'
     },
+
     {
         selector: 'ev3_whenButtonPressed',
         spec: 'ev3: when button %m.ev3_menu_sensorPorts pressed',
@@ -961,6 +965,7 @@ const blocks = [
         inputNames: ['DISTANCE'],
         shape: 'hat'
     },
+
     {
         selector: 'ev3_buttonPressed',
         spec: 'ev3: button %m.ev3_menu_sensorPorts pressed?',
@@ -977,6 +982,7 @@ const blocks = [
         spec: 'ev3: brightness',
         shape: 'reporter'
     },
+
     {
         selector: 'ev3_beep',
         spec: 'ev3: beep note %n for %n secs',
@@ -1020,6 +1026,7 @@ const blocks = [
         inputNames: ['MOTOR_REPORTER_ID'],
         shape: 'reporter'
     },
+
     {
         selector: 'boost_whenColor',
         spec: 'boost: when %m.boost_menu_COLOR brick seen',
@@ -1032,6 +1039,7 @@ const blocks = [
         inputNames: ['COLOR'],
         shape: 'predicate'
     },
+
     {
         selector: 'boost_whenTilted',
         spec: 'boost: when tilted %m.boost_menu_TILT_DIRECTION_ANY',
@@ -1044,6 +1052,7 @@ const blocks = [
         inputNames: ['TILT_DIRECTION'],
         shape: 'reporter'
     },
+
     {
         selector: 'boost_setLightHue',
         spec: 'boost: set light color to %n',
@@ -1087,6 +1096,7 @@ const blocks = [
         spec: 'wedo: play note %n for %n seconds',
         inputNames: ['NOTE', 'DURATION']
     },
+
     {
         selector: 'wedo2_whenDistance',
         spec: 'wedo: when distance %m.wedo2_menu_OP %n',
@@ -1099,6 +1109,7 @@ const blocks = [
         inputNames: ['TILT_DIRECTION_ANY'],
         shape: 'hat'
     },
+
     {
         selector: 'wedo2_getDistance',
         spec: 'wedo: distance',
@@ -1135,6 +1146,7 @@ const blocks = [
         spec: 'force',
         shape: 'reporter'
     },
+
     {
         selector: 'gdxfor_whenTilted',
         spec: 'force: when tilted %m.gdxfor_menu_tiltAnyOptions',
@@ -1153,6 +1165,7 @@ const blocks = [
         inputNames: ['TILT'],
         shape: 'reporter'
     },
+
     {
         selector: 'gdxfor_isFreeFalling',
         spec: 'force: falling?',
