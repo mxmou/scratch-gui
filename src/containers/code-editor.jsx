@@ -39,7 +39,7 @@ import generateAllTargets from '../lib/code-editor/generate-all';
 import toshParser from '../lib/tosh/mode';
 import {inputSeek} from '../lib/tosh/app';
 import * as ToshLanguage from '../lib/tosh/language';
-import {setTargetState, setTargetScrollPos, setTargetError} from '../reducers/code-editor';
+import {setTargetState, setTargetScrollPos, setTargetError, setHardwareExtensions} from '../reducers/code-editor';
 
 import styles from '../components/code-editor/code-editor.css';
 
@@ -164,9 +164,17 @@ class CodeEditor extends React.Component {
         this.repaintTimeout = null;
         this.view.dispatch({
             effects: this.parserOptions.reconfigure([
-                StreamLanguage.define(toshParser(
-                    getParserOptions(this.props.vm, this.props.editingTarget)
-                ))
+                StreamLanguage.define(toshParser({
+                    ...getParserOptions(this.props.vm, this.props.editingTarget),
+                    // Will be called if a hardware extension is detected while parsing
+                    hardwareExtensionCallback: extensionId => {
+                        if (this.props.hardwareExtensions.includes(extensionId)) return;
+                        this.props.setHardwareExtensions([
+                            ...this.props.hardwareExtensions,
+                            extensionId
+                        ]);
+                    }
+                }))
             ])
         });
     }
@@ -359,7 +367,8 @@ const targetShape = PropTypes.shape({
 
 CodeEditor.propTypes = {
     editingTarget: PropTypes.string,
-    theme: PropTypes.string,
+    hardwareExtensions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    setHardwareExtensions: PropTypes.func.isRequired,
     setTargetError: PropTypes.func.isRequired,
     setTargetScrollPos: PropTypes.func.isRequired,
     setTargetState: PropTypes.func.isRequired,
@@ -375,11 +384,13 @@ CodeEditor.propTypes = {
         left: PropTypes.number
     })).isRequired,
     targetStates: PropTypes.objectOf(PropTypes.instanceOf(EditorState)).isRequired,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
     editingTarget: state.scratchGui.targets.editingTarget,
+    hardwareExtensions: state.scratchGui.codeEditor.hardwareExtensions,
     sprites: state.scratchGui.targets.sprites,
     stage: state.scratchGui.targets.stage,
     targetErrors: state.scratchGui.codeEditor.targetErrors,
@@ -389,6 +400,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    setHardwareExtensions: extensionIds => {
+        dispatch(setHardwareExtensions(extensionIds));
+    },
     setTargetError: (target, error) => {
         dispatch(setTargetError(target, error));
     },

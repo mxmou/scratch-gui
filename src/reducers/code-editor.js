@@ -4,11 +4,13 @@ const SET_TARGET_STATE = 'scratch-gui/code-editor/SET_TARGET_STATE';
 const SET_TARGET_SCROLL_POS = 'scratch-gui/code-editor/SET_TARGET_SCROLL_POS';
 const RESET_TARGET_SCROLL_POS = 'scratch-gui/code-editor/RESET_TARGET_SCROLL_POS';
 const SET_TARGET_ERROR = 'scratch-gui/code-editor/SET_TARGET_ERROR';
+const SET_HARDWARE_EXTENSIONS = 'scratch-gui/code-editor/SET_HARDWARE_EXTENSIONS';
 
 const initialState = {
     targetStates: {},
     targetScrollPos: {},
-    targetErrors: {}
+    targetErrors: {},
+    hardwareExtensions: []
 };
 
 const reducer = (state = initialState, action) => {
@@ -42,6 +44,11 @@ const reducer = (state = initialState, action) => {
                 [action.target]: action.error
             }
         };
+    case SET_HARDWARE_EXTENSIONS:
+        return {
+            ...state,
+            hardwareExtensions: action.extensionIds
+        };
     default:
         return state;
     }
@@ -70,11 +77,17 @@ const setTargetError = (target, error) => ({
     error
 });
 
+const setHardwareExtensions = extensionIds => ({
+    type: SET_HARDWARE_EXTENSIONS,
+    extensionIds
+});
+
 export {
     reducer as default,
     initialState as codeEditorInitialState,
     setTargetState,
     setTargetScrollPos,
     resetTargetScrollPos,
-    setTargetError
+    setTargetError,
+    setHardwareExtensions
 };

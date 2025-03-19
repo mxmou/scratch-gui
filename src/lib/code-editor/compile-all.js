@@ -1,6 +1,7 @@
 import getParserOptions from './parser-options';
+import {HARDWARE_EXTENSIONS} from './hardware-extensions';
 import * as ToshCompiler from '../tosh/compile';
-import {setTargetError, resetTargetScrollPos} from '../../reducers/code-editor';
+import {setTargetError, resetTargetScrollPos, setHardwareExtensions} from '../../reducers/code-editor';
 import {activateTab, BLOCKS_TAB_INDEX} from '../../reducers/editor-tab';
 
 /**
@@ -13,6 +14,7 @@ export default function compileAllTargets (vm, dispatch) {
     let success = true;
     let firstTargetWithError = null;
     let editingTargetHasError = false;
+    let categoryIds = new Set();
     for (const target of vm.runtime.targets) {
         if (target.isOriginal && target.code !== null) {
             target.blocks.deleteAllBlocks();
@@ -25,6 +27,7 @@ export default function compileAllTargets (vm, dispatch) {
             try {
                 ToshCompiler.compile(target, stream);
                 dispatch(setTargetError(target.id, null));
+                categoryIds = categoryIds.union(target.blocks.getCategoryIds());
             } catch (err) {
                 target.blocks.deleteAllBlocks();
                 let lineNumber = lines.length - (stream.length - 1); // -1 because EOF
@@ -52,5 +55,8 @@ export default function compileAllTargets (vm, dispatch) {
             dispatch(resetTargetScrollPos(firstTargetWithError.id));
         }
     }
+    dispatch(setHardwareExtensions(
+        Array.from(categoryIds).filter(categoryId => HARDWARE_EXTENSIONS.includes(categoryId))
+    ));
     return success;
 }

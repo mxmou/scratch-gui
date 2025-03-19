@@ -3,6 +3,7 @@ import * as Earley from './earley';
 import * as Language from './language';
 import toshTags from '../code-editor/tags';
 import autocomplete from '../code-editor/autocomplete';
+import {HARDWARE_EXTENSIONS, getCategoryId} from '../code-editor/hardware-extensions';
 
 export default function(modeCfg) {
 
@@ -96,7 +97,12 @@ export default function(modeCfg) {
         paintBlocks(p);
       } else if (b.info) {
         p.category = b.info.category;
-        // TODO paint variables
+        if (b.info.category === 'extension') {
+          const categoryId = getCategoryId(b.info.selector);
+          if (HARDWARE_EXTENSIONS.includes(categoryId)) {
+            modeCfg.hardwareExtensionCallback(categoryId);
+          }
+        }
       }
     });
   }
