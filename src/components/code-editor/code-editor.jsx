@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import ReactTooltip from 'react-tooltip';
+import VM from 'scratch-vm';
 
 import styles from './code-editor.css';
 
@@ -23,7 +25,8 @@ const CodeEditorComponent = ({
     hardwareExtensions,
     isPeripheralConnected,
     selectedRanges,
-    selectedChars
+    selectedChars,
+    vm
 }) => (
     <div className={classNames(styles.codeEditorOuter, className)}>
         <div
@@ -32,31 +35,46 @@ const CodeEditorComponent = ({
             ref={containerRef}
         />
         <div className={styles.statusBar}>
-            {hardwareExtensions.map(extensionId => (
-                <button
-                    key={extensionId}
-                    className={classNames(styles.statusBarItem, styles.extension)}
-                >
-                    <img
-                        className={classNames(styles.extensionIcon, {
-                            [styles.extensionIconWide]: WIDE_ICONS.includes(extensionId)
-                        })}
-                        src={{
-                            microbit: microbitIcon,
-                            ev3: ev3Icon,
-                            boost: boostIcon,
-                            wedo2: wedo2Icon,
-                            gdxfor: gdxforIcon
-                        }[extensionId]}
-                        draggable={false}
-                    />
-                    <img
-                        className={styles.extensionStatusIcon}
-                        src={isPeripheralConnected[extensionId] ? connectedIcon : notConnectedIcon}
-                        draggable={false}
-                    />
-                </button>
-            ))}
+            {hardwareExtensions.map(extensionId => {
+                const tooltipId = `${extensionId}_status`;
+                const extensionName = vm.extensionManager.getExtensionInfo(extensionId).name;
+                return (
+                    <React.Fragment key={extensionId}>
+                        <button
+                            className={classNames(styles.statusBarItem, styles.extension)}
+                            data-for={tooltipId}
+                            data-tip={extensionName}
+                        >
+                            <img
+                                className={classNames(styles.extensionIcon, {
+                                    [styles.extensionIconWide]: WIDE_ICONS.includes(extensionId)
+                                })}
+                                src={{
+                                    microbit: microbitIcon,
+                                    ev3: ev3Icon,
+                                    boost: boostIcon,
+                                    wedo2: wedo2Icon,
+                                    gdxfor: gdxforIcon
+                                }[extensionId]}
+                                alt={extensionName}
+                                draggable={false}
+                            />
+                            <img
+                                className={styles.extensionStatusIcon}
+                                src={isPeripheralConnected[extensionId] ? connectedIcon : notConnectedIcon}
+                                alt={isPeripheralConnected[extensionId] ? 'Connected' : 'Needs Connection'}
+                                draggable={false}
+                            />
+                        </button>
+                        <ReactTooltip
+                            className={styles.extensionTooltip}
+                            effect="solid"
+                            id={tooltipId}
+                            place="top"
+                        />
+                    </React.Fragment>
+                );
+            })}
             <div className={styles.statusBarSpace} />
             {selectedRanges > 1 || selectedChars > 0 ? <div className={styles.statusBarItem}>
                 {selectedRanges === 1 ? '1 selection' : `${selectedRanges} selections`}
@@ -75,7 +93,8 @@ CodeEditorComponent.propTypes = {
     hardwareExtensions: PropTypes.arrayOf(PropTypes.string).isRequired,
     isPeripheralConnected: PropTypes.objectOf(PropTypes.string).isRequired,
     selectedRanges: PropTypes.number,
-    selectedChars: PropTypes.number
+    selectedChars: PropTypes.number,
+    vm: PropTypes.instanceOf(VM)
 };
 
 export default CodeEditorComponent;

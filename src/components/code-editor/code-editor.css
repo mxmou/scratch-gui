@@ -213,3 +213,31 @@
     width: 1rem;
     height: 1rem;
 }
+
+.extension-tooltip {
+    z-index: $z-index-tooltip !important;
+    background-color: $ui-white-bg !important;
+    border: 1px solid $ui-black-transparent !important;
+    border-radius: $form-radius !important;
+    box-shadow: 0 0 .5rem $ui-black-transparent !important;
+    color: $text-primary !important;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    opacity: 1 !important;
+}
+
+$arrow-size: 0.5rem;
+$arrow-inset: -0.25rem;
+$arrow-rounding: 0.125rem;
+
+.extension-tooltip::after {
+    bottom: $arrow-inset !important;
+    margin-right: $arrow-inset !important;
+    transform: rotate(135deg) !important;
+    width: $arrow-size !important;
+    height: $arrow-size !important;
+    background-color: $ui-white-bg;
+    border: 1px solid $ui-black-transparent !important;
+    border-left: 0 !important;
+    border-bottom: 0 !important;
+    border-radius: $arrow-rounding;
+}

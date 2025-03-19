@@ -348,7 +348,6 @@ class CodeEditor extends React.Component {
     render () {
         /* eslint-disable no-unused-vars */
         const {
-            vm,
             sprites,
             stage,
             editingTarget,
@@ -356,7 +355,7 @@ class CodeEditor extends React.Component {
             ...componentProps
         } = this.props;
         /* eslint-enable no-unused-vars */
-        if (!vm.editingTarget) {
+        if (!this.props.vm.editingTarget) {
             return null;
         }
         return (
