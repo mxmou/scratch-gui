@@ -347,14 +347,23 @@ class CodeEditor extends React.Component {
     }
     render () {
         /* eslint-disable no-unused-vars */
+        /* eslint-disable no-shadow */
         const {
             sprites,
             stage,
             editingTarget,
             theme,
+            targetErrors,
+            targetScrollPos,
+            targetStates,
+            setHardwareExtensions,
+            setTargetError,
+            setTargetScrollPos,
+            setTargetState,
             ...componentProps
         } = this.props;
         /* eslint-enable no-unused-vars */
+        /* eslint-enable no-shadow */
         if (!this.props.vm.editingTarget) {
             return null;
         }
