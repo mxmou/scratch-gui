@@ -55,7 +55,7 @@ const setLocales = function (localesMessages, localesBlocksMessages) {
     return {
         type: UPDATE_LOCALES,
         messagesByLocale: localesMessages,
-        blocksM: localesBlocksMessages
+        blocksMessagesByLocale: localesBlocksMessages
     };
 };
 const initLocale = function (currentState, locale) {
@@ -67,7 +67,9 @@ const initLocale = function (currentState, locale) {
                 isRtl: isRtl(locale),
                 locale: locale,
                 messagesByLocale: currentState.messagesByLocale,
-                messages: currentState.messagesByLocale[locale]
+                messages: currentState.messagesByLocale[locale],
+                blocksMessagesByLocale: currentState.blocksMessagesByLocale,
+                blocksMessages: currentState.blocksMessagesByLocale[locale]
             }
         );
     }
