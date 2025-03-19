@@ -26,7 +26,8 @@ const CodeEditorComponent = ({
     isPeripheralConnected,
     selectedRanges,
     selectedChars,
-    vm
+    vm,
+    onOpenConnectionModal
 }) => (
     <div className={classNames(styles.codeEditorOuter, className)}>
         <div
@@ -44,6 +45,7 @@ const CodeEditorComponent = ({
                             className={classNames(styles.statusBarItem, styles.extension)}
                             data-for={tooltipId}
                             data-tip={extensionName}
+                            onClick={onOpenConnectionModal(extensionId)}
                         >
                             <img
                                 className={classNames(styles.extensionIcon, {
@@ -94,7 +96,8 @@ CodeEditorComponent.propTypes = {
     isPeripheralConnected: PropTypes.objectOf(PropTypes.string).isRequired,
     selectedRanges: PropTypes.number,
     selectedChars: PropTypes.number,
-    vm: PropTypes.instanceOf(VM)
+    vm: PropTypes.instanceOf(VM),
+    onOpenConnectionModal: PropTypes.func.isRequired
 };
 
 export default CodeEditorComponent;

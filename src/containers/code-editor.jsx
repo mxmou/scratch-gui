@@ -41,6 +41,8 @@ import toshParser from '../lib/tosh/mode';
 import {inputSeek} from '../lib/tosh/app';
 import * as ToshLanguage from '../lib/tosh/language';
 import {setTargetState, setTargetScrollPos, setTargetError, setHardwareExtensions} from '../reducers/code-editor';
+import {openConnectionModal} from '../reducers/modals';
+import {setConnectionModalExtensionId} from '../reducers/connection-modal';
 
 import styles from '../components/code-editor/code-editor.css';
 
@@ -51,7 +53,8 @@ class CodeEditor extends React.Component {
             'setElement',
             'updateParserOptions',
             'handleViewUpdate',
-            'indentSelection'
+            'indentSelection',
+            'handleOpenConnectionModal'
         ]);
         this.element = null;
         this.view = null;
@@ -345,6 +348,9 @@ class CodeEditor extends React.Component {
             )
         });
     }
+    handleOpenConnectionModal (extensionId) {
+        return () => this.props.openConnectionModal(extensionId);
+    }
     render () {
         /* eslint-disable no-unused-vars */
         /* eslint-disable no-shadow */
@@ -375,6 +381,7 @@ class CodeEditor extends React.Component {
                 isPeripheralConnected={this.state.isPeripheralConnected}
                 selectedRanges={this.state.selectedRanges}
                 selectedChars={this.state.selectedChars}
+                onOpenConnectionModal={this.handleOpenConnectionModal}
                 {...componentProps}
             />
         );
@@ -392,6 +399,7 @@ const targetShape = PropTypes.shape({
 CodeEditor.propTypes = {
     editingTarget: PropTypes.string,
     hardwareExtensions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    openConnectionModal: PropTypes.func.isRequired,
     setHardwareExtensions: PropTypes.func.isRequired,
     setTargetError: PropTypes.func.isRequired,
     setTargetScrollPos: PropTypes.func.isRequired,
@@ -424,6 +432,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+    openConnectionModal: extensionId => {
+        dispatch(setConnectionModalExtensionId(extensionId));
+        dispatch(openConnectionModal());
+    },
     setHardwareExtensions: extensionIds => {
         dispatch(setHardwareExtensions(extensionIds));
     },
