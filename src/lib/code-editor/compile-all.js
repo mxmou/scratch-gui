@@ -44,7 +44,11 @@ export default function compileAllTargets (vm, dispatch) {
             }
         }
     }
-    if (!success) {
+    if (success) {
+        dispatch(setHardwareExtensions(
+            Array.from(categoryIds).filter(categoryId => HARDWARE_EXTENSIONS.includes(categoryId))
+        ));
+    } else {
         // Make sure the error message is visible
         // Reseting the scroll position tells CodeEditor to scroll to the line with the error
         dispatch(activateTab(BLOCKS_TAB_INDEX));
@@ -55,8 +59,5 @@ export default function compileAllTargets (vm, dispatch) {
             dispatch(resetTargetScrollPos(firstTargetWithError.id));
         }
     }
-    dispatch(setHardwareExtensions(
-        Array.from(categoryIds).filter(categoryId => HARDWARE_EXTENSIONS.includes(categoryId))
-    ));
     return success;
 }
