@@ -1,5 +1,7 @@
 import omit from 'lodash.omit';
 
+import {sortExtensions} from '../lib/code-editor/hardware-extensions';
+
 const SET_TARGET_STATE = 'scratch-gui/code-editor/SET_TARGET_STATE';
 const SET_TARGET_SCROLL_POS = 'scratch-gui/code-editor/SET_TARGET_SCROLL_POS';
 const RESET_TARGET_SCROLL_POS = 'scratch-gui/code-editor/RESET_TARGET_SCROLL_POS';
@@ -47,7 +49,7 @@ const reducer = (state = initialState, action) => {
     case SET_HARDWARE_EXTENSIONS:
         return {
             ...state,
-            hardwareExtensions: action.extensionIds
+            hardwareExtensions: sortExtensions(action.extensionIds)
         };
     default:
         return state;

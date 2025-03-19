@@ -36,6 +36,7 @@ import toshTags from '../lib/code-editor/tags';
 import getParserOptions from '../lib/code-editor/parser-options';
 import {errorWidget, setErrorWidget} from '../lib/code-editor/error-widget';
 import generateAllTargets from '../lib/code-editor/generate-all';
+import {HARDWARE_EXTENSIONS} from '../lib/code-editor/hardware-extensions';
 import toshParser from '../lib/tosh/mode';
 import {inputSeek} from '../lib/tosh/app';
 import * as ToshLanguage from '../lib/tosh/language';
@@ -61,12 +62,16 @@ class CodeEditor extends React.Component {
             currentLine: 1,
             currentColumn: 1,
             selectedRanges: 1,
-            selectedChars: 0
+            selectedChars: 0,
+            isPeripheralConnected: {}
         };
     }
     componentDidMount () {
         this.view = new EditorView({parent: this.element});
         if (this.props.editingTarget) this.loadTargetState();
+        this.updateHardwareExtensionStatus();
+        this.props.vm.on('PERIPHERAL_CONNECTED', () => this.updateHardwareExtensionStatus());
+        this.props.vm.on('PERIPHERAL_DISCONNECTED', () => this.updateHardwareExtensionStatus());
     }
     componentDidUpdate (prevProps) {
         if (this.props.theme !== prevProps.theme) {
@@ -330,6 +335,16 @@ class CodeEditor extends React.Component {
             )
         });
     }
+    updateHardwareExtensionStatus () {
+        this.setState({
+            isPeripheralConnected: Object.fromEntries(
+                HARDWARE_EXTENSIONS.map(extensionId => [
+                    extensionId,
+                    this.props.vm.getPeripheralIsConnected(extensionId)
+                ])
+            )
+        });
+    }
     render () {
         /* eslint-disable no-unused-vars */
         const {
@@ -349,6 +364,7 @@ class CodeEditor extends React.Component {
                 containerRef={this.setElement}
                 currentLine={this.state.currentLine}
                 currentColumn={this.state.currentColumn}
+                isPeripheralConnected={this.state.isPeripheralConnected}
                 selectedRanges={this.state.selectedRanges}
                 selectedChars={this.state.selectedChars}
                 {...componentProps}

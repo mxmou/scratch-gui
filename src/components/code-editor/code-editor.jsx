@@ -4,11 +4,24 @@ import classNames from 'classnames';
 
 import styles from './code-editor.css';
 
+import notConnectedIcon from './icon--status-not-ready.svg';
+import connectedIcon from './icon--status-ready.svg';
+
+import microbitIcon from '../../lib/libraries/extensions/microbit/microbit-small.svg';
+import ev3Icon from '../../lib/libraries/extensions/ev3/ev3-small.svg';
+import boostIcon from '../../lib/libraries/extensions/boost/boost-small.svg';
+import wedo2Icon from '../../lib/libraries/extensions/wedo2/wedo-small.svg';
+import gdxforIcon from '../../lib/libraries/extensions/gdxfor/gdxfor-small.svg';
+
+const WIDE_ICONS = ['boost', 'wedo2'];
+
 const CodeEditorComponent = ({
     className,
     containerRef,
     currentLine,
     currentColumn,
+    hardwareExtensions,
+    isPeripheralConnected,
     selectedRanges,
     selectedChars
 }) => (
@@ -19,6 +32,31 @@ const CodeEditorComponent = ({
             ref={containerRef}
         />
         <div className={styles.statusBar}>
+            {hardwareExtensions.map(extensionId => (
+                <button
+                    key={extensionId}
+                    className={classNames(styles.statusBarItem, styles.extension)}
+                >
+                    <img
+                        className={classNames(styles.extensionIcon, {
+                            [styles.extensionIconWide]: WIDE_ICONS.includes(extensionId)
+                        })}
+                        src={{
+                            microbit: microbitIcon,
+                            ev3: ev3Icon,
+                            boost: boostIcon,
+                            wedo2: wedo2Icon,
+                            gdxfor: gdxforIcon
+                        }[extensionId]}
+                        draggable={false}
+                    />
+                    <img
+                        className={styles.extensionStatusIcon}
+                        src={isPeripheralConnected[extensionId] ? connectedIcon : notConnectedIcon}
+                        draggable={false}
+                    />
+                </button>
+            ))}
             <div className={styles.statusBarSpace} />
             {selectedRanges > 1 || selectedChars > 0 ? <div className={styles.statusBarItem}>
                 {selectedRanges === 1 ? '1 selection' : `${selectedRanges} selections`}
@@ -34,6 +72,8 @@ CodeEditorComponent.propTypes = {
     containerRef: PropTypes.func,
     currentLine: PropTypes.number,
     currentColumn: PropTypes.number,
+    hardwareExtensions: PropTypes.arrayOf(PropTypes.string).isRequired,
+    isPeripheralConnected: PropTypes.objectOf(PropTypes.string).isRequired,
     selectedRanges: PropTypes.number,
     selectedChars: PropTypes.number
 };

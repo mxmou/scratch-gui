@@ -13,7 +13,12 @@ const HARDWARE_EXTENSIONS = [
  */
 const getCategoryId = opcode => opcode.split('_')[0];
 
+const sortExtensions = extensionIds => extensionIds.sort(
+    (a, b) => HARDWARE_EXTENSIONS.indexOf(a) - HARDWARE_EXTENSIONS.indexOf(b)
+);
+
 export {
     HARDWARE_EXTENSIONS,
-    getCategoryId
+    getCategoryId,
+    sortExtensions
 };

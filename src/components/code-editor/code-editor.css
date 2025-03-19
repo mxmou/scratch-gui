@@ -165,7 +165,7 @@
 }
 
 .status-bar {
-    height: 1.75rem;
+    height: calc(1.75rem + 1px);
     display: flex;
     align-items: center;
     border-top: 1px solid $ui-black-transparent;
@@ -179,4 +179,37 @@
 
 .status-bar-space {
     flex-grow: 1;
+}
+
+.extension {
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.extension:hover {
+    background-color: $motion-light-transparent;
+}
+
+.extension:active {
+    background-color: $motion-transparent;
+}
+
+.extension-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.extension-icon-wide {
+    width: 1.75rem;
+    height: 1.75rem;
+}
+
+.extension-status-icon {
+    width: 1rem;
+    height: 1rem;
 }
