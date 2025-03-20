@@ -5,9 +5,9 @@ import classNames from 'classnames';
 
 import Box from '../box/box.jsx';
 import Dots from './dots.jsx';
+import {getIconsForTheme} from '../../lib/themes';
 
 import bluetoothIcon from './icons/bluetooth-white.svg';
-import closeIcon from '../close-button/icon--close.svg';
 
 import styles from './connection-modal.css';
 
@@ -53,7 +53,7 @@ const ConnectingStep = props => (
                 >
                     <img
                         className={styles.abortConnectingIcon}
-                        src={closeIcon}
+                        src={getIconsForTheme(props.theme).close.onAccent}
                     />
                 </button>
             </div>
@@ -64,7 +64,8 @@ const ConnectingStep = props => (
 ConnectingStep.propTypes = {
     connectingMessage: PropTypes.node.isRequired,
     connectionIconURL: PropTypes.string.isRequired,
-    onDisconnect: PropTypes.func
+    onDisconnect: PropTypes.func,
+    theme: PropTypes.string
 };
 
 export default ConnectingStep;

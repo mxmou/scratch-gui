@@ -174,7 +174,7 @@
     right: -15px;
     left: -15px;
     padding: 5px 5px;
-    background-color: $motion-accent;
+    background-color: $motion-tertiary;
     border-radius: 100%;
     box-shadow: 0px 0px 0px 4px $motion-transparent;
     /* animation: pulse-blue-ring 1s infinite ease-in-out alternate; */
