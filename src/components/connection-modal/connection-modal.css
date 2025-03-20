@@ -7,7 +7,8 @@
 }
 
 .header {
-    background-color: $pen-tertiary;
+    background-color: $extensions-header;
+    border-color: $extensions-header-border;
 }
 
 .body {
@@ -106,7 +107,7 @@
 .signal-bar {
     width: 4px;
     border-radius: 4px;
-    background-color: #DBDBDB;
+    background-color: $ui-gray-transparent;
 }
 
 .signal-bar:nth-of-type(1) { height: 25%; }
@@ -115,7 +116,7 @@
 .signal-bar:nth-of-type(4) { height: 100%; }
 
 .green-bar {
-    background-color: $pen-primary;
+    background-color: $extensions-accent;
 }
 
 .radar-small {
@@ -422,11 +423,11 @@
 }
 
 .success-dot {
-    background: $pen-primary;
+    background: $extensions-accent;
 }
 
 .error-dot {
-    background: $error-primary;
+    background: $error-accent;
 }
 
 .scratch-link-error {

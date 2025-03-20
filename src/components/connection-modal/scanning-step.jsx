@@ -7,10 +7,8 @@ import BalancedFormattedMessage from '../../containers/balanced-formatted-messag
 import Box from '../box/box.jsx';
 import PeripheralTile from './peripheral-tile.jsx';
 import Dots from './dots.jsx';
+import {getIconsForTheme} from '../../lib/themes';
 
-import enterUpdateIcon from './icons/enter-update.svg';
-import radarIcon from './icons/searching.png';
-import refreshIcon from './icons/refresh.svg';
 import warningIcon from './icons/warning.svg';
 
 import styles from './connection-modal.css';
@@ -25,7 +23,7 @@ const ScanningStep = props => {
                         <div className={styles.centeredRow}>
                             <img
                                 className={classNames(styles.radarSmall, styles.radarSpin)}
-                                src={radarIcon}
+                                src={getIconsForTheme(props.theme).radar.accent}
                             />
                             <FormattedMessage
                                 defaultMessage="Looking for devices"
@@ -101,7 +99,7 @@ const ScanningStep = props => {
                     />
                     <img
                         className={styles.buttonIconRight}
-                        src={refreshIcon}
+                        src={getIconsForTheme(props.theme).refresh.onAccent}
                     />
                 </button>
                 {showUpdate && (
@@ -116,7 +114,7 @@ const ScanningStep = props => {
                         />
                         <img
                             className={styles.buttonIconRight}
-                            src={enterUpdateIcon}
+                            src={getIconsForTheme(props.theme).openModal.onAccent}
                         />
                     </button>
                 )}
@@ -135,7 +133,8 @@ ScanningStep.propTypes = {
         rssi: PropTypes.number,
         peripheralId: PropTypes.string
     })),
-    scanning: PropTypes.bool.isRequired
+    scanning: PropTypes.bool.isRequired,
+    theme: PropTypes.string
 };
 
 ScanningStep.defaultProps = {

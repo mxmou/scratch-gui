@@ -15,6 +15,7 @@
 
     --ui-white-transparent: hsla(0, 100%, 100%, 0.15); /* 15% transparent version of white */
     --ui-black-transparent: hsla(0, 0%, 0%, 0.25); /* 25% transparent version of black */
+    --ui-gray-transparent: hsla(0, 100%, 100%, 0.25); /* 25% transparent version of black */
 
     --text-primary: hsla(0, 100%, 100%, 1); /* #FFFFFF */
     --text-primary-transparent: hsla(0, 100%, 100%, 0.75); /* 75% transparent version of text-primary */
@@ -35,6 +36,8 @@
     --list-dark: hsla(20, 100%, 60%, 1); /* #FF7733 */
     --error-accent: hsla(30, 100%, 65%, 1); /* #FFA54C */
     --extensions-accent: hsla(163, 85%, 50%, 1); /* #13ECAF */
+    --extensions-header: hsla(163, 15%, 22%, 1); /* 30413C */
+    --extensions-header-border: hsla(0, 0%, 0%, 0.25); /* 25% transparent version of black */
 
     --drop-highlight: hsla(215, 60%, 50%, 1); /* #3373CC */
     --selection: hsla(215, 100%, 75%, 0.35); /* 35% transparent version of motion-accent */

@@ -28,6 +28,7 @@ import largeStageIconAccent from '../../../components/stage-header/icon--large-s
 import paintIconAccent from '../../../components/gui/icon--costumes.svg';
 import pasteIcon from '../../../components/sound-editor/icon--paste.svg';
 import playIconAccent from '../../../components/record-modal/icon--play.svg';
+import radarIcon from '../../../components/connection-modal/icons/searching.png';
 import redoIcon from '../../../components/sound-editor/icon--redo.svg';
 import rerecordIcon from '../../../components/record-modal/icon--back.svg';
 import rotateAllAroundIconAccent from '../../../components/direction-picker/icon--all-around.svg';
@@ -48,9 +49,11 @@ import deleteIconOnAccent from '../../../components/delete-button/icon--delete.s
 import newBackdropIcon from '../../../components/action-menu/icon--backdrop.svg';
 import newSoundIcon from '../../../components/asset-panel/icon--add-sound-lib.svg';
 import newSpriteIcon from '../../../components/action-menu/icon--sprite.svg';
+import openModalIcon from '../../../components/connection-modal/icons/enter-update.svg';
 import paintIconOnAccent from '../../../components/action-menu/icon--paint.svg';
 import playIconOnAccent from '../../../components/sound-editor/icon--play.svg';
 import recordIcon from '../../../components/asset-panel/icon--add-sound-record.svg';
+import refreshIcon from '../../../components/connection-modal/icons/refresh.svg';
 import searchIcon from '../../../components/action-menu/icon--search.svg';
 import stopIconOnAccent from '../../../components/sound-editor/icon--stop.svg';
 import surpriseIcon from '../../../components/action-menu/icon--surprise.svg';
@@ -242,6 +245,9 @@ const icons = {
     newSprite: {
         onAccent: newSpriteIcon
     },
+    openModal: {
+        onAccent: openModalIcon
+    },
     paint: {
         default: paintIconDefault,
         accent: paintIconAccent,
@@ -254,11 +260,17 @@ const icons = {
         accent: playIconAccent,
         onAccent: playIconOnAccent
     },
+    radar: {
+        accent: radarIcon
+    },
     record: {
         onAccent: recordIcon
     },
     redo: {
         accent: redoIcon
+    },
+    refresh: {
+        onAccent: refreshIcon
     },
     rerecord: {
         accent: rerecordIcon

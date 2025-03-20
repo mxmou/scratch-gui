@@ -58,6 +58,7 @@ class ScanningStep extends React.Component {
                 peripheralList={this.state.peripheralList}
                 phase={this.state.phase}
                 scanning={this.state.scanning}
+                theme={this.props.theme}
                 title={this.props.extensionId}
                 onConnected={this.props.onConnected}
                 onConnecting={this.props.onConnecting}
@@ -74,6 +75,7 @@ ScanningStep.propTypes = {
     onConnected: PropTypes.func.isRequired,
     onConnecting: PropTypes.func.isRequired,
     onUpdatePeripheral: PropTypes.func,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 

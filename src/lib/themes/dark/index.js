@@ -28,6 +28,7 @@ import largeStageIconAccent from '../../../components/stage-header/icon--large-s
 import paintIconAccent from '../../../components/gui/icon--costumes-dark-mode.svg';
 import pasteIcon from '../../../components/sound-editor/icon--paste-dark-mode.svg';
 import playIconAccent from '../../../components/record-modal/icon--play-dark-mode.svg';
+import radarIcon from '../../../components/connection-modal/icons/searching-dark-mode.png';
 import redoIcon from '../../../components/sound-editor/icon--redo-dark-mode.svg';
 import rerecordIcon from '../../../components/record-modal/icon--back-dark-mode.svg';
 import rotateAllAroundIconAccent from '../../../components/direction-picker/icon--all-around-dark-mode.svg';
@@ -48,9 +49,11 @@ import deleteIconOnAccent from '../../../components/delete-button/icon--delete-b
 import newBackdropIcon from '../../../components/action-menu/icon--backdrop-black.svg';
 import newSoundIcon from '../../../components/asset-panel/icon--add-sound-lib-black.svg';
 import newSpriteIcon from '../../../components/action-menu/icon--sprite-black.svg';
+import openModalIcon from '../../../components/connection-modal/icons/enter-update-black.svg';
 import paintIconOnAccent from '../../../components/action-menu/icon--paint-black.svg';
 import playIconOnAccent from '../../../components/sound-editor/icon--play-black.svg';
 import recordIcon from '../../../components/asset-panel/icon--add-sound-record-black.svg';
+import refreshIcon from '../../../components/connection-modal/icons/refresh-black.svg';
 import searchIcon from '../../../components/action-menu/icon--search-black.svg';
 import stopIconOnAccent from '../../../components/sound-editor/icon--stop-black.svg';
 import surpriseIcon from '../../../components/action-menu/icon--surprise-black.svg';
@@ -220,6 +223,9 @@ const icons = {
     newSprite: {
         onAccent: newSpriteIcon
     },
+    openModal: {
+        onAccent: openModalIcon
+    },
     paint: {
         default: paintIconDefault,
         accent: paintIconAccent,
@@ -232,11 +238,17 @@ const icons = {
         accent: playIconAccent,
         onAccent: playIconOnAccent
     },
+    radar: {
+        accent: radarIcon
+    },
     record: {
         onAccent: recordIcon
     },
     redo: {
         accent: redoIcon
+    },
+    refresh: {
+        onAccent: refreshIcon
     },
     rerecord: {
         accent: rerecordIcon

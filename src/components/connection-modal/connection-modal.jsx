@@ -54,6 +54,7 @@ ConnectionModalComponent.propTypes = {
     onCancel: PropTypes.func.isRequired,
     onHelp: PropTypes.func.isRequired,
     phase: PropTypes.oneOf(Object.keys(PHASES)).isRequired,
+    theme: PropTypes.string,
     title: PropTypes.string.isRequired,
     useAutoScan: PropTypes.bool.isRequired
 };

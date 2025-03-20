@@ -144,6 +144,7 @@ class ConnectionModal extends React.Component {
                 extensionId={this.props.extensionId}
                 name={this.state.extension && this.state.extension.name}
                 phase={this.state.phase}
+                theme={this.props.theme}
                 title={this.props.extensionId}
                 useAutoScan={this.state.extension && this.state.extension.useAutoScan}
                 vm={this.props.vm}
@@ -163,11 +164,13 @@ class ConnectionModal extends React.Component {
 ConnectionModal.propTypes = {
     extensionId: PropTypes.string.isRequired,
     onCancel: PropTypes.func.isRequired,
+    theme: PropTypes.string,
     vm: PropTypes.instanceOf(VM).isRequired
 };
 
 const mapStateToProps = state => ({
-    extensionId: state.scratchGui.connectionModal.extensionId
+    extensionId: state.scratchGui.connectionModal.extensionId,
+    theme: state.scratchGui.theme.theme
 });
 
 const mapDispatchToProps = dispatch => ({
