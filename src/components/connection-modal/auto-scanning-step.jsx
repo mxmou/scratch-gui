@@ -7,13 +7,9 @@ import classNames from 'classnames';
 import BalancedFormattedMessage from '../../containers/balanced-formatted-message.jsx';
 import Box from '../box/box.jsx';
 import Dots from './dots.jsx';
+import {getIconsForTheme} from '../../lib/themes';
 
-import closeIcon from '../close-button/icon--close.svg';
-
-import backIcon from './icons/back.svg';
 import bluetoothIcon from './icons/bluetooth-white.svg';
-import enterUpdateIcon from './icons/enter-update.svg';
-import radarIcon from './icons/searching.png';
 import warningIcon from './icons/warning.svg';
 
 import styles from './connection-modal.css';
@@ -38,7 +34,7 @@ const AutoScanningStep = props => {
                         <React.Fragment>
                             <img
                                 className={styles.radarBig}
-                                src={radarIcon}
+                                src={getIconsForTheme(props.theme).radar.accent}
                             />
                             <img
                                 className={styles.bluetoothCenteredIcon}
@@ -50,7 +46,7 @@ const AutoScanningStep = props => {
                         <React.Fragment>
                             <img
                                 className={classNames(styles.radarBig, styles.radarSpin)}
-                                src={radarIcon}
+                                src={getIconsForTheme(props.theme).radar.accent}
                             />
                             <img
                                 className={styles.connectionTipIcon}
@@ -137,7 +133,7 @@ const AutoScanningStep = props => {
                         >
                             <img
                                 className={styles.abortConnectingIcon}
-                                src={closeIcon}
+                                src={getIconsForTheme(props.theme).close.onAccent}
                             />
                         </button>
                     </div>
@@ -149,7 +145,7 @@ const AutoScanningStep = props => {
                     >
                         <img
                             className={styles.buttonIconLeft}
-                            src={backIcon}
+                            src={getIconsForTheme(props.theme).back.onAccent}
                         />
                         <FormattedMessage
                             defaultMessage="Try again"
@@ -170,7 +166,7 @@ const AutoScanningStep = props => {
                         />
                         <img
                             className={styles.buttonIconRight}
-                            src={enterUpdateIcon}
+                            src={getIconsForTheme(props.theme).openModal.onAccent}
                         />
                     </button>
                 )}
@@ -184,7 +180,8 @@ AutoScanningStep.propTypes = {
     onRefresh: PropTypes.func,
     onStartScan: PropTypes.func,
     onUpdatePeripheral: PropTypes.func,
-    phase: PropTypes.oneOf(Object.keys(PHASES))
+    phase: PropTypes.oneOf(Object.keys(PHASES)),
+    theme: PropTypes.string
 };
 
 AutoScanningStep.defaultProps = {

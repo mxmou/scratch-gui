@@ -15,7 +15,7 @@ import soundIconDefault from '../../../components/gui/icon--sounds-gray.svg';
 import xPositionIcon from '../../../components/sprite-info/icon--x.svg';
 import yPositionIcon from '../../../components/sprite-info/icon--y.svg';
 
-import clearIcon from '../../../components/filter/icon--x.svg';
+import closeIconAccent from '../../../components/filter/icon--x.svg';
 import codeIconAccent from '../../../components/gui/icon--code.svg';
 import copyIcon from '../../../components/sound-editor/icon--copy.svg';
 import copyToNewIcon from '../../../components/sound-editor/icon--copy-to-new.svg';
@@ -44,7 +44,9 @@ import undoIcon from '../../../components/sound-editor/icon--undo.svg';
 import selectionHandleRed from '../../../components/audio-trimmer/icon--handle-red.svg';
 import stopIconRed from '../../../components/record-modal/icon--stop-recording.svg';
 
+import backIcon from '../../../components/connection-modal/icons/back.svg';
 import checkIcon from '../../../components/data-panel/icon--check.svg';
+import closeIconOnAccent from '../../../components/close-button/icon--close.svg';
 import deleteIconOnAccent from '../../../components/delete-button/icon--delete.svg';
 import newBackdropIcon from '../../../components/action-menu/icon--backdrop.svg';
 import newSoundIcon from '../../../components/asset-panel/icon--add-sound-lib.svg';
@@ -186,11 +188,15 @@ const blockColors = {
 };
 
 const icons = {
+    back: {
+        onAccent: backIcon
+    },
     check: {
         onAccent: checkIcon
     },
-    clear: {
-        accent: clearIcon
+    close: {
+        accent: closeIconAccent,
+        onAccent: closeIconOnAccent
     },
     code: {
         default: codeIconDefault,

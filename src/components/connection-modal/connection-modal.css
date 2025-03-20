@@ -210,7 +210,7 @@
 .bluetooth-centered-icon {
     position: absolute;
     padding: 5px 5px;
-    background-color: $motion-accent;
+    background-color: $motion-tertiary;
     border-radius: 100%;
     box-shadow: 0px 0px 0px 2px $motion-transparent;
 }

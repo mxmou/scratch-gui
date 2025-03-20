@@ -40,7 +40,7 @@ const FilterComponent = props => {
             >
                 <img
                     className={styles.xIcon}
-                    src={getIconsForTheme(theme).clear.accent}
+                    src={getIconsForTheme(theme).close.accent}
                     draggable={false}
                 />
             </div>
