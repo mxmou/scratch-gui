@@ -48,6 +48,7 @@ import backIcon from '../../../components/connection-modal/icons/back-black.svg'
 import checkIcon from '../../../components/data-panel/icon--check-black.svg';
 import closeIconOnAccent from '../../../components/close-button/icon--close-black.svg';
 import deleteIconOnAccent from '../../../components/delete-button/icon--delete-black.svg';
+import helpIcon from '../../../components/connection-modal/icons/help-black.svg';
 import newBackdropIcon from '../../../components/action-menu/icon--backdrop-black.svg';
 import newSoundIcon from '../../../components/asset-panel/icon--add-sound-lib-black.svg';
 import newSpriteIcon from '../../../components/action-menu/icon--sprite-black.svg';
@@ -211,6 +212,9 @@ const icons = {
     },
     fullScreen: {
         default: fullScreenIcon
+    },
+    help: {
+        onAccent: helpIcon
     },
     hide: {
         default: hideIconDefault,

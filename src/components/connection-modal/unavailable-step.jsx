@@ -5,8 +5,7 @@ import React from 'react';
 
 import Box from '../box/box.jsx';
 import Dots from './dots.jsx';
-import helpIcon from './icons/help.svg';
-import backIcon from './icons/back.svg';
+import {getIconsForTheme} from '../../lib/themes';
 import bluetoothIcon from './icons/bluetooth.svg';
 import scratchLinkIcon from './icons/scratchlink.svg';
 
@@ -20,7 +19,7 @@ const UnavailableStep = props => (
                     <div className={styles.helpStepNumber}>
                         {'1'}
                     </div>
-                    <div className={styles.helpStepImage}>
+                    <div className={styles.unavailableStepImage}>
                         <img
                             className={styles.scratchLinkIcon}
                             src={scratchLinkIcon}
@@ -38,7 +37,7 @@ const UnavailableStep = props => (
                     <div className={styles.helpStepNumber}>
                         {'2'}
                     </div>
-                    <div className={styles.helpStepImage}>
+                    <div className={styles.unavailableStepImage}>
                         <img
                             className={styles.scratchLinkIcon}
                             src={bluetoothIcon}
@@ -67,7 +66,7 @@ const UnavailableStep = props => (
                 >
                     <img
                         className={classNames(styles.buttonIconLeft, styles.buttonIconBack)}
-                        src={backIcon}
+                        src={getIconsForTheme(props.theme).back.onAccent}
                     />
                     <FormattedMessage
                         defaultMessage="Try again"
@@ -81,7 +80,7 @@ const UnavailableStep = props => (
                 >
                     <img
                         className={styles.buttonIconLeft}
-                        src={helpIcon}
+                        src={getIconsForTheme(props.theme).help.onAccent}
                     />
                     <FormattedMessage
                         defaultMessage="Help"
@@ -96,7 +95,8 @@ const UnavailableStep = props => (
 
 UnavailableStep.propTypes = {
     onHelp: PropTypes.func,
-    onScanning: PropTypes.func
+    onScanning: PropTypes.func,
+    theme: PropTypes.string
 };
 
 export default UnavailableStep;

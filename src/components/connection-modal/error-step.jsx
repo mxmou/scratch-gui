@@ -5,8 +5,7 @@ import React from 'react';
 
 import Box from '../box/box.jsx';
 import Dots from './dots.jsx';
-import helpIcon from './icons/help.svg';
-import backIcon from './icons/back.svg';
+import {getIconsForTheme} from '../../lib/themes';
 
 import styles from './connection-modal.css';
 
@@ -42,7 +41,7 @@ const ErrorStep = props => (
                 >
                     <img
                         className={classNames(styles.buttonIconLeft, styles.buttonIconBack)}
-                        src={backIcon}
+                        src={getIconsForTheme(props.theme).back.onAccent}
                     />
                     <FormattedMessage
                         defaultMessage="Try again"
@@ -56,7 +55,7 @@ const ErrorStep = props => (
                 >
                     <img
                         className={styles.buttonIconLeft}
-                        src={helpIcon}
+                        src={getIconsForTheme(props.theme).help.onAccent}
                     />
                     <FormattedMessage
                         defaultMessage="Help"
@@ -72,7 +71,8 @@ const ErrorStep = props => (
 ErrorStep.propTypes = {
     connectionIconURL: PropTypes.string.isRequired,
     onHelp: PropTypes.func,
-    onScanning: PropTypes.func
+    onScanning: PropTypes.func,
+    theme: PropTypes.string
 };
 
 export default ErrorStep;

@@ -194,7 +194,7 @@
     right: -15px;
     left: -15px;
     padding: 5px 5px;
-    background-color: $pen-primary;
+    background-color: $extensions-tertiary;
     border-radius: 100%;
     box-shadow: 0px 0px 0px 4px $pen-transparent;
 }
@@ -261,21 +261,23 @@
     max-width: 40px;
 }
 
-[dir="ltr"] .help-step-image {
+[dir="ltr"] .help-step-image,
+[dir="ltr"] .unavailable-step-image {
     margin-right: 0.5rem;
 }
 
-[dir="rtl"] .help-step-image {
+[dir="rtl"] .help-step-image,
+[dir="ltr"] .unavailable-step-image {
     margin-left: 0.5rem;
 }
 
 .help-step-number {
-    background: $pen-tertiary;
+    background: $extensions-accent;
     border-radius: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: $ui-white;
+    color: $text-on-accent;
     font-weight: bold;
     min-width: 2rem;
     height: 2rem;
@@ -355,7 +357,7 @@
 }
 
 .red-button {
-    background: $red-primary;
+    background: $data-accent;
 }
 
 .corner-buttons {
