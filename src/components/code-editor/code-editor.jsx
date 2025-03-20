@@ -93,7 +93,7 @@ CodeEditorComponent.propTypes = {
     currentLine: PropTypes.number,
     currentColumn: PropTypes.number,
     hardwareExtensions: PropTypes.arrayOf(PropTypes.string).isRequired,
-    isPeripheralConnected: PropTypes.objectOf(PropTypes.string).isRequired,
+    isPeripheralConnected: PropTypes.objectOf(PropTypes.bool).isRequired,
     selectedRanges: PropTypes.number,
     selectedChars: PropTypes.number,
     vm: PropTypes.instanceOf(VM),
