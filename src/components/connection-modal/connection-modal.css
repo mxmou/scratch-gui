@@ -449,3 +449,7 @@
     height: 60%;
     width: inherit;
 }
+
+.microbit-firmware-link {
+    color: $motion-accent;
+}

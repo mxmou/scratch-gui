@@ -40,6 +40,7 @@ import soundIconAccent from '../../../components/gui/icon--sounds.svg';
 import stopIconAccent from '../../../components/record-modal/icon--stop-playback.svg';
 import trimIcon from '../../../components/sound-editor/icon--delete.svg';
 import undoIcon from '../../../components/sound-editor/icon--undo.svg';
+import updateButtonIcon from '../../../components/connection-modal/icons/send-update.svg';
 
 import selectionHandleRed from '../../../components/audio-trimmer/icon--handle-red.svg';
 import stopIconRed from '../../../components/record-modal/icon--stop-recording.svg';
@@ -60,6 +61,7 @@ import refreshIcon from '../../../components/connection-modal/icons/refresh.svg'
 import searchIcon from '../../../components/action-menu/icon--search.svg';
 import stopIconOnAccent from '../../../components/sound-editor/icon--stop.svg';
 import surpriseIcon from '../../../components/action-menu/icon--surprise.svg';
+import updateIcon from '../../../components/connection-modal/icons/send-update-white.svg';
 import uploadIcon from '../../../components/action-menu/icon--file-upload.svg';
 
 import fasterIcon from '../../../components/sound-editor/icon--faster.svg';
@@ -325,6 +327,12 @@ const icons = {
     },
     undo: {
         accent: undoIcon
+    },
+    update: {
+        onAccent: updateIcon
+    },
+    updateButton: {
+        accent: updateButtonIcon
     },
     upload: {
         onAccent: uploadIcon

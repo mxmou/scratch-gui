@@ -9,10 +9,7 @@ import keyMirror from 'keymirror';
 import BalancedFormattedMessage from '../../containers/balanced-formatted-message.jsx';
 import Box from '../box/box.jsx';
 import ProgressRingComponent from '../progress-ring/progress-ring.jsx';
-
-import backIcon from './icons/back.svg';
-import sendUpdateIcon from './icons/send-update.svg';
-import sendUpdateGlyph from './icons/send-update-white.svg';
+import {getIconsForTheme} from '../../lib/themes';
 
 import styles from './connection-modal.css';
 
@@ -103,7 +100,7 @@ class UpdatePeripheralStep extends React.Component {
                     </Box>
                     <img
                         className={styles.helpStepImage}
-                        src={sendUpdateIcon}
+                        src={getIconsForTheme(this.props.theme).updateButton.accent}
                     />
                     <FormattedMessage
                         defaultMessage="Press &quot;Do Update&quot; and allow the update to complete."
@@ -149,6 +146,7 @@ class UpdatePeripheralStep extends React.Component {
                 id="gui.connection.updatePeripheral.updateMicroBitFirmware"
                 values={{
                     microBitFirmwareLink: <a
+                        className={styles.microbitFirmwareLink}
                         rel="noopener noreferrer"
                         target="_blank"
                         href={microBitFirmwareUrl}
@@ -211,7 +209,7 @@ class UpdatePeripheralStep extends React.Component {
                             >
                                 <img
                                     className={classNames(styles.buttonIconLeft, styles.buttonIconBack)}
-                                    src={backIcon}
+                                    src={getIconsForTheme(this.props.theme).back.onAccent}
                                 />
                                 <FormattedMessage
                                     defaultMessage="Go Back"
@@ -240,7 +238,7 @@ class UpdatePeripheralStep extends React.Component {
                                     }
                                     <img
                                         className={styles.buttonIconRight}
-                                        src={sendUpdateGlyph}
+                                        src={getIconsForTheme(this.props.theme).update.onAccent}
                                     />
                                 </button>
                             }
@@ -256,7 +254,8 @@ UpdatePeripheralStep.propTypes = {
     connectionSmallIconURL: PropTypes.string,
     name: PropTypes.string.isRequired,
     onScanning: PropTypes.func.isRequired,
-    onSendPeripheralUpdate: PropTypes.func.isRequired
+    onSendPeripheralUpdate: PropTypes.func.isRequired,
+    theme: PropTypes.string
 };
 
 export default UpdatePeripheralStep;

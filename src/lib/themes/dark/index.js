@@ -40,6 +40,7 @@ import soundIconAccent from '../../../components/gui/icon--sounds-dark-mode.svg'
 import stopIconAccent from '../../../components/record-modal/icon--stop-playback-dark-mode.svg';
 import trimIcon from '../../../components/sound-editor/icon--delete-dark-mode.svg';
 import undoIcon from '../../../components/sound-editor/icon--undo-dark-mode.svg';
+import updateButtonIcon from '../../../components/connection-modal/icons/send-update-dark-mode.svg';
 
 import selectionHandleRed from '../../../components/audio-trimmer/icon--handle-red-dark-mode.svg';
 import stopIconRed from '../../../components/record-modal/icon--stop-recording-dark-mode.svg';
@@ -60,6 +61,7 @@ import refreshIcon from '../../../components/connection-modal/icons/refresh-blac
 import searchIcon from '../../../components/action-menu/icon--search-black.svg';
 import stopIconOnAccent from '../../../components/sound-editor/icon--stop-black.svg';
 import surpriseIcon from '../../../components/action-menu/icon--surprise-black.svg';
+import updateIcon from '../../../components/connection-modal/icons/send-update-black.svg';
 import uploadIcon from '../../../components/action-menu/icon--file-upload-black.svg';
 
 import fasterIcon from '../../../components/sound-editor/icon--faster-dark-mode.svg';
@@ -303,6 +305,12 @@ const icons = {
     },
     undo: {
         accent: undoIcon
+    },
+    update: {
+        onAccent: updateIcon
+    },
+    updateButton: {
+        accent: updateButtonIcon
     },
     upload: {
         onAccent: uploadIcon
