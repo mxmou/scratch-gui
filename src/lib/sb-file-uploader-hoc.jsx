@@ -6,6 +6,7 @@ import {connect} from 'react-redux';
 import log from '../lib/log';
 import sharedMessages from './shared-messages';
 
+import {HARDWARE_EXTENSIONS} from './code-editor/hardware-extensions';
 import {
     LoadingStates,
     getIsLoadingUpload,
@@ -21,6 +22,7 @@ import {
 import {
     closeFileMenu
 } from '../reducers/menus';
+import {setHardwareExtensions} from '../reducers/code-editor';
 
 const messages = defineMessages({
     loadError: {
@@ -150,12 +152,18 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 const filename = this.fileToUpload && this.fileToUpload.name;
                 let loadingSuccess = false;
                 this.props.vm.loadProject(this.fileReader.result)
-                    .then(() => {
+                    .then(extensionIds => {
                         if (filename) {
                             const uploadedProjectTitle = this.getProjectTitleFromFilename(filename);
                             this.props.onSetProjectTitle(uploadedProjectTitle);
                         }
                         loadingSuccess = true;
+
+                        this.props.setHardwareExtensions(
+                            Array.from(extensionIds).filter(
+                                extensionId => HARDWARE_EXTENSIONS.includes(extensionId)
+                            )
+                        );
                     })
                     .catch(error => {
                         log.warn(error);
@@ -193,6 +201,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
                 onSetProjectTitle,
                 projectChanged,
                 requestProjectUpload: requestProjectUploadProp,
+                setHardwareExtensions: setHardwareExtensionsProp,
                 userOwnsProject,
                 /* eslint-enable no-unused-vars */
                 ...componentProps
@@ -221,6 +230,7 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         onSetProjectTitle: PropTypes.func,
         projectChanged: PropTypes.bool,
         requestProjectUpload: PropTypes.func,
+        setHardwareExtensions: PropTypes.func.isRequired,
         userOwnsProject: PropTypes.bool,
         vm: PropTypes.shape({
             loadProject: PropTypes.func
@@ -255,7 +265,9 @@ const SBFileUploaderHOC = function (WrappedComponent) {
         // step 4: transition the project state so we're ready to handle the new
         // project data. When this is done, the project state transition will be
         // noticed by componentDidUpdate()
-        requestProjectUpload: loadingState => dispatch(requestProjectUpload(loadingState))
+        requestProjectUpload: loadingState => dispatch(requestProjectUpload(loadingState)),
+        // update list of used hardware extensions
+        setHardwareExtensions: extensionIds => dispatch(setHardwareExtensions(extensionIds))
     });
     // Allow incoming props to override redux-provided props. Used to mock in tests.
     const mergeProps = (stateProps, dispatchProps, ownProps) => Object.assign(
