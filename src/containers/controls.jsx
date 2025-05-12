@@ -11,11 +11,24 @@ class Controls extends React.Component {
     constructor (props) {
         super(props);
         bindAll(this, [
-            'handleGreenFlagClick',
-            'handleStopAllClick'
+            'handleKeyDown',
+            'handleGreenFlag',
+            'handleStopAll'
         ]);
     }
-    handleGreenFlagClick (e) {
+    componentDidMount () {
+        document.addEventListener('keydown', this.handleKeyDown, {capture: true});
+    }
+    handleKeyDown (e) {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+            this.handleGreenFlag(e);
+            document.activeElement.blur();
+            e.stopPropagation();
+        } else if (e.key === 'Escape') {
+            this.handleStopAll(e);
+        }
+    }
+    handleGreenFlag (e) {
         e.preventDefault();
         if (e.shiftKey) {
             this.props.vm.setTurboMode(!this.props.turbo);
@@ -29,7 +42,7 @@ class Controls extends React.Component {
             }
         }
     }
-    handleStopAllClick (e) {
+    handleStopAll (e) {
         e.preventDefault();
         this.props.vm.stopAll();
     }
@@ -47,8 +60,8 @@ class Controls extends React.Component {
                 {...props}
                 active={projectRunning}
                 turbo={turbo}
-                onGreenFlagClick={this.handleGreenFlagClick}
-                onStopAllClick={this.handleStopAllClick}
+                onGreenFlagClick={this.handleGreenFlag}
+                onStopAllClick={this.handleStopAll}
             />
         );
     }

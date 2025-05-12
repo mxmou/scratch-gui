@@ -48,6 +48,7 @@ class CodeEditor extends React.Component {
         super(props);
         bindAll(this, [
             'setElement',
+            'handleKeyDown',
             'updateParserOptions',
             'handleViewUpdate',
             'indentSelection'
@@ -67,6 +68,7 @@ class CodeEditor extends React.Component {
     componentDidMount () {
         this.view = new EditorView({parent: this.element});
         if (this.props.editingTarget) this.loadTargetState();
+        document.addEventListener('keydown', this.handleKeyDown, {capture: true});
     }
     componentDidUpdate (prevProps) {
         if (this.props.theme !== prevProps.theme) {
@@ -150,6 +152,11 @@ class CodeEditor extends React.Component {
         if (element && this.view) {
             element.appendChild(this.view.dom);
             if (document.activeElement === document.body) this.view.focus();
+        }
+    }
+    handleKeyDown (e) {
+        if (e.key === 'Escape') {
+            this.view.focus();
         }
     }
     updateTheme () {
