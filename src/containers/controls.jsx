@@ -19,6 +19,9 @@ class Controls extends React.Component {
     componentDidMount () {
         document.addEventListener('keydown', this.handleKeyDown, {capture: true});
     }
+    componentWillUnmount () {
+        document.removeEventListener('keydown', this.handleKeyDown);
+    }
     handleKeyDown (e) {
         if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
             this.handleGreenFlag(e);

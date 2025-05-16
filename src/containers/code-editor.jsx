@@ -93,6 +93,7 @@ class CodeEditor extends React.Component {
         this.saveTargetState(this.props.editingTarget);
         if (this.repaintTimeout) clearTimeout(this.repaintTimeout);
         this.view.destroy();
+        document.removeEventListener('keydown', this.handleKeyDown);
     }
     newState (code) {
         return EditorState.create({
