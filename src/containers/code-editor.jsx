@@ -43,6 +43,10 @@ import {setTargetState, setTargetScrollPos, setTargetError} from '../reducers/co
 
 import styles from '../components/code-editor/code-editor.css';
 
+const viewOptions = new Compartment();
+const themeOptions = new Compartment();
+const parserOptions = new Compartment();
+
 class CodeEditor extends React.Component {
     constructor (props) {
         super(props);
@@ -55,8 +59,6 @@ class CodeEditor extends React.Component {
         ]);
         this.element = null;
         this.view = null;
-        this.themeOptions = new Compartment();
-        this.parserOptions = new Compartment();
         this.repaintTimeout = null;
         this.state = {
             currentLine: 1,
@@ -67,7 +69,11 @@ class CodeEditor extends React.Component {
     }
     componentDidMount () {
         this.view = new EditorView({parent: this.element});
-        if (this.props.editingTarget) this.loadTargetState();
+        if (this.props.editingTarget) {
+            // Timeout is needed when switching languages
+            // because the previous state might not have been saved yet
+            setTimeout(() => this.loadTargetState(), 0);
+        }
         document.addEventListener('keydown', this.handleKeyDown, {capture: true});
     }
     componentDidUpdate (prevProps) {
@@ -138,12 +144,12 @@ class CodeEditor extends React.Component {
                     ...searchKeymap,
                     ...defaultKeymap
                 ]),
-                EditorView.updateListener.of(this.handleViewUpdate),
-                this.themeOptions.of([
+                viewOptions.of([]),
+                themeOptions.of([
                     this.getEditorTheme(),
                     syntaxHighlighting(this.getHighlightStyle())
                 ]),
-                this.parserOptions.of([]),
+                parserOptions.of([]),
                 errorWidget
             ]
         });
@@ -160,9 +166,16 @@ class CodeEditor extends React.Component {
             this.view.focus();
         }
     }
+    updateViewOptions () {
+        this.view.dispatch({
+            effects: viewOptions.reconfigure([
+                EditorView.updateListener.of(this.handleViewUpdate)
+            ])
+        });
+    }
     updateTheme () {
         this.view.dispatch({
-            effects: this.themeOptions.reconfigure([
+            effects: themeOptions.reconfigure([
                 this.getEditorTheme(),
                 syntaxHighlighting(this.getHighlightStyle())
             ])
@@ -171,7 +184,7 @@ class CodeEditor extends React.Component {
     updateParserOptions () {
         this.repaintTimeout = null;
         this.view.dispatch({
-            effects: this.parserOptions.reconfigure([
+            effects: parserOptions.reconfigure([
                 StreamLanguage.define(toshParser(
                     getParserOptions(this.props.vm, this.props.editingTarget)
                 ))
@@ -179,7 +192,7 @@ class CodeEditor extends React.Component {
         });
     }
     loadTargetState () {
-        this.element.classList.add(styles.loading);
+        if (this.element) this.element.classList.add(styles.loading);
         if (Object.prototype.hasOwnProperty.call(this.props.targetStates, this.props.editingTarget)) {
             this.view.setState(this.props.targetStates[this.props.editingTarget]);
         } else {
@@ -208,10 +221,11 @@ class CodeEditor extends React.Component {
         // Timeout prevents error:
         // Calls to EditorView.update are not allowed while an update is in progress
         setTimeout(() => {
+            this.updateViewOptions();
             this.updateTheme();
             this.updateParserOptions();
             this.showErrorWidget();
-            this.element.classList.remove(styles.loading);
+            if (this.element) this.element.classList.remove(styles.loading);
         }, 0);
     }
     saveTargetState (target) {
