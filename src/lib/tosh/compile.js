@@ -319,13 +319,19 @@ function compileInputs(target, scratchBlock, args, info) {
         break;
     }
     if (variableType !== null) {
-      var variable = target.lookupVariableByNameAndType(arg, variableType);
+      var variableName = arg;
+      if (argIsReporter) {
+        // Reporter in a broadcast block's menu.
+        // The obscured shadow must still contain a valid broadcast variable.
+        variableName = "";
+      }
+      var variable = target.lookupVariableByNameAndType(variableName, variableType);
       if (variable) {
         variableId = variable.id;
       } else if (variableType === VM.BROADCAST_MESSAGE_VARIABLE) {
         variableId = uid();
         var stage = target.runtime.getTargetForStage();
-        stage.createVariable(variableId, arg, variableType);
+        stage.createVariable(variableId, variableName, variableType);
       }
     }
     var isField = false;
